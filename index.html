@@ -5,13 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Under Construction</title>
   <style>
+    :root {
+      --bg1: #0f172a; /* slate-900 */
+      --bg2: #1e293b; /* slate-800 */
+      --accent1: #f59e0b; /* amber-500 */
+      --accent2: #f97316; /* orange-500 */
+      --textPrimary: #e2e8f0; /* slate-200 */
+      --textSecondary: #94a3b8; /* slate-400 */
+      --card: rgba(15, 23, 42, 0.55);
+      --cardBorder: rgba(255, 255, 255, 0.08);
+      --glow: rgba(245, 158, 11, 0.45);
+    }
+
     html, body {
       height: 100%;
       margin: 0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: #0f172a;
-      color: #e2e8f0;
+      color: var(--textPrimary);
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      background-size: 200% 200%;
+      animation: gradientShift 16s ease infinite;
     }
+
+    /* Animated gradient background */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     .container {
       min-height: 100%;
       display: flex;
@@ -19,33 +41,173 @@
       justify-content: center;
       text-align: center;
       padding: 24px;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
     }
-    h1 {
-      font-size: 2.25rem;
-      line-height: 1.2;
-      margin: 0 0 12px;
+
+    /* Moving caution tape stripes */
+    .tape {
+      position: absolute;
+      left: -10%;
+      width: 120%;
+      height: 56px;
+      background: repeating-linear-gradient(
+        45deg,
+        var(--accent1) 0 22px,
+        #111827 22px 44px
+      );
+      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+      opacity: 0.9;
+      transform: rotate(-6deg);
+      z-index: -1;
+      animation: none;
     }
-    p {
-      margin: 0;
-      color: #94a3b8;
+    .tape.top { top: 8%; }
+    .tape.bottom { bottom: 8%; transform: rotate(6deg); }
+
+    @keyframes slideTape {
+      from { background-position: 0 0; }
+      to { background-position: 44px 0; }
     }
+
+    /* Center card with glass effect */
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--cardBorder);
+      border-radius: 16px;
+      padding: 32px 28px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.03) inset;
+      max-width: 680px;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
     .emoji {
-      font-size: 3rem;
-      display: block;
-      margin-bottom: 12px;
+      font-size: 3.25rem;
+      display: inline-block;
+      filter: drop-shadow(0 6px 12px var(--glow));
+      animation: float 4.2s ease-in-out infinite;
     }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      margin: 10px 0 12px;
+      text-shadow: 0 0 24px var(--glow);
+      letter-spacing: 0.3px;
+      animation: pulse 3.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 12px var(--glow); }
+      50% { text-shadow: 0 0 28px var(--glow); }
+    }
+
+    .lead {
+      margin: 0 0 12px;
+      color: var(--textSecondary);
+    }
+
+    /* Producer link styling */
+    .producer {
+      color: var(--textSecondary);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .producer:visited { color: var(--textSecondary); }
+
+    /* Falling nails */
+    .nails {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .nail {
+      position: absolute;
+      top: -10vh;
+      left: var(--x, 50vw);
+      font-size: var(--size, 22px);
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,0.35));
+      animation: fall var(--dur, 10s) linear forwards;
+      will-change: transform;
+    }
+    @keyframes fall {
+      0% { transform: translate3d(0, -10vh, 0) rotate(0deg); opacity: 0; }
+      5% { opacity: 1; }
+      100% { transform: translate3d(0, 120vh, 0) rotate(360deg); opacity: 0.9; }
+    }
+
+    .cta {
+      margin-top: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #0b0f1c;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      padding: 10px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 12px 24px rgba(249, 115, 22, 0.25);
+      transition: transform 200ms ease, box-shadow 200ms ease;
+    }
+    .cta:hover { transform: translateY(-2px); box-shadow: 0 18px 32px rgba(249, 115, 22, 0.35); }
+    .cta:focus-visible { outline: 3px solid rgba(245, 158, 11, 0.6); outline-offset: 2px; }
   </style>
   <meta name="robots" content="noindex" />
   <meta name="description" content="This site is under construction." />
 </head>
 <body>
   <main class="container" aria-label="Under construction notice">
-    <div>
+    <div class="tape top" aria-hidden="true"></div>
+    <div class="tape bottom" aria-hidden="true"></div>
+    <section class="card" role="region" aria-labelledby="title">
       <span class="emoji" role="img" aria-label="Construction barrier">🚧</span>
-      <h1>Under construction</h1>
-      <p>Please check back soon.</p>
-    </div>
+      <h1 id="title">Under construction</h1>
+      <p class="lead">
+        <a class="producer" href="https://charlierusso.dev/" target="_blank" rel="noopener noreferrer">This site is being produced by Russo Technical Services</a>
+      </p>
+    </section>
+    <div class="nails" aria-hidden="true" id="nails"></div>
   </main>
+  <script>
+    (function startContinuousNails() {
+      var container = document.getElementById('nails');
+      if (!container) return;
+      var parts = ['🔩','🪛','🔨','🔧','⚙️'];
+
+      function spawnOne() {
+        var el = document.createElement('span');
+        el.className = 'nail';
+        el.textContent = parts[(Math.random() * parts.length) | 0];
+        var x = Math.random() * 100; // vw
+        var size = 16 + Math.random() * 18; // 16px - 34px
+        var duration = 9 + Math.random() * 10; // 9s - 19s
+        el.style.setProperty('--x', x + 'vw');
+        el.style.setProperty('--size', size + 'px');
+        el.style.setProperty('--dur', duration + 's');
+        container.appendChild(el);
+        // Clean up after the animation completes
+        setTimeout(function () {
+          if (el && el.parentNode === container) container.removeChild(el);
+        }, (duration * 1000) + 200);
+      }
+
+      // Spawn rate
+      setInterval(spawnOne, 300);
+    })();
+  </script>
 </body>
 </html>
 
