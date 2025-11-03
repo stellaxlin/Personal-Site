@@ -7,7 +7,6 @@
   <style>
     :root {
       --bg: #fff5e6; /* cream */
-      --nav: #ffe6c7; /* slightly darker cream for navbar */
       --fg: #000000; /* black */
       --muted: rgba(0, 0, 0, 0.35);
       --flash: rgba(0, 0, 0, 0.9);
@@ -17,15 +16,30 @@
       --speed: 190; /* px/sec base speed */
     }
 
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
     html, body {
       height: 100%;
+      overflow-x: hidden;
+      width: 100%;
     }
 
     /* Prevent scrolling during animation */
     html.animating {
       overflow: hidden;
+      overflow-y: hidden;
       position: fixed;
       width: 100%;
+      height: 100%;
+    }
+    html.animating body {
+      overflow: hidden;
+      overflow-y: hidden;
+      position: fixed;
+      width: 100%;
+      height: 100%;
     }
 
     body {
@@ -50,7 +64,8 @@
     .stage.site-mode {
       place-items: start center;
       min-height: auto;
-      padding: 0 24px 24px;
+      padding: 0 24px 0;
+      padding-top: 80px; /* Account for fixed navbar */
     }
 
     /* When showing site content, return it to normal flow */
@@ -161,8 +176,8 @@
       max-width: none; /* full width */
       width: 100%;
       margin: 0;
-      padding-top: 80px; /* account for navbar */
-      padding-bottom: 48px;
+      padding-top: 0;
+      padding-bottom: 0;
       padding-left: 16px;
       padding-right: 16px;
       pointer-events: none;
@@ -181,55 +196,6 @@
       margin: 0 0 12px;
       font-weight: 700;
       letter-spacing: -0.02em;
-    }
-    /* Navbar */
-    .navbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 56px;
-      background: var(--nav);
-      z-index: 20;
-      box-shadow: 0 1px 0 rgba(0,0,0,.08);
-      display: flex;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 600ms ease;
-    }
-    .site.show .navbar { opacity: 1; }
-    .nav-inner {
-      max-width: 1400px;
-      height: 100%;
-      margin: 0 auto;
-      padding: 0 16px;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .brand {
-      font-weight: 800;
-      font-size: clamp(18px, 3.5vw, 24px);
-      letter-spacing: 0.4px;
-    }
-    .nav-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 14px;
-      align-items: center;
-      justify-content: flex-end;
-      font-size: 15px;
-    }
-    .nav-links a { 
-      color: inherit; 
-      text-decoration: none; 
-      padding: 4px 0;
-      border-bottom: 1px dotted rgba(0,0,0,.35); 
-      transition: border-color 200ms ease;
-    }
-    .nav-links a:hover { 
-      border-bottom-style: solid; 
-      border-color: rgba(0,0,0,.6);
     }
     /* Social strip under heading (optional) */
     .social {
@@ -331,11 +297,14 @@
       display: grid;
       place-items: center;
       overflow: hidden;
-      border-radius: 16px;
-      border: 1px solid rgba(0,0,0,.1);
+      border-radius: 0;
+      border: none;
+      border-bottom: 1px solid rgba(0,0,0,.1);
       background: var(--bg);
       box-shadow: 0 4px 20px rgba(0,0,0,.08), inset 0 1px 0 rgba(255,255,255,.6);
-      margin-bottom: 24px;
+      margin: 0 0 24px 0;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
     }
     .hero-slideshow { position:absolute; inset:0; }
     .hero-slide {
@@ -480,29 +449,6 @@
       object-fit: contain;
       filter: brightness(0);
     }
-    .nav-icons {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-    .nav-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      opacity: 0.7;
-      transition: opacity 200ms ease;
-    }
-    .nav-icon:hover {
-      opacity: 1;
-    }
-    .nav-icon img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      filter: brightness(0);
-    }
     .hero-icons {
       display: flex;
       gap: 16px;
@@ -607,59 +553,6 @@
     /* About placeholders */
     .about-image .ph { height: 320px; background: rgba(0,0,0,.06); border:1px solid rgba(0,0,0,.1); border-radius:10px; display:grid; place-items:center; color: rgba(0,0,0,.45); }
 
-    .site-footer { 
-      background: var(--nav); 
-      margin-top: 64px; 
-      border-top: 1px solid rgba(0,0,0,.1); 
-      padding: 32px 0;
-    }
-    .footer-content { 
-      max-width: 1400px; 
-      margin: 0 auto; 
-      padding: 0 16px; 
-      display:flex; 
-      align-items:center; 
-      justify-content: space-between; 
-      gap: 20px; 
-      flex-wrap: wrap; 
-    }
-    .footer-left {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .footer-email p, .footer-copyright p { 
-      margin: 0; 
-      color: rgba(0,0,0,.75); 
-      font-size: 15px; 
-    }
-    .footer-email a {
-      color: inherit;
-      text-decoration: none;
-      border-bottom: 1px dotted rgba(0,0,0,.3);
-    }
-    .footer-email a:hover {
-      border-bottom-style: solid;
-    }
-    .footer-social-links { 
-      display:flex; 
-      gap: 16px; 
-    }
-    .footer-social-link {
-      padding: 8px 16px;
-      background: rgba(255,255,255,.7);
-      border: 1px solid rgba(0,0,0,.1);
-      border-radius: 6px;
-      text-decoration: none;
-      color: inherit;
-      font-size: 14px;
-      transition: all 200ms ease;
-    }
-    .footer-social-link:hover {
-      background: rgba(255,255,255,.9);
-      transform: translateY(-2px);
-    }
-    .footer-social-icon { width: 26px; height:26px; }
 
     .content {
       max-width: 1400px;
@@ -777,10 +670,205 @@
       .hero-section {
         min-height: 60vh;
       }
+      .media-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .media-grid img {
+        height: 200px;
+      }
+    }
+
+    /* Navbar styles */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(245, 232, 210, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      padding: 16px 24px;
+      z-index: 100;
+      opacity: 0;
+      transform: translateY(-100%);
+      transition: opacity 600ms ease, transform 600ms ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .navbar.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .navbar-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--fg);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .navbar-social {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .navbar-social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      border-radius: 50%;
+      padding: 8px;
+      transition: all 200ms ease;
+      text-decoration: none;
+    }
+    .navbar-social a:hover {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: rgba(0, 0, 0, 0.22);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,.1);
+    }
+    .navbar-social img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: brightness(0);
+    }
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 12px 16px;
+      }
+      .navbar-logo {
+        font-size: 18px;
+      }
+      .navbar-social a { width: 36px; height: 36px; }
+    }
+
+    /* Footer styles */
+    .footer {
+      background: rgba(245, 232, 210, 0.7);
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+      padding: 40px 24px;
+      margin-top: 80px;
+      margin-right: 0;
+      margin-left: calc(-50vw + 50%);
+      margin-bottom: 0;
+      width: 100vw; /* full-bleed */
+      opacity: 0;
+      transform: translateY(12px);
+      filter: blur(2px);
+      transition: opacity 600ms ease, transform 600ms ease, filter 600ms ease;
+    }
+    .site.show .footer {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 32px;
+    }
+    .footer-section h4 {
+      margin: 0 0 16px;
+      font-size: 18px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.9);
+    }
+    .footer-section p {
+      margin: 8px 0;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .footer-section a {
+      color: rgba(0, 0, 0, 0.75);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(0, 0, 0, 0.3);
+      transition: all 200ms ease;
+    }
+    .footer-section a:hover {
+      border-bottom-style: solid;
+      color: rgba(0, 0, 0, 0.9);
+    }
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .footer-social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 50%;
+      padding: 8px;
+    }
+    .footer-social a:hover {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .footer-social img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: brightness(0);
+    }
+    .footer-bottom {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      text-align: center;
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 14px;
+    }
+    @media (max-width: 768px) {
+      .footer {
+        padding: 32px 16px;
+        margin-top: 60px;
+      }
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar" aria-label="Main navigation">
+    <div class="navbar-content">
+      <a href="#about" class="navbar-logo">Stella Xulin</a>
+      <div class="navbar-social">
+        <a href="mailto:stellashengjia@gmail.com" aria-label="Email">
+          <img src="media/logos/email.webp" alt="Email">
+        </a>
+        <a href="tel:+19597772389" aria-label="Phone">
+          <img src="media/logos/phone.png" alt="Phone">
+        </a>
+        <a href="#" aria-label="LinkedIn">
+          <img src="media/logos/linkedin.png" alt="LinkedIn">
+        </a>
+      </div>
+    </div>
+  </nav>
+
   <div class="stage">
     <div class="rail-wrap" aria-label="Word selector animation" role="region">
       <div class="indicator" aria-hidden="true"></div>
@@ -791,49 +879,32 @@
     </div>
 
     <main id="site" class="site" aria-hidden="true">
-      <nav class="navbar" aria-label="Primary">
-        <div class="nav-inner">
-          <div class="brand">Stella Xulin</div>
-          <div class="nav-icons">
-            <a href="mailto:stellashengjia@gmail.com" class="nav-icon" aria-label="Email">
+      <!-- Cox site structure adapted to cream theme -->
+      <section class="hero-section" aria-label="Hero">
+        <div class="hero-slideshow">
+          <div class="hero-slide active" style="background-image:url('media/farmingtonmusic/music1.jpg')"></div>
+          <div class="hero-slide" style="background-image:url('media/farmingtonmusic/music2.jpg')"></div>
+          <div class="hero-slide" style="background-image:url('media/farmingtonmusic/music3.jpg')"></div>
+          <div class="hero-slide" style="background-image:url('media/farmingtonmusic/music4.jpg')"></div>
+          <div class="hero-slide" style="background-image:url('media/farmingtonmusic/music5.jpg')"></div>
+        </div>
+        <div class="hero-content">
+          <h1>Stella Xulin</h1>
+          <div class="hero-icons">
+            <a href="mailto:stellashengjia@gmail.com" class="hero-icon" aria-label="Email">
               <img src="media/logos/email.webp" alt="Email">
             </a>
-            <a href="tel:+19597772389" class="nav-icon" aria-label="Phone">
+            <a href="tel:+19597772389" class="hero-icon" aria-label="Phone">
               <img src="media/logos/phone.png" alt="Phone">
             </a>
-            <a href="#" class="nav-icon" aria-label="LinkedIn">
+            <a href="#" class="hero-icon" aria-label="LinkedIn">
               <img src="media/logos/linkedin.png" alt="LinkedIn">
             </a>
           </div>
         </div>
-      </nav>
+      </section>
 
       <div class="content">
-        <!-- Cox site structure adapted to cream theme -->
-        <section class="hero-section" aria-label="Hero">
-          <div class="hero-slideshow">
-            <div class="hero-slide active" style="background-image:url('media/farmingtonmusic/music1.jpg')"></div>
-            <div class="hero-slide" style="background-image:url('media/farmingtonmusic/music2.jpg')"></div>
-            <div class="hero-slide" style="background-image:url('media/farmingtonmusic/music3.jpg')"></div>
-            <div class="hero-slide" style="background-image:url('media/farmingtonmusic/music4.jpg')"></div>
-            <div class="hero-slide" style="background-image:url('media/farmingtonmusic/music5.jpg')"></div>
-          </div>
-          <div class="hero-content">
-            <h1>Stella Xulin</h1>
-            <div class="hero-icons">
-              <a href="mailto:stellashengjia@gmail.com" class="hero-icon" aria-label="Email">
-                <img src="media/logos/email.webp" alt="Email">
-              </a>
-              <a href="tel:+19597772389" class="hero-icon" aria-label="Phone">
-                <img src="media/logos/phone.png" alt="Phone">
-              </a>
-              <a href="#" class="hero-icon" aria-label="LinkedIn">
-                <img src="media/logos/linkedin.png" alt="LinkedIn">
-              </a>
-            </div>
-          </div>
-        </section>
-
         <section class="content-section" id="about">
           <h2 class="underlined">About</h2>
           <div class="about-content">
@@ -917,21 +988,19 @@
         </section>
 
         <section class="content-section" id="leadership">
-          <h2 class="underlined">Leadership & Extracurricular</h2>
+          <h2 class="underlined">Engineering and Robotics</h2>
+          <div class="media-grid">
+            <img src="media/firstrobotics/1.jpg" alt="FIRST Robotics photo 1" class="gallery-image">
+            <img src="media/firstrobotics/2.jpg" alt="FIRST Robotics photo 2" class="gallery-image">
+            <img src="media/firstrobotics/3.jpg" alt="FIRST Robotics photo 3" class="gallery-image">
+            <img src="media/firstrobotics/4.jpg" alt="FIRST Robotics photo 4" class="gallery-image">
+          </div>
           <div class="entry">
             <h3>FIRST Robotics Team & LEGO League — Discipline leader, FLL Mentor, Pit Representative</h3>
             <div class="meta">Farmington, Connecticut • Oct 2023 – Present</div>
             <ul class="bullets">
               <li>Mentored students ages 9–14 through FLL seasons; taught elementary engineering classes.</li>
               <li>Led robot design/CAD, field elements, outreach, autonomous navigation, and sensor integration.</li>
-            </ul>
-          </div>
-          <div class="entry">
-            <h3>Farmington Music Students Association & Scholars in Sound — Founder, President, Concerts Director, Solo Pianist</h3>
-            <div class="meta">Apr 2023 – May 2025</div>
-            <ul class="bullets">
-              <li>Arranged large‑scale concert opportunities for 60+ student musicians; partnered with senior homes and hospitals.</li>
-              <li>Created AI-driven music videos blending art, technology, and culture to enhance global healthcare collaboration.</li>
             </ul>
           </div>
         </section>
@@ -943,7 +1012,14 @@
             <img src="media/farmingtonmusic/music2.jpg" alt="Music photo 2" class="gallery-image" data-index="1">
             <img src="media/farmingtonmusic/music3.jpg" alt="Music photo 3" class="gallery-image" data-index="2">
             <img src="media/farmingtonmusic/music4.jpg" alt="Music photo 4" class="gallery-image" data-index="3">
-            <img src="media/farmingtonmusic/music5.jpg" alt="Music photo 5" class="gallery-image" data-index="4">
+          </div>
+          <div class="entry">
+            <h3>Farmington Music Students Association & Scholars in Sound — Founder, President, Concerts Director, Solo Pianist</h3>
+            <div class="meta">Apr 2023 – May 2025</div>
+            <ul class="bullets">
+              <li>Arranged large‑scale concert opportunities for 60+ student musicians; partnered with senior homes and hospitals.</li>
+              <li>Created AI-driven music videos blending art, technology, and culture to enhance global healthcare collaboration.</li>
+            </ul>
           </div>
         </section>
 
@@ -964,20 +1040,33 @@
         </section>
       </div>
 
-      <footer class="site-footer">
+      <!-- Footer -->
+      <footer class="footer">
         <div class="footer-content">
-          <div class="footer-left">
-            <div class="footer-email">
-              <p>Contact: <a href="mailto:stellashengjia@gmail.com">stellashengjia@gmail.com</a></p>
-            </div>
-            <div class="footer-copyright">
-              <p>© Shengjia Xulin <span id="currentYear"></span></p>
+          <div class="footer-section">
+            <h4>Contact</h4>
+            <p>
+              <a href="mailto:stellashengjia@gmail.com">stellashengjia@gmail.com</a>
+            </p>
+            <p>
+              <a href="tel:+19597772389">+1 (959) 777-2389</a>
+            </p>
+            <div class="footer-social">
+              <a href="mailto:stellashengjia@gmail.com" aria-label="Email">
+                <img src="media/logos/email.webp" alt="Email">
+              </a>
+              <a href="tel:+19597772389" aria-label="Phone">
+                <img src="media/logos/phone.png" alt="Phone">
+              </a>
+              <a href="#" aria-label="LinkedIn">
+                <img src="media/logos/linkedin.png" alt="LinkedIn">
+              </a>
             </div>
           </div>
-          <div class="footer-social-links">
-            <a href="tel:+19597772389" class="footer-social-link">Phone</a>
-            <a href="mailto:stellashengjia@gmail.com" class="footer-social-link">Email</a>
-          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Stella Xulin. All rights reserved.</p>
+          <p><a href="https://charlierusso.dev/" target="_blank" rel="noopener noreferrer">Designed by Charles Russo</a></p>
         </div>
       </footer>
     </main>
@@ -998,6 +1087,27 @@
       // Prevent scrolling and ensure page starts at top
       window.scrollTo(0, 0);
       document.documentElement.classList.add('animating');
+      
+      // Prevent all scrolling during animation
+      const preventScroll = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      };
+      
+      // Block scroll events
+      window.addEventListener('scroll', preventScroll, { passive: false });
+      window.addEventListener('wheel', preventScroll, { passive: false });
+      window.addEventListener('touchmove', preventScroll, { passive: false });
+      document.addEventListener('scroll', preventScroll, { passive: false });
+      
+      // Function to re-enable scrolling
+      const enableScrolling = () => {
+        window.removeEventListener('scroll', preventScroll);
+        window.removeEventListener('wheel', preventScroll);
+        window.removeEventListener('touchmove', preventScroll);
+        document.removeEventListener('scroll', preventScroll);
+      };
       
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const track = document.getElementById('track');
@@ -1035,8 +1145,13 @@
         track.appendChild(end);
         site.classList.add('show');
         site.removeAttribute('aria-hidden');
+        const navbar = document.getElementById('navbar');
+        if (navbar) {
+          navbar.classList.add('show');
+        }
         live.textContent = 'Welcome!';
         document.documentElement.classList.remove('animating');
+        enableScrolling();
         return;
       }
 
@@ -1128,8 +1243,14 @@
                 stage.classList.add('site-mode');
                 site.classList.add('show');
                 site.removeAttribute('aria-hidden');
+                // Show navbar
+                const navbar = document.getElementById('navbar');
+                if (navbar) {
+                  navbar.classList.add('show');
+                }
                 // Re-enable scrolling after animation completes
                 document.documentElement.classList.remove('animating');
+                enableScrolling();
               }, 1000);
             };
             rail.addEventListener('transitionend', onShrinkDone, { once: true });
@@ -1174,9 +1295,6 @@
         }, 5000);
       }
 
-      // Footer year
-      const y = document.getElementById('currentYear');
-      if (y) y.textContent = new Date().getFullYear();
     })();
   </script>
   <script>
@@ -1264,6 +1382,89 @@
           showNext();
         }
       });
+    })();
+  </script>
+  <script>
+    // Navbar smooth scrolling and active link highlighting
+    (function() {
+      const navbar = document.getElementById('navbar');
+      if (!navbar) return;
+      
+      const navLinks = navbar.querySelectorAll('.navbar-links a');
+      const logoLink = navbar.querySelector('.navbar-logo');
+      const sections = document.querySelectorAll('section[id]');
+      
+      // Smooth scroll function
+      function smoothScrollTo(targetId) {
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+          const offsetTop = targetSection.getBoundingClientRect().top + window.pageYOffset - 80; // Account for navbar height
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      }
+      
+      // Smooth scroll for navbar links
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href.startsWith('#')) {
+            e.preventDefault();
+            const targetId = href.substring(1);
+            smoothScrollTo(targetId);
+          }
+        });
+      });
+      
+      // Smooth scroll for logo
+      if (logoLink) {
+        logoLink.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href.startsWith('#')) {
+            e.preventDefault();
+            const targetId = href.substring(1);
+            smoothScrollTo(targetId);
+          }
+        });
+      }
+      
+      // Update active link on scroll
+      function updateActiveLink() {
+        let current = '';
+        const scrollPos = window.pageYOffset + 100; // Offset for navbar
+        
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+          if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+            current = section.getAttribute('id');
+          }
+        });
+        
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('active');
+          }
+        });
+      }
+      
+      // Throttle scroll event
+      let ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            updateActiveLink();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+      
+      // Initial update
+      updateActiveLink();
     })();
   </script>
 </body>
