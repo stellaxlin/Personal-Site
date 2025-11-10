@@ -226,6 +226,13 @@
       color: rgba(0,0,0,.9);
       line-height: 1.3;
     }
+    .entry h4 {
+      margin: 16px 0 8px;
+      font-size: 18px;
+      font-weight: 600;
+      color: rgba(0,0,0,.85);
+      line-height: 1.3;
+    }
     .meta { 
       font-size: 15px; 
       color: rgba(0,0,0,.65); 
@@ -415,6 +422,54 @@
       font-size: 17px; 
       line-height: 1.7; 
       margin: 0 0 16px;
+    }
+
+    /* Podcast content layout */
+    .podcast-content {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .podcast-image {
+      flex: 1 1 300px;
+      min-width: 250px;
+    }
+    .podcast-image img {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid rgba(0,0,0,.1);
+      box-shadow: 0 4px 16px rgba(0,0,0,.1);
+      transition: transform 300ms ease;
+    }
+    .podcast-image img:hover {
+      transform: scale(1.02);
+    }
+    .podcast-text {
+      flex: 2 1 400px;
+    }
+    .podcast-text h3 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      font-weight: 600;
+      color: rgba(0,0,0,.9);
+      line-height: 1.3;
+    }
+    .podcast-text p {
+      color: rgba(0,0,0,.85);
+      font-size: 17px;
+      line-height: 1.7;
+      margin: 0 0 16px;
+    }
+    @media (max-width: 768px) {
+      .podcast-content {
+        flex-direction: column;
+      }
+      .podcast-image {
+        flex: 1 1 auto;
+        width: 100%;
+      }
     }
     .about-contact {
       display: flex;
@@ -928,8 +983,20 @@
           </div>
         </section>
 
+        <section class="content-section" id="writing">
+          <h2 class="underlined">Writing</h2>
+          <div class="entry">
+            <p>I love the feeling of a pen between my fingers, its smooth body resting against my skin, ink staining faintly, a deep blue that lingers after I have written too long.</p>
+            <p>When I was one, during ZhuaZhou—a tradition where a child's first grasp predicts her destiny—I reached for a black Parker pen instead of the spoon, cookie, or silk dress before me. Each night beneath the yellow lamp, my mother read poems aloud. I traced the rhythm of her voice with my finger as if I could hold its shape. Sometimes she placed her pen in my hand, and I learned how a single stroke could hold emotion. Those were my first stories: camellias in rain, the scent of paper and tea, the hush of a courtyard that never stopped listening.</p>
+            <p>Then we moved across the ocean. For the first time, I dropped the pen. English bent oddly in my mouth. My handwriting tilted. My words felt fragile and uncertain. I stayed quiet, watching others speak with ease.</p>
+            <p>Then I began again. My first sentences wobbled, half in English, half in Chinese. They were not perfect, but they were mine. I filled notebooks with fragments, thoughts between classes, lines written before sleep, tiny worlds forming in ink. Each word felt like a step closer to home. At the kitchen table, I practiced pronunciation with my sister, turning film into flim, receipt into recipe, laughing until our stomachs hurt. Sometimes we translated old Chinese poems, our voices blending softly, half Mandarin, half English, fully ours.</p>
+            <p>Slowly, I learned to write again. Through language, I found a new beginning. I wrote letters, reflections, and essays, then I found poetry. Poetry taught me to listen, to pause between words, to let silence speak. Now I write to remember and to connect, to keep alive the two worlds that shaped me: the courtyard in China where I first held a pen, and the quiet corners in America where I learned to speak again. Ink still stains my fingers. And I continue to write.</p>
+            <p><a href="https://docs.google.com/document/d/1pWpMRCJFzL3EeT8vPMb4ChEiiDj9X__cu-8pbFWY_-Y/edit?usp=sharing" target="_blank" rel="noopener noreferrer">View my writing portfolio →</a></p>
+          </div>
+        </section>
+
         <section class="content-section" id="education">
-          <h2 class="underlined">Education</h2>
+          <h2 class="underlined">Education & Academics</h2>
           <div class="entry">
             <h3>Farmington High School</h3>
             <div class="meta">Farmington, Connecticut • Aug 2020 – Jun 2026</div>
@@ -946,48 +1013,57 @@
             </ul>
           </div>
           <div class="entry">
-            <h3>Yale Young Global Scholars — IST Program</h3>
-            <div class="meta">Certificate</div>
+            <h3>Yale Young Global Scholars — Innovation in Science & Technology</h3>
+            <div class="meta">Summer 2024</div>
+            <p>Explored interdisciplinary STEM fields including physics, molecular biology, chemistry, engineering, and neuroscience through lectures, labs, and collaborative projects that emphasized inquiry and real-world application.</p>
+            <h4>Capstone: Computer Science</h4>
+            <p>Developed an AI-powered personalized learning platform that integrates educational psychology and adaptive algorithms to enhance engagement and academic growth.</p>
+            <h4>Seminars & Lectures</h4>
             <ul class="bullets">
-              <li>Innovations in Science & Technology (IST)</li>
+              <li><strong>Introduction to Microelectronics</strong> (Ivan Huang) — Studied semiconductor physics and circuit analysis with a focus on diodes, transistors, MOSFETs, and amplifiers while bridging theory with practical design</li>
+              <li><strong>Model Fitting: Forecasting Extreme Weather</strong> (Mashiko Lortkipanidze) — Applied Bayesian statistical modeling and data analysis to understand climate change through the prediction of extreme weather events</li>
+              <li><strong>The Crooked Line Between the Finite and the Infinite</strong> (Benjamin Grant) — Explored geometric reflections and symmetry using algebraic tools such as Coxeter groups and diagrams to classify mirror configurations</li>
+              <li><strong>Image Making in the Age of AI</strong> (Nahom Seyoum) — Analyzed how AI and computer technologies influence modern image-making, ethics, and artistic expression</li>
+              <li><strong>Observing Star and Planet Formation</strong> (Hector Arce) — Studied star and planet formation using multiwavelength observation and modern astronomical instruments</li>
+              <li><strong>Nutrition, Food Practices, and Equity</strong> (Erica Watson) — Examined how race, culture, and access shape nutrition, health, and food systems with a focus on social equity</li>
+              <li><strong>Musical Intervention in Medicine</strong> (Tom Duffy) — Explored how music-based training helps medical students identify body sounds, blending art and anatomy in diagnostic education</li>
+              <li><strong>The Scientific Method in Everyday Life</strong> (David Hillier) — Investigated how the scientific method can be applied across professions and daily life to improve understanding of the world</li>
             </ul>
+            <h4>Symposium: CubeSat</h4>
+            <p>Built and programmed CubeSat prototypes using Arduino sensors to collect environmental data and simulate real-world space research.</p>
+            <p><a href="https://docs.google.com/presentation/d/1wirvCMcuOJWpMmvlMGc0b8yncAp-eQ5d/edit?usp=sharing&ouid=110452420028554407544&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer">View Capstone Presentation →</a></p>
           </div>
           <div class="entry">
-            <h3>Barnard College — Pre-College Program</h3>
-            <div class="meta">New York City, New York</div>
+            <h3>Barnard College — NextGen Leadership Institute, STEMinist Track</h3>
+            <div class="meta">New York City, New York • Summer 2024</div>
+            <p>Participated in a three-week program in New York City exploring leadership through a feminist lens. In the STEMinist track, examined the role of women in science and technology while developing leadership, problem-solving, and communication skills through workshops and mentorship from the Athena Center for Leadership. Gained insight into how inclusive innovation and equity shape the future of STEM.</p>
+            <p>Also participated in "The Exploration of Space" program, further expanding interdisciplinary learning.</p>
+          </div>
+        </section>
+
+        <section class="content-section" id="research">
+          <h2 class="underlined">Research</h2>
+          <div class="entry">
+            <h3>Yale School of Medicine, Yan Lab — Research Assistant</h3>
+            <div class="meta">New Haven, Connecticut • Jun 2025 – Aug 2025</div>
+            <p>At the Yan Lab in the Yale School of Medicine's Department of Pathology, I studied the function of Endogenous Retroviruses (ERVs), ancient viral sequences often considered "junk DNA." My project focused on reactivating these ERVs through precise epigenetic editing to better understand their role in cancer and immunity.</p>
+            <p>I constructed the lab's central molecular tool, a dCas9-KDM4D fusion protein designed to remove repressive H3K9me3 histone marks from ERV loci. I designed primers, performed PCR-based molecular cloning, and successfully assembled the lentiviral plasmid carrying our editor. After delivering the construct into target cells, I validated its expression through Western blot analysis.</p>
+            <p>This validated construct became the foundation for the lab's large-scale study on ERV function, enabling new exploration into how ERV reactivation may influence tumor biology and immune responses. I concluded my research by presenting my methods and results at a formal Yan Lab meeting at Yale.</p>
+            <p><strong>Research Impact:</strong> The successful construction and validation of the dCas9-KDM4D epigenetic editor enable the lab to study ERV activation with unprecedented precision. This tool provides a framework for exploring how epigenetic regulation of viral elements shapes the tumor microenvironment and immune signaling, potentially informing new therapeutic strategies that harness the body's immune system to recognize and eliminate tumor cells.</p>
+            <p><a href="https://medicine.yale.edu/lab/yan/research/" target="_blank" rel="noopener noreferrer">Learn more about the Yan Lab →</a></p>
+          </div>
+          <div class="entry">
+            <h3>University of Hartford, Civil Engineering — Research Assistant</h3>
+            <div class="meta">Hartford, Connecticut • Jun 2025 – Sep 2025</div>
             <ul class="bullets">
-              <li>NextGen Leadership Institute (STEMinist Track); The Exploration of Space</li>
+              <li>Developing an app to standardize concrete roughness estimation</li>
+              <li>Designed CAD models, built a mechanical shaking board, and ran tuning tests</li>
+              <li>Explored sustainable uses of FRP, including seawater concrete and bio-based materials</li>
             </ul>
           </div>
         </section>
 
-        <section class="content-section" id="experience">
-          <h2 class="underlined">Professional Experience</h2>
-          <div class="content-grid">
-            <div class="content-card">
-              <div class="ph">Image</div>
-              <h3>University of Hartford, Civil Engineering — Research Assistant</h3>
-              <div class="meta">Hartford, Connecticut • Jun 2025 – Sep 2025</div>
-              <ul class="bullets">
-                <li>Developing an app to standardize concrete roughness estimation.</li>
-                <li>Designed CAD models, built a mechanical shaking board, and ran tuning tests.</li>
-                <li>Explored sustainable uses of FRP, including seawater concrete and bio-based materials.</li>
-              </ul>
-            </div>
-            <div class="content-card">
-              <div class="ph">Image</div>
-              <h3>Yale School of Medicine, Yan Lab — Lab Intern, Research Assistant</h3>
-              <div class="meta">New Haven, Connecticut • Jun 2025 – Aug 2025</div>
-              <ul class="bullets">
-                <li>Built a Cas9‑KDM4D fusion to epigenetically reactivate ERVs (remove H3K9me3).</li>
-                <li>Designed primers, performed PCR cloning, and assembled lentiviral plasmids.</li>
-                <li>Delivered a tool for a large‑scale functional screen and presented results.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section class="content-section" id="leadership">
+        <section class="content-section" id="robotics">
           <h2 class="underlined">Engineering and Robotics</h2>
           <div class="media-grid">
             <img src="media/firstrobotics/1.jpg" alt="FIRST Robotics photo 1" class="gallery-image">
@@ -996,17 +1072,57 @@
             <img src="media/firstrobotics/4.jpg" alt="FIRST Robotics photo 4" class="gallery-image">
           </div>
           <div class="entry">
-            <h3>FIRST Robotics Team & LEGO League — Discipline leader, FLL Mentor, Pit Representative</h3>
+            <h3>FIRST Robotics Team — Team Lead</h3>
             <div class="meta">Farmington, Connecticut • Oct 2023 – Present</div>
-            <ul class="bullets">
-              <li>Mentored students ages 9–14 through FLL seasons; taught elementary engineering classes.</li>
-              <li>Led robot design/CAD, field elements, outreach, autonomous navigation, and sensor integration.</li>
-            </ul>
+            <p>As the selected team lead of a 60+ member robotics program, I oversee mechanical design, strategy, and outreach across competition seasons. I lead efforts in robot design, CAD modeling, field element construction, autonomous navigation, and sensor integration.</p>
+            <p>Under my leadership, our team increased female membership by 50% and earned multiple honors, including the Team Sustainability Award and Gracious Professionalism Award at both state and regional levels in 2024 and 2025.</p>
+            <p><em>Fun fact: I designed the team logo and team shirt.</em></p>
+          </div>
+          <div class="entry">
+            <h2 class="underlined" style="font-size: clamp(24px, 3.5vw, 36px); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid rgba(0,0,0,.08);">Outreach Programs</h2>
+            <p>Beyond the lab, I am an active outreach leader helping expand access to STEAM education across Connecticut. Through interactive programs and partnerships, I work with students of all ages to make science, technology, and creativity approachable, inspiring, and fun.</p>
+          </div>
+          <div class="entry">
+            <h3>FIRST LEGO League Mentorship</h3>
+            <div class="meta">Ages 9–14</div>
+            <div class="media-grid" style="margin-top: 16px; margin-bottom: 16px;">
+              <img src="media/outreach/FIRST-LEGO-League-Mentorship/1.png" alt="FIRST LEGO League Mentorship 1" class="gallery-image">
+              <img src="media/outreach/FIRST-LEGO-League-Mentorship/2.png" alt="FIRST LEGO League Mentorship 2" class="gallery-image">
+            </div>
+            <p>Within the FIRST LEGO League (FLL) branch of outreach, I mentor students through full 14-session seasons. I teach coding, design thinking, and collaboration while guiding teams through research and robot challenges. I also teach introductory engineering classes at local elementary schools, helping young students discover confidence and joy through STEM.</p>
+          </div>
+          <div class="entry">
+            <h3>Rockin' Robotics</h3>
+            <p>Through Rockin' Robotics, I engage young learners in hands-on STEAM workshops that combine engineering and imagination. Working with library programs in Farmington and West Hartford, our sessions have grown from three to five each year, reaching more than 270 students through activities that make science come alive.</p>
+          </div>
+          <div class="entry">
+            <h3>STEAM Day</h3>
+            <div class="media-grid" style="margin-top: 16px; margin-bottom: 16px;">
+              <img src="media/outreach/STEAM-Day/1.png" alt="STEAM Day 1" class="gallery-image">
+              <img src="media/outreach/STEAM-Day/2.png" alt="STEAM Day 2" class="gallery-image">
+            </div>
+            <p>During STEAM Day events, I help bring full-day, schoolwide programs to local elementary schools. Each rotation of activities allows students to explore topics like circuitry, motion, and design in a playful setting. These events transform classrooms into creative labs, giving every child a chance to build, experiment, and learn.</p>
+          </div>
+          <div class="entry">
+            <h3>Farmington Valley Robotics Expo</h3>
+            <div class="media-grid" style="margin-top: 16px; margin-bottom: 16px;">
+              <img src="media/outreach/Farmington-Valley-Robotics-Expo/1.png" alt="Farmington Valley Robotics Expo 1" class="gallery-image">
+              <img src="media/outreach/Farmington-Valley-Robotics-Expo/2.png" alt="Farmington Valley Robotics Expo 2" class="gallery-image">
+              <img src="media/outreach/Farmington-Valley-Robotics-Expo/3.png" alt="Farmington Valley Robotics Expo 3" class="gallery-image">
+            </div>
+            <p>I participate in organizing and leading the Farmington Valley Robotics Expo, a celebration of local FIRST programs that unites FLL, FTC, and FRC teams. Over the past three years, this outreach has mentored 29 Explore and 8 Discover teams, reaching more than 270 students across five towns. The Expo showcases student-built robots, hosts demonstrations, and highlights how teamwork and innovation connect all levels of robotics.</p>
+          </div>
+          <div class="entry">
+            <h3>Central Connecticut Robotics Alliance</h3>
+            <p>As part of the Central Connecticut Robotics Alliance, I collaborate with partner teams to host Gold Tournaments that raise funds for a shared robotics community space. This partnership strengthens the regional network of teams and supports long-term access to training and competition resources.</p>
           </div>
         </section>
 
         <section class="content-section" id="music">
           <h2 class="underlined">Music</h2>
+          <div class="entry">
+            <p>Music has been part of my life since I was six, when the piano first became a place of calm and discovery. From Schubert's Impromptu No. 4, Op. 90 to the Chinese classic Liangzhu, I've found meaning in both the elegance of Western composition and the emotion of traditional Chinese storytelling. I have performed in numerous school music programs and community concerts, and I enjoy tutoring younger students, helping them build a strong foundation and love for piano. As a member of The Hartford Music Teachers Alliance, I continue to grow as a pianist and performer, recently earning first place and a gold medal in the HMTA Rising Pianists Competition with the highest score in the high school division.</p>
+          </div>
           <div class="media-grid">
             <img src="media/farmingtonmusic/music1.jpg" alt="Music photo 1" class="gallery-image" data-index="0">
             <img src="media/farmingtonmusic/music2.jpg" alt="Music photo 2" class="gallery-image" data-index="1">
@@ -1014,12 +1130,49 @@
             <img src="media/farmingtonmusic/music4.jpg" alt="Music photo 4" class="gallery-image" data-index="3">
           </div>
           <div class="entry">
-            <h3>Farmington Music Students Association & Scholars in Sound — Founder, President, Concerts Director, Solo Pianist</h3>
-            <div class="meta">Apr 2023 – May 2025</div>
-            <ul class="bullets">
-              <li>Arranged large‑scale concert opportunities for 60+ student musicians; partnered with senior homes and hospitals.</li>
-              <li>Created AI-driven music videos blending art, technology, and culture to enhance global healthcare collaboration.</li>
-            </ul>
+            <h3>Farmington Music Students Association</h3>
+            <div class="meta">Founder, President, Concerts Director • Apr 2023 – May 2025</div>
+            <p>What began as a personal passion soon grew into something larger. I founded the Farmington Music Students Association to share the joy of music beyond the stage. Our group grew quickly, bringing live performances to schools, hospitals, and retirement homes. Each concert reminds me that music can heal, connect, and bring light to those who need it most.</p>
+            <p><strong>Impact:</strong> 60+ members, 400+ residents with disabilities reached</p>
+            <p><a href="https://www.instagram.com/fmsa.scholarsinsound" target="_blank" rel="noopener noreferrer">Follow FMSA on Instagram →</a></p>
+          </div>
+          <div class="entry">
+            <h3>Scholars in Sound</h3>
+            <p>Curiosity led me to explore the harmony between music and science. Through Scholars in Sound, I examine the therapeutic power of music and how technology can amplify its reach. Our team publishes student-written articles, curates performance videos in collaboration with artists from Vancouver, China, Australia, Spain, and Korea, and develops AI-generated compositions and playlists crafted to comfort and inspire.</p>
+            <p>We also interview seniors about how music has shaped their lives, gathering stories of memory, emotion, and connection that guide our creative process. This expanding interdisciplinary library serves as a source of solace for patients while uniting art, technology, and healing. Our student-coded AI further empowers elders to engage with the digital world through the universal language of music.</p>
+            <p><a href="https://docs.google.com/document/d/1Yi-Avb_hucaOss3bw5kBfwQSv_5jnWQkmsImsHrEKQc/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Read our articles →</a></p>
+            <p><a href="https://youtube.com/@farmingtonmsa" target="_blank" rel="noopener noreferrer">View our playlist →</a></p>
+          </div>
+        </section>
+
+        <section class="content-section" id="cheerleading">
+          <h2 class="underlined">Cheerleading</h2>
+          <div class="media-grid">
+            <img src="media/cheer/1.png" alt="Cheerleading photo 1" class="gallery-image">
+            <img src="media/cheer/2.png" alt="Cheerleading photo 2" class="gallery-image">
+            <img src="media/cheer/3.png" alt="Cheerleading photo 3" class="gallery-image">
+            <img src="media/cheer/4.png" alt="Cheerleading photo 4" class="gallery-image">
+          </div>
+          <div class="entry">
+            <p>"Let's get fired up and show 'em what you got!"</p>
+            <p>That chant still echoes in my head every time I step onto the mat. Cheer taught me strength in balance and grace under pressure. From long practices to championship floors, it became more than a sport; it became a language of trust and precision.</p>
+            <p>As a four-time All-Academic athlete, Most Improved awardee, and CCC nominee, I have grown as both a performer and a leader. I have coached elementary, middle school, and unified teams, and helped our squad to earn the first CCC championship in school history.</p>
+          </div>
+        </section>
+
+        <section class="content-section" id="art-podcast">
+          <h2 class="underlined">Art & Podcast</h2>
+          <div class="podcast-content">
+            <div class="podcast-image">
+              <img src="media/podcast/1.png" alt="S.H.E. Podcast">
+            </div>
+            <div class="podcast-text">
+              <h3>Art</h3>
+              <p>My creative expression extends beyond writing and music into visual art, including drawings and digital media. I enjoy exploring different mediums and techniques to bring ideas to life through visual storytelling.</p>
+              <h3>S.H.E. Podcast</h3>
+              <p>I host S.H.E., a podcast where science meets storytelling and women's voices take center stage. Through conversations with inspiring women in STEM, we explore the intersections of science, identity, and personal narrative.</p>
+              <p><a href="https://drive.google.com/file/d/1iduv_XEvnRGOK4OapC-deP2guIpzKKmY/view?usp=sharing" target="_blank" rel="noopener noreferrer">Listen to S.H.E. Podcast →</a></p>
+            </div>
           </div>
         </section>
 
