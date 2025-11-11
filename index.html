@@ -7,6 +7,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+  <script type="module">
+    import { animate, svg, stagger } from 'https://cdn.jsdelivr.net/npm/animejs@4.0.0/+esm';
+    window.animejs = { animate, svg, stagger };
+  </script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/animejs@4.0.0/lib/anime.min.js"></script>
   <style>
     :root {
       --bg: #0a0a0a; /* dark black */
@@ -20,6 +25,7 @@
       --word-gap: 56px;
       --word-size: 72px; /* bigger words for tall slot */
       --speed: 190; /* px/sec base speed */
+      --navbar-height: 70px; /* navbar height for positioning content */
     }
 
     html {
@@ -77,12 +83,13 @@
       place-items: start center;
       min-height: auto;
       padding: 0;
-      padding-top: 80px; /* Account for fixed navbar */
     }
 
     /* When showing site content, return it to normal flow */
     .stage.site-mode .site {
       position: static;
+      margin-top: 0;
+      padding-top: 0;
     }
 
     /* Rail wrapper with arrow indicator */
@@ -197,6 +204,8 @@
       transform: translateY(0);
       filter: blur(0);
       pointer-events: auto;
+      margin-top: 0;
+      top: 0;
     }
 
     .site h1 {
@@ -312,18 +321,29 @@
     /* Hero section layout */
     .hero-section {
       position: relative;
-      min-height: 75vh;
+      min-height: 88vh; /* 1.1x of 80vh */
       display: grid;
       place-items: center;
-      overflow: hidden;
+      overflow: visible; /* allow overlap with semicircle */
       border-radius: 0;
       border: none;
       border-bottom: 1px solid rgba(255,255,255,.15);
       background: var(--bg);
       box-shadow: 0 4px 20px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.1);
-      margin: 0 0 24px 0;
+      margin: 0;
+      margin-top: 0;
+      margin-bottom: -100px; /* overlap more with semicircle */
       width: 100vw;
       margin-left: calc(-50vw + 50%);
+    }
+    /* Ensure hero section starts right below fixed navbar with no gap */
+    .site.show .hero-section {
+      margin-top: 0;
+    }
+    /* For section pages, ensure content starts right below navbar with no gap */
+    .site.show > .content:first-child {
+      margin-top: 0;
+      padding-top: 0;
     }
     .hero-slideshow { position:absolute; inset:0; }
     .hero-slide {
@@ -339,11 +359,18 @@
       background: linear-gradient(to bottom, rgba(10,10,10,0.40), rgba(10,10,10,0.78));
     }
     .hero-content { 
-      position: relative; 
+      position: absolute; 
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       z-index: 1; 
       text-align: center; 
-      padding: 60px 24px; 
+      padding: 0 24px; 
       max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 80px; /* 2x margin with SVG */
     }
     .hero-section h1 {
       margin: 0 0 16px; 
@@ -353,6 +380,39 @@
       font-weight: 700;
       letter-spacing: -0.02em;
       line-height: 1.1;
+    }
+    /* Calligraphy SVG container */
+    .calligraphy-container {
+      margin: 0; /* spacing handled by parent flexbox gap */
+      display: inline-block;
+      width: 100%;
+      max-width: 4800px; /* bigger bounds to prevent cutoff with scale(4) */
+      height: auto;
+      transform: scale(4); /* 2x the previous scale(2) */
+      transform-origin: center top;
+      overflow: visible; /* allow overflow to prevent cutoff */
+      padding: 20px; /* extra padding to prevent edge cutoff */
+      position: relative;
+    }
+    .calligraphy-container svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,.8)) drop-shadow(0 2px 6px rgba(0,0,0,.6));
+      overflow: visible;
+    }
+    .calligraphy-container svg path,
+    .calligraphy-container svg polyline,
+    .calligraphy-container svg line,
+    .calligraphy-container svg circle,
+    .calligraphy-container svg rect,
+    .calligraphy-container svg ellipse,
+    .calligraphy-container svg polygon {
+      stroke: #fffef7; /* white with slight egg/warm tint */
+      fill: none; /* no fill, outline only */
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
     .hero-content p {
       font-size: clamp(16px, 2vw, 20px);
@@ -389,11 +449,11 @@
     .semicircle-separator {
       position: relative;
       width: 100%;
-      height: 100px;
+      height: 120px;
       background: var(--bg);
       overflow: visible;
-      margin-top: -30px;
-      z-index: 2;
+      margin-top: 160px; /* offset */
+      z-index: 1; /* below About section */
     }
     .semicircle-separator::before {
       content: '';
@@ -401,13 +461,13 @@
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 120%;
-      height: 200px;
+      width: 150%; /* bigger radius */
+      height: 300px; /* bigger radius */
       background: var(--content-bg);
       border-radius: 50% 50% 0 0 / 100% 100% 0 0;
     }
 
-    .content-section { 
+    .content-section {
       margin-top: 56px; 
       padding: 0; 
       max-width: none;
@@ -418,7 +478,8 @@
       z-index: 1;
     }
     .content-section:first-of-type {
-      margin-top: 20px;
+      margin-top: -120px; /* moved up more to be closer to semicircle */
+      z-index: 3; /* above semicircle */
     }
     .content-section h2 {
       font-size: clamp(26px, 4vw, 42px);
@@ -429,6 +490,12 @@
       padding-bottom: 12px;
       border-bottom: 2px solid rgba(255,255,255,.15);
     }
+    /* Remove border for alternating sections */
+    .alternating-section + .content-section h2,
+    .content-section .alternating-section ~ h2 {
+      border: none;
+      padding: 0;
+    }
 
     .about-content { 
       display:flex; 
@@ -438,8 +505,8 @@
       margin-top: 20px;
     }
     .about-image { 
-      flex: 1 1 192px; /* 60% of 320px */
-      min-width: 156px; /* 60% of 260px */
+      flex: 1 1 128px; /* smaller size */
+      min-width: 104px; /* smaller min-width */
     }
     .about-image img { 
       width: 100%; 
@@ -553,7 +620,7 @@
       display: flex;
       gap: 16px;
       justify-content: center;
-      margin-top: 20px;
+      margin-top: 0; /* spacing handled by parent flexbox gap */
     }
     .hero-icon {
       display: inline-flex;
@@ -595,59 +662,74 @@
     .cta-button:hover { background: rgba(40, 40, 40, 0.95); }
     .cta-icon { width: 18px; height:18px; }
 
-    .content-grid {
-      display:grid; 
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-      gap: 24px; 
-      margin-top: 20px;
+    /* Alternating layout for home page sections */
+    .alternating-section {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      margin: 48px 0;
+      flex-wrap: wrap;
     }
-    .content-card { 
-      background: rgba(20, 20, 20, 0.7); 
-      border: 1px solid rgba(255,255,255,.1); 
-      border-radius: 14px; 
-      padding: 20px; 
-      box-shadow: 0 2px 8px rgba(0,0,0,.06);
-      transition: transform 300ms ease, box-shadow 300ms ease;
+    .alternating-section.reverse {
+      flex-direction: row-reverse;
     }
-    .content-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    .alternating-section .section-image {
+      flex: 1 1 400px;
+      min-width: 300px;
     }
-    .content-card img { 
-      width:100%; 
-      height: 220px; 
-      object-fit: cover; 
-      border-radius: 10px; 
-      margin-bottom: 16px; 
-      background: #1a1a1a; 
+    .alternating-section .section-image img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.1);
     }
-    .content-card .ph { 
-      height: 220px; 
-      background: rgba(255,255,255,.08); 
-      border:1px solid rgba(255,255,255,.15); 
-      border-radius:10px; 
-      display:grid; 
-      place-items:center; 
-      color: rgba(255,255,255,.5); 
-      margin-bottom: 16px; 
-      font-size: 14px;
+    .alternating-section .section-content {
+      flex: 1 1 400px;
+      min-width: 300px;
     }
-    .content-card h3 { 
-      font-size: 20px; 
-      margin: 0 0 10px; 
-      font-weight: 600;
-      line-height: 1.3;
+    .alternating-section h2 {
+      font-size: clamp(36px, 5vw, 56px);
+      margin: 0 0 20px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--content-fg);
+      border: none;
+      padding: 0;
     }
-    .content-card h3 a { 
-      color: inherit; 
-      text-decoration: none; 
-      border-bottom: 1px dotted rgba(255,255,255,.4);
+    .alternating-section h2 a {
+      color: inherit;
+      text-decoration: none;
+      transition: opacity 200ms ease;
     }
-    .content-card h3 a:hover {
-      border-bottom-style: solid;
+    .alternating-section h2 a:hover {
+      opacity: 0.8;
     }
-    .content-card .meta {
-      margin-bottom: 12px;
+    .alternating-section .section-description {
+      font-size: 18px;
+      line-height: 1.7;
+      color: rgba(0,0,0,.75);
+      margin: 0 0 24px;
+    }
+    .alternating-section .section-link {
+      display: inline-block;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 16px;
+      transition: color 200ms ease;
+    }
+    .alternating-section .section-link:hover {
+      color: #1d4ed8;
+    }
+    @media (max-width: 768px) {
+      .alternating-section {
+        flex-direction: column !important;
+        gap: 32px;
+      }
+      .alternating-section .section-image img {
+        height: 300px;
+      }
     }
 
     /* About placeholders */
@@ -660,7 +742,7 @@
       width: 100%;
       background: var(--content-bg);
       color: var(--content-fg);
-      padding: 40px 24px;
+      padding: 0 24px 40px 24px; /* no top padding */
       border-radius: 0;
       margin: 0 auto;
       max-width: none;
@@ -958,7 +1040,7 @@
       align-items: center;
     }
     .navbar-logo {
-      font-size: 20px;
+      font-size: 26px; /* 20px * 1.3 */
       font-weight: 700;
       color: var(--fg);
       text-decoration: none;
@@ -975,7 +1057,7 @@
     .navbar-links a {
       color: var(--fg);
       text-decoration: none;
-      font-size: 16px;
+      font-size: 20.8px; /* 16px * 1.3 */
       font-weight: 500;
       padding: 8px 0;
       border-bottom: 2px solid transparent;
@@ -1024,13 +1106,13 @@
         padding: 12px 16px;
       }
       .navbar-logo {
-        font-size: 18px;
+        font-size: 23.4px; /* 18px * 1.3 */
       }
       .navbar-links {
         gap: 16px;
       }
       .navbar-links a {
-        font-size: 14px;
+        font-size: 18.2px; /* 14px * 1.3 */
       }
       .navbar-social a { width: 36px; height: 36px; }
     }
@@ -1138,9 +1220,11 @@
     <div class="navbar-content">
       <a href="#about" class="navbar-logo">Stella Xulin</a>
       <ul class="navbar-links">
+        <li><a href="/">Home</a></li>
         <li><a href="/music">Music</a></li>
         <li><a href="/research">Research</a></li>
         <li><a href="/education">Education</a></li>
+        <li><a href="/writing">Writing</a></li>
         <li><a href="/cheerleading">Cheerleading</a></li>
         <li><a href="/art-podcast">Art</a></li>
       </ul>
@@ -1151,7 +1235,7 @@
         <a href="tel:+19597772389" aria-label="Phone">
           <img src="media/logos/phone.png" alt="Phone">
         </a>
-        <a href="#" aria-label="LinkedIn">
+        <a href="https://www.linkedin.com/in/stella-xulin-2a299932a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
           <img src="media/logos/linkedin.png" alt="LinkedIn">
         </a>
       </div>
@@ -1178,17 +1262,8 @@
           <div class="hero-slide" style="background-image:url('media/farmingtonmusic/music5.jpg')"></div>
         </div>
         <div class="hero-content">
-          <h1>Stella Xulin</h1>
-          <div class="hero-icons">
-            <a href="mailto:stellashengjia@gmail.com" class="hero-icon" aria-label="Email">
-              <img src="media/logos/email.webp" alt="Email">
-            </a>
-            <a href="tel:+19597772389" class="hero-icon" aria-label="Phone">
-              <img src="media/logos/phone.png" alt="Phone">
-            </a>
-            <a href="#" class="hero-icon" aria-label="LinkedIn">
-              <img src="media/logos/linkedin.png" alt="LinkedIn">
-            </a>
+          <div class="calligraphy-container" id="calligraphy-container">
+            <!-- SVG will be loaded here -->
           </div>
         </div>
       </section>
@@ -1212,7 +1287,7 @@
                 <a href="tel:+19597772389" class="contact-icon phone" aria-label="Phone">
                   <img src="media/logos/phone.png" alt="Phone">
                 </a>
-                <a href="#" class="contact-icon linkedin" aria-label="LinkedIn">
+                <a href="https://www.linkedin.com/in/stella-xulin-2a299932a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" class="contact-icon linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
                   <img src="media/logos/linkedin.png" alt="LinkedIn">
                 </a>
               </div>
@@ -1221,213 +1296,96 @@
         </section>
 
         <section class="content-section" id="writing">
-          <h2 class="underlined">Writing</h2>
-          <div class="entry">
-            <p>I love the feeling of a pen between my fingers, its smooth body resting against my skin, ink staining faintly, a deep blue that lingers after I have written too long.</p>
-            <p>When I was one, during ZhuaZhou—a tradition where a child's first grasp predicts her destiny—I reached for a black Parker pen instead of the spoon, cookie, or silk dress before me. Each night beneath the yellow lamp, my mother read poems aloud. I traced the rhythm of her voice with my finger as if I could hold its shape. Sometimes she placed her pen in my hand, and I learned how a single stroke could hold emotion. Those were my first stories: camellias in rain, the scent of paper and tea, the hush of a courtyard that never stopped listening.</p>
-            <p>Then we moved across the ocean. For the first time, I dropped the pen. English bent oddly in my mouth. My handwriting tilted. My words felt fragile and uncertain. I stayed quiet, watching others speak with ease.</p>
-            <p>Then I began again. My first sentences wobbled, half in English, half in Chinese. They were not perfect, but they were mine. I filled notebooks with fragments, thoughts between classes, lines written before sleep, tiny worlds forming in ink. Each word felt like a step closer to home. At the kitchen table, I practiced pronunciation with my sister, turning film into flim, receipt into recipe, laughing until our stomachs hurt. Sometimes we translated old Chinese poems, our voices blending softly, half Mandarin, half English, fully ours.</p>
-            <p>Slowly, I learned to write again. Through language, I found a new beginning. I wrote letters, reflections, and essays, then I found poetry. Poetry taught me to listen, to pause between words, to let silence speak. Now I write to remember and to connect, to keep alive the two worlds that shaped me: the courtyard in China where I first held a pen, and the quiet corners in America where I learned to speak again. Ink still stains my fingers. And I continue to write.</p>
-            <p><a href="https://docs.google.com/document/d/1pWpMRCJFzL3EeT8vPMb4ChEiiDj9X__cu-8pbFWY_-Y/edit?usp=sharing" target="_blank" rel="noopener noreferrer">View my writing portfolio →</a></p>
+          <div class="alternating-section">
+            <div class="section-content">
+              <h2><a href="/writing">Writing</a></h2>
+              <p class="section-description">I write to remember and to connect, keeping alive the two worlds that shaped me.</p>
+              <a href="/writing" class="section-link">Read more →</a>
+            </div>
+            <div class="section-image">
+              <img src="media/text.svg" alt="Writing" style="object-fit: contain; background: rgba(0,0,0,.02);">
+            </div>
           </div>
         </section>
 
         <section class="content-section" id="education">
-          <h2 class="underlined">Education & Academics</h2>
-          <div class="entry">
-            <h3>Farmington High School</h3>
-            <div class="meta">Farmington, Connecticut • Aug 2020 – Jun 2026</div>
-            <ul class="bullets">
-              <li>GPA 97.5% • SAT 800 Math, 730 English</li>
-              <li>Honors include National Recognition Program, AP Scholar with Distinction, Scholastic Art & Writing Awards, FIRST Team Sustainability Award, All‑Academic Athlete, CT COLT Award, Mu Alpha Theta</li>
-            </ul>
-          </div>
-          <div class="entry">
-            <h3>Kenyon College — Kenyon Review Young Writers Workshops</h3>
-            <div class="meta">Gambier, Ohio</div>
-            <ul class="bullets">
-              <li>Creative Writing concentration: nonfiction, memoir, and poetry</li>
-            </ul>
-          </div>
-          <div class="entry">
-            <h3>Yale Young Global Scholars — Innovation in Science & Technology</h3>
-            <div class="meta">Summer 2024</div>
-            <p>Explored interdisciplinary STEM fields including physics, molecular biology, chemistry, engineering, and neuroscience through lectures, labs, and collaborative projects that emphasized inquiry and real-world application.</p>
-            <h4>Capstone: Computer Science</h4>
-            <p>Developed an AI-powered personalized learning platform that integrates educational psychology and adaptive algorithms to enhance engagement and academic growth.</p>
-            <h4>Seminars & Lectures</h4>
-            <ul class="bullets">
-              <li><strong>Introduction to Microelectronics</strong> (Ivan Huang) — Studied semiconductor physics and circuit analysis with a focus on diodes, transistors, MOSFETs, and amplifiers while bridging theory with practical design</li>
-              <li><strong>Model Fitting: Forecasting Extreme Weather</strong> (Mashiko Lortkipanidze) — Applied Bayesian statistical modeling and data analysis to understand climate change through the prediction of extreme weather events</li>
-              <li><strong>The Crooked Line Between the Finite and the Infinite</strong> (Benjamin Grant) — Explored geometric reflections and symmetry using algebraic tools such as Coxeter groups and diagrams to classify mirror configurations</li>
-              <li><strong>Image Making in the Age of AI</strong> (Nahom Seyoum) — Analyzed how AI and computer technologies influence modern image-making, ethics, and artistic expression</li>
-              <li><strong>Observing Star and Planet Formation</strong> (Hector Arce) — Studied star and planet formation using multiwavelength observation and modern astronomical instruments</li>
-              <li><strong>Nutrition, Food Practices, and Equity</strong> (Erica Watson) — Examined how race, culture, and access shape nutrition, health, and food systems with a focus on social equity</li>
-              <li><strong>Musical Intervention in Medicine</strong> (Tom Duffy) — Explored how music-based training helps medical students identify body sounds, blending art and anatomy in diagnostic education</li>
-              <li><strong>The Scientific Method in Everyday Life</strong> (David Hillier) — Investigated how the scientific method can be applied across professions and daily life to improve understanding of the world</li>
-            </ul>
-            <h4>Symposium: CubeSat</h4>
-            <p>Built and programmed CubeSat prototypes using Arduino sensors to collect environmental data and simulate real-world space research.</p>
-            <p><a href="https://docs.google.com/presentation/d/1wirvCMcuOJWpMmvlMGc0b8yncAp-eQ5d/edit?usp=sharing&ouid=110452420028554407544&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer">View Capstone Presentation →</a></p>
-          </div>
-          <div class="entry">
-            <h3>Barnard College — NextGen Leadership Institute, STEMinist Track</h3>
-            <div class="meta">New York City, New York • Summer 2024</div>
-            <p>Participated in a three-week program in New York City exploring leadership through a feminist lens. In the STEMinist track, examined the role of women in science and technology while developing leadership, problem-solving, and communication skills through workshops and mentorship from the Athena Center for Leadership. Gained insight into how inclusive innovation and equity shape the future of STEM.</p>
-            <p>Also participated in "The Exploration of Space" program, further expanding interdisciplinary learning.</p>
+          <div class="alternating-section reverse">
+            <div class="section-content">
+              <h2><a href="/education">Education & Academics</a></h2>
+              <p class="section-description">Farmington High School • GPA 97.5% • SAT 800 Math, 730 English. Programs include Yale Young Global Scholars, Barnard College NextGen Leadership Institute, and Kenyon Review Young Writers Workshops.</p>
+              <a href="/education" class="section-link">Learn more →</a>
+            </div>
+            <div class="section-image">
+              <img src="media/yale/yale.jpg" alt="Education" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'height:400px; background:rgba(0,0,0,.03); border-radius:12px; display:grid; place-items:center; color:rgba(0,0,0,.5);\'>Education</div>';">
+            </div>
           </div>
         </section>
 
         <section class="content-section" id="research">
-          <h2 class="underlined">Research</h2>
-          <div class="entry">
-            <h3>Yale School of Medicine, Yan Lab — Research Assistant</h3>
-            <div class="meta">New Haven, Connecticut • Jun 2025 – Aug 2025</div>
-            <p>At the Yan Lab in the Yale School of Medicine's Department of Pathology, I studied the function of Endogenous Retroviruses (ERVs), ancient viral sequences often considered "junk DNA." My project focused on reactivating these ERVs through precise epigenetic editing to better understand their role in cancer and immunity.</p>
-            <p>I constructed the lab's central molecular tool, a dCas9-KDM4D fusion protein designed to remove repressive H3K9me3 histone marks from ERV loci. I designed primers, performed PCR-based molecular cloning, and successfully assembled the lentiviral plasmid carrying our editor. After delivering the construct into target cells, I validated its expression through Western blot analysis.</p>
-            <p>This validated construct became the foundation for the lab's large-scale study on ERV function, enabling new exploration into how ERV reactivation may influence tumor biology and immune responses. I concluded my research by presenting my methods and results at a formal Yan Lab meeting at Yale.</p>
-            <p><strong>Research Impact:</strong> The successful construction and validation of the dCas9-KDM4D epigenetic editor enable the lab to study ERV activation with unprecedented precision. This tool provides a framework for exploring how epigenetic regulation of viral elements shapes the tumor microenvironment and immune signaling, potentially informing new therapeutic strategies that harness the body's immune system to recognize and eliminate tumor cells.</p>
-            <p><a href="https://medicine.yale.edu/lab/yan/research/" target="_blank" rel="noopener noreferrer">Learn more about the Yan Lab →</a></p>
-          </div>
-          <div class="entry">
-            <h3>University of Hartford, Civil Engineering — Research Assistant</h3>
-            <div class="meta">Hartford, Connecticut • Jun 2025 – Sep 2025</div>
-            <ul class="bullets">
-              <li>Developing an app to standardize concrete roughness estimation</li>
-              <li>Designed CAD models, built a mechanical shaking board, and ran tuning tests</li>
-              <li>Explored sustainable uses of FRP, including seawater concrete and bio-based materials</li>
-            </ul>
+          <div class="alternating-section">
+            <div class="section-content">
+              <h2><a href="/research">Research</a></h2>
+              <p class="section-description">Conducted research at Yale School of Medicine's Yan Lab studying epigenetic editing, and at University of Hartford developing sustainable concrete solutions.</p>
+              <a href="/research" class="section-link">Learn more →</a>
+            </div>
+            <div class="section-image">
+              <img src="media/yaleresearch/research.jpg" alt="Research" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'height:400px; background:rgba(0,0,0,.03); border-radius:12px; display:grid; place-items:center; color:rgba(0,0,0,.5);\'>Research</div>';">
+            </div>
           </div>
         </section>
 
         <section class="content-section" id="robotics">
-          <h2 class="underlined">Engineering and Robotics</h2>
-          <div class="media-grid">
-            <img src="media/firstrobotics/1.jpg" alt="FIRST Robotics photo 1" class="gallery-image">
-            <img src="media/firstrobotics/2.jpg" alt="FIRST Robotics photo 2" class="gallery-image">
-            <img src="media/firstrobotics/3.jpg" alt="FIRST Robotics photo 3" class="gallery-image">
-            <img src="media/firstrobotics/4.jpg" alt="FIRST Robotics photo 4" class="gallery-image">
-          </div>
-          <div class="entry">
-            <h3>FIRST Robotics Team — Team Lead</h3>
-            <div class="meta">Farmington, Connecticut • Oct 2023 – Present</div>
-            <p>As the selected team lead of a 60+ member robotics program, I oversee mechanical design, strategy, and outreach across competition seasons. I lead efforts in robot design, CAD modeling, field element construction, autonomous navigation, and sensor integration.</p>
-            <p>Under my leadership, our team increased female membership by 50% and earned multiple honors, including the Team Sustainability Award and Gracious Professionalism Award at both state and regional levels in 2024 and 2025.</p>
-            <p><em>Fun fact: I designed the team logo and team shirt.</em></p>
-          </div>
-          <div class="entry">
-            <h2 class="underlined" style="font-size: clamp(24px, 3.5vw, 36px); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid rgba(0,0,0,.15);">Outreach Programs</h2>
-            <p>Beyond the lab, I am an active outreach leader helping expand access to STEAM education across Connecticut. Through interactive programs and partnerships, I work with students of all ages to make science, technology, and creativity approachable, inspiring, and fun.</p>
-          </div>
-          <div class="entry">
-            <h3>FIRST LEGO League Mentorship</h3>
-            <div class="meta">Ages 9–14</div>
-            <div class="media-grid" style="margin-top: 16px; margin-bottom: 16px;">
-              <img src="media/outreach/FIRST-LEGO-League-Mentorship/1.png" alt="FIRST LEGO League Mentorship 1" class="gallery-image">
-              <img src="media/outreach/FIRST-LEGO-League-Mentorship/2.png" alt="FIRST LEGO League Mentorship 2" class="gallery-image">
+          <div class="alternating-section reverse">
+            <div class="section-content">
+              <h2><a href="/robotics">Engineering and Robotics</a></h2>
+              <p class="section-description">Team Lead of a 60+ member FIRST Robotics program. Increased female membership by 50% and earned Team Sustainability and Gracious Professionalism Awards.</p>
+              <a href="/robotics" class="section-link">Learn more →</a>
             </div>
-            <p>Within the FIRST LEGO League (FLL) branch of outreach, I mentor students through full 14-session seasons. I teach coding, design thinking, and collaboration while guiding teams through research and robot challenges. I also teach introductory engineering classes at local elementary schools, helping young students discover confidence and joy through STEM.</p>
-          </div>
-          <div class="entry">
-            <h3>Rockin' Robotics</h3>
-            <p>Through Rockin' Robotics, I engage young learners in hands-on STEAM workshops that combine engineering and imagination. Working with library programs in Farmington and West Hartford, our sessions have grown from three to five each year, reaching more than 270 students through activities that make science come alive.</p>
-          </div>
-          <div class="entry">
-            <h3>STEAM Day</h3>
-            <div class="media-grid" style="margin-top: 16px; margin-bottom: 16px;">
-              <img src="media/outreach/STEAM-Day/1.png" alt="STEAM Day 1" class="gallery-image">
-              <img src="media/outreach/STEAM-Day/2.png" alt="STEAM Day 2" class="gallery-image">
+            <div class="section-image">
+              <img src="media/firstrobotics/1.jpg" alt="FIRST Robotics">
             </div>
-            <p>During STEAM Day events, I help bring full-day, schoolwide programs to local elementary schools. Each rotation of activities allows students to explore topics like circuitry, motion, and design in a playful setting. These events transform classrooms into creative labs, giving every child a chance to build, experiment, and learn.</p>
-          </div>
-          <div class="entry">
-            <h3>Farmington Valley Robotics Expo</h3>
-            <div class="media-grid" style="margin-top: 16px; margin-bottom: 16px;">
-              <img src="media/outreach/Farmington-Valley-Robotics-Expo/1.png" alt="Farmington Valley Robotics Expo 1" class="gallery-image">
-              <img src="media/outreach/Farmington-Valley-Robotics-Expo/2.png" alt="Farmington Valley Robotics Expo 2" class="gallery-image">
-              <img src="media/outreach/Farmington-Valley-Robotics-Expo/3.png" alt="Farmington Valley Robotics Expo 3" class="gallery-image">
-            </div>
-            <p>I participate in organizing and leading the Farmington Valley Robotics Expo, a celebration of local FIRST programs that unites FLL, FTC, and FRC teams. Over the past three years, this outreach has mentored 29 Explore and 8 Discover teams, reaching more than 270 students across five towns. The Expo showcases student-built robots, hosts demonstrations, and highlights how teamwork and innovation connect all levels of robotics.</p>
-          </div>
-          <div class="entry">
-            <h3>Central Connecticut Robotics Alliance</h3>
-            <p>As part of the Central Connecticut Robotics Alliance, I collaborate with partner teams to host Gold Tournaments that raise funds for a shared robotics community space. This partnership strengthens the regional network of teams and supports long-term access to training and competition resources.</p>
           </div>
         </section>
 
         <section class="content-section" id="music">
-          <h2 class="underlined">Music</h2>
-          <div class="entry">
-            <p>Music has been part of my life since I was six, when the piano first became a place of calm and discovery. From Schubert's Impromptu No. 4, Op. 90 to the Chinese classic Liangzhu, I've found meaning in both the elegance of Western composition and the emotion of traditional Chinese storytelling. I have performed in numerous school music programs and community concerts, and I enjoy tutoring younger students, helping them build a strong foundation and love for piano. As a member of The Hartford Music Teachers Alliance, I continue to grow as a pianist and performer, recently earning first place and a gold medal in the HMTA Rising Pianists Competition with the highest score in the high school division.</p>
-          </div>
-          <div class="media-grid">
-            <img src="media/farmingtonmusic/music1.jpg" alt="Music photo 1" class="gallery-image" data-index="0">
-            <img src="media/farmingtonmusic/music2.jpg" alt="Music photo 2" class="gallery-image" data-index="1">
-            <img src="media/farmingtonmusic/music3.jpg" alt="Music photo 3" class="gallery-image" data-index="2">
-            <img src="media/farmingtonmusic/music4.jpg" alt="Music photo 4" class="gallery-image" data-index="3">
-          </div>
-          <div class="entry">
-            <h3>Farmington Music Students Association</h3>
-            <div class="meta">Founder, President, Concerts Director • Apr 2023 – May 2025</div>
-            <p>What began as a personal passion soon grew into something larger. I founded the Farmington Music Students Association to share the joy of music beyond the stage. Our group grew quickly, bringing live performances to schools, hospitals, and retirement homes. Each concert reminds me that music can heal, connect, and bring light to those who need it most.</p>
-            <p><strong>Impact:</strong> 60+ members, 400+ residents with disabilities reached</p>
-            <p><a href="https://www.instagram.com/fmsa.scholarsinsound" target="_blank" rel="noopener noreferrer">Follow FMSA on Instagram →</a></p>
-          </div>
-          <div class="entry">
-            <h3>Scholars in Sound</h3>
-            <p>Curiosity led me to explore the harmony between music and science. Through Scholars in Sound, I examine the therapeutic power of music and how technology can amplify its reach. Our team publishes student-written articles, curates performance videos in collaboration with artists from Vancouver, China, Australia, Spain, and Korea, and develops AI-generated compositions and playlists crafted to comfort and inspire.</p>
-            <p>We also interview seniors about how music has shaped their lives, gathering stories of memory, emotion, and connection that guide our creative process. This expanding interdisciplinary library serves as a source of solace for patients while uniting art, technology, and healing. Our student-coded AI further empowers elders to engage with the digital world through the universal language of music.</p>
-            <p><a href="https://docs.google.com/document/d/1Yi-Avb_hucaOss3bw5kBfwQSv_5jnWQkmsImsHrEKQc/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Read our articles →</a></p>
-            <p><a href="https://youtube.com/@farmingtonmsa" target="_blank" rel="noopener noreferrer">View our playlist →</a></p>
+          <div class="alternating-section">
+            <div class="section-content">
+              <h2><a href="/music">Music</a></h2>
+              <p class="section-description">Pianist and performer with first place in HMTA Rising Pianists Competition. Founder and President of Farmington Music Students Association, organizing concerts for 60+ musicians.</p>
+              <a href="/music" class="section-link">Learn more →</a>
+            </div>
+            <div class="section-image">
+              <img src="media/farmingtonmusic/music1.jpg" alt="Music">
+            </div>
           </div>
         </section>
 
         <section class="content-section" id="cheerleading">
-          <h2 class="underlined">Cheerleading</h2>
-          <div class="media-grid">
-            <img src="media/cheer/1.png" alt="Cheerleading photo 1" class="gallery-image">
-            <img src="media/cheer/2.png" alt="Cheerleading photo 2" class="gallery-image">
-            <img src="media/cheer/3.png" alt="Cheerleading photo 3" class="gallery-image">
-            <img src="media/cheer/4.png" alt="Cheerleading photo 4" class="gallery-image">
-          </div>
-          <div class="entry">
-            <p>"Let's get fired up and show 'em what you got!"</p>
-            <p>That chant still echoes in my head every time I step onto the mat. Cheer taught me strength in balance and grace under pressure. From long practices to championship floors, it became more than a sport; it became a language of trust and precision.</p>
-            <p>As a four-time All-Academic athlete, Most Improved awardee, and CCC nominee, I have grown as both a performer and a leader. I have coached elementary, middle school, and unified teams, and helped our squad to earn the first CCC championship in school history.</p>
+          <div class="alternating-section reverse">
+            <div class="section-content">
+              <h2><a href="/cheerleading">Cheerleading</a></h2>
+              <p class="section-description">Four-time All-Academic athlete and CCC nominee. Coached elementary, middle school, and unified teams, helping earn the first CCC championship in school history.</p>
+              <a href="/cheerleading" class="section-link">Learn more →</a>
+            </div>
+            <div class="section-image">
+              <img src="media/cheer/1.png" alt="Cheerleading">
+            </div>
           </div>
         </section>
 
         <section class="content-section" id="art-podcast">
-          <h2 class="underlined">Art & Podcast</h2>
-          <div class="podcast-content">
-            <div class="podcast-image">
-              <img src="media/podcast/1.png" alt="S.H.E. Podcast">
+          <div class="alternating-section">
+            <div class="section-content">
+              <h2><a href="/art-podcast">Art & Podcast</a></h2>
+              <p class="section-description">Visual artist exploring drawings and digital media. Host of S.H.E. podcast, featuring conversations with inspiring women in STEM.</p>
+              <a href="/art-podcast" class="section-link">Learn more →</a>
             </div>
-            <div class="podcast-text">
-              <h3>Art</h3>
-              <p>My creative expression extends beyond writing and music into visual art, including drawings and digital media. I enjoy exploring different mediums and techniques to bring ideas to life through visual storytelling.</p>
-              <h3>S.H.E. Podcast</h3>
-              <p>I host S.H.E., a podcast where science meets storytelling and women's voices take center stage. Through conversations with inspiring women in STEM, we explore the intersections of science, identity, and personal narrative.</p>
-              <p><a href="https://drive.google.com/file/d/1iduv_XEvnRGOK4OapC-deP2guIpzKKmY/view?usp=sharing" target="_blank" rel="noopener noreferrer">Listen to S.H.E. Podcast →</a></p>
+            <div class="section-image">
+              <img src="media/podcast/1.png" alt="Art & Podcast">
             </div>
           </div>
         </section>
 
-        <section class="content-section" id="skills">
-          <h2 class="underlined">Skills, Languages, and Interests</h2>
-          <div class="entry">
-            <h3>Skills</h3>
-            <p>Microsoft Word (Introductory), Microsoft Excel (Proficient), Microsoft PowerPoint (Proficient), Python, Java</p>
-          </div>
-          <div class="entry">
-            <h3>Languages</h3>
-            <p>English (Fluent), Chinese (Fluent)</p>
-          </div>
-          <div class="entry">
-            <h3>Interests</h3>
-            <p>International Travel, Classical Piano, Horror & Zombie Movies, Chocolate Foods, Sunbathing, Grocery Shopping</p>
-          </div>
-        </section>
       </div>
 
       <!-- Footer -->
@@ -1507,26 +1465,39 @@
       const rail = document.querySelector('.rail');
       const stage = document.querySelector('.stage');
 
+      // Check if we should skip animation
+      const urlParams = new URLSearchParams(window.location.search);
+      const skipParam = urlParams.get('skip') || urlParams.get('skipAnimation');
+      
+      // Check if user came from another page (same origin, different path)
+      let cameFromAnotherPage = false;
+      if (document.referrer) {
+        try {
+          const referrerUrl = new URL(document.referrer);
+          const currentUrl = new URL(window.location.href);
+          // Skip if referrer is same origin but different pathname
+          cameFromAnotherPage = referrerUrl.origin === currentUrl.origin && 
+                                referrerUrl.pathname !== currentUrl.pathname &&
+                                referrerUrl.pathname !== '';
+        } catch (e) {
+          // If URL parsing fails, check if referrer is different from current
+          cameFromAnotherPage = document.referrer !== window.location.href && document.referrer !== '';
+        }
+      }
+      
+      const shouldSkipAnimation = prefersReduced || skipParam !== null || cameFromAnotherPage;
+
       const words = [
-        'innovative', 'music', 'cheer', 'robotics', 'design', 'build', 'learn',
-        'create', 'collaborate', 'curious', 'maker', 'engineer', 'compose',
-        'coach', 'lead', 'analyze', 'iterate', 'explore', 'dream', 'ship',
-        'craft', 'debug', 'perform', 'prototype', 'inspire', 'remix', 'refactor',
-        'optimize', 'tinker', 'vision', 'energy', 'harmony', 'rhythm', 'code', 'art',
-        'dance', 'play', 'spark', 'motion', 'growth', 'clarity', 'insight', 'balance',
-        'adventure', 'curiosity', 'craftsmanship', 'precision', 'innovation', 'synergy',
-        'momentum', 'focus', 'build', 'compose', 'iterate', 'strategy', 'systems', 'fusion',
-        'melody', 'tempo', 'cadence', 'logic', 'puzzle', 'pattern', 'structure', 'visionary',
-        'collage', 'palette', 'sprint', 'flow', 'vector', 'matrix', 'signal', 'sparkle',
-        'explore', 'discover', 'learn', 'iterate', 'prototype', 'deploy', 'optimize',
-        'tune', 'balance', 'focus', 'momentum', 'discipline', 'craft', 'refine',
-        'Welcome!', 'imagine', 'focus', 'grow', 'launch', 'connect'
+        'Creative', 'Confident', 'Adventurous', 'Driven', 'Cheerful', 'Collaborative', 'Dreamer', 'Enthusiastic', 'Curious', 'Courageous',
+        'Innovative', 'Passionate', 'Resilient', 'Inspiring', 'Thoughtful', 'Ambitious', 'Energetic', 'Focused', 'Disciplined', 'Determined',
+        'Welcome!', 'Creative', 'Confident', 'Adventurous', 'Driven', 'Cheerful', 'Collaborative', 'Dreamer', 'Enthusiastic', 'Curious', 'Courageous',
+        'Innovative', 'Passionate', 'Resilient', 'Inspiring', 'Thoughtful', 'Ambitious', 'Energetic', 'Focused', 'Disciplined', 'Determined'
       ];
 
       const targetWord = 'Welcome!';
       const durationMs = 4000; // faster landing
 
-      if (prefersReduced) {
+      if (shouldSkipAnimation) {
         // Skip animation: show final state immediately
         track.innerHTML = '';
         const end = document.createElement('span');
@@ -1855,6 +1826,139 @@
       
       // Initial update
       updateActiveLink();
+    })();
+  </script>
+  <script>
+    // Calligraphy animation for "Stella Xulin"
+    (function() {
+      const container = document.getElementById('calligraphy-container');
+      if (!container) return;
+      
+      // Load SVG and animate when site is shown
+      function initCalligraphy() {
+        fetch('media/text.svg')
+          .then(response => response.text())
+          .then(svgText => {
+            // Insert SVG into container
+            container.innerHTML = svgText;
+            
+            // Wait a bit for SVG to render
+            setTimeout(() => {
+              const svg = container.querySelector('svg');
+              if (!svg) return;
+              
+              // Get all drawable elements (paths, polylines, lines)
+              const drawableElements = svg.querySelectorAll('path, polyline, line');
+              
+              if (drawableElements.length === 0) return;
+              
+              // Use anime.js v4 createDrawable API
+              if (window.animejs && window.animejs.svg && window.animejs.svg.createDrawable) {
+                const { animate, svg: svgModule, stagger } = window.animejs;
+                
+                // Create drawable proxies for all paths
+                const drawables = [];
+                drawableElements.forEach(el => {
+                  const drawable = svgModule.createDrawable(el);
+                  if (drawable && drawable.length > 0) {
+                    drawables.push(drawable[0]);
+                  }
+                });
+                
+                if (drawables.length > 0) {
+                  // Animate the drawing
+                  animate(drawables, {
+                    draw: ['0 0', '0 1'],
+                    duration: 16000, /* 0.5x speed (2x slower) */
+                    delay: stagger(100),
+                    ease: 'inOutQuad'
+                  });
+                }
+              } else if (window.anime) {
+                // Fallback for older anime.js versions
+                const drawables = Array.from(drawableElements);
+                window.anime({
+                  targets: drawables,
+                  strokeDashoffset: [function(el) {
+                    return el.getTotalLength();
+                  }, 0],
+                  duration: 16000, /* 0.5x speed (2x slower) */
+                  delay: window.anime.stagger(100),
+                  easing: 'easeInOutQuad',
+                  begin: function(anim) {
+                    anim.animatables.forEach(animatable => {
+                      const el = animatable.target;
+                      const length = el.getTotalLength();
+                      el.style.strokeDasharray = length;
+                      el.style.strokeDashoffset = length;
+                    });
+                  }
+                });
+              } else {
+                // Final fallback: CSS animation
+                drawableElements.forEach((el, index) => {
+                  const pathLength = el.getTotalLength ? el.getTotalLength() : 100;
+                  el.style.strokeDasharray = pathLength;
+                  el.style.strokeDashoffset = pathLength;
+                  
+                  setTimeout(() => {
+                    el.style.transition = 'stroke-dashoffset 12s ease-in-out'; /* 0.5x speed (2x slower) */
+                    el.style.strokeDashoffset = 0;
+                  }, index * 100);
+                });
+              }
+            }, 100);
+          })
+          .catch(error => {
+            console.error('Error loading calligraphy SVG:', error);
+            // Fallback: show text if SVG fails to load
+            container.innerHTML = '<h1 style="margin: 0; color: var(--fg);">Stella Xulin</h1>';
+          });
+      }
+      
+      // Wait for site to be shown, then initialize
+      const site = document.getElementById('site');
+      if (site && site.classList.contains('show')) {
+        initCalligraphy();
+      } else {
+        // Watch for site to be shown
+        const observer = new MutationObserver((mutations) => {
+          if (site.classList.contains('show')) {
+            initCalligraphy();
+            observer.disconnect();
+          }
+        });
+        if (site) {
+          observer.observe(site, { attributes: true, attributeFilter: ['class'] });
+        }
+        // Also try after a delay in case observer doesn't catch it
+        setTimeout(initCalligraphy, 3000);
+      }
+    })();
+  </script>
+  <script>
+    // Update Home links to include skip parameter when navigating from other pages
+    (function() {
+      const homeLinks = document.querySelectorAll('a[href="/"], a[href="#about"]');
+      const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname.endsWith('/');
+      
+      homeLinks.forEach(link => {
+        // If we're on a section page, add skip parameter to home links
+        if (!isHomePage && link.getAttribute('href') === '/') {
+          link.setAttribute('href', '/?skip');
+        }
+        // If we're on home page and link points to #about, add skip parameter
+        if (isHomePage && link.getAttribute('href') === '#about') {
+          link.addEventListener('click', function(e) {
+            // If coming from another page, the referrer check will handle it
+            // But we can also add the parameter explicitly
+            if (document.referrer && document.referrer !== window.location.href) {
+              window.location.href = '/?skip#about';
+              e.preventDefault();
+            }
+          });
+        }
+      });
     })();
   </script>
 </body>

@@ -113,9 +113,10 @@ for section_key, section_info in sections.items():
     section_content = section_content.replace('style="background-image:url(\'media/', 'style="background-image:url(\'../media/')
     
     # Create navbar with navigation links for section pages
-    navbar_with_links = navbar_html.replace('href="#about"', 'href="../index.html"').replace('src="media/', 'src="../media/')
+    navbar_with_links = navbar_html.replace('href="#about"', 'href="../index.html?skip"').replace('src="media/', 'src="../media/')
     
     # Update navigation link paths to use relative paths
+    navbar_with_links = navbar_with_links.replace('href="/"', 'href="../index.html?skip"')  # Add skip parameter for Home
     navbar_with_links = navbar_with_links.replace('href="/music"', 'href="../music"')
     navbar_with_links = navbar_with_links.replace('href="/research"', 'href="../research"')
     navbar_with_links = navbar_with_links.replace('href="/education"', 'href="../education"')

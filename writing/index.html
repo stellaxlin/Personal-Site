@@ -20,6 +20,7 @@
       --word-gap: 56px;
       --word-size: 72px; /* bigger words for tall slot */
       --speed: 190; /* px/sec base speed */
+      --navbar-height: 70px; /* navbar height for positioning content */
     }
 
     html {
@@ -77,12 +78,13 @@
       place-items: start center;
       min-height: auto;
       padding: 0;
-      padding-top: 80px; /* Account for fixed navbar */
     }
 
     /* When showing site content, return it to normal flow */
     .stage.site-mode .site {
       position: static;
+      margin-top: 0;
+      padding-top: 0;
     }
 
     /* Rail wrapper with arrow indicator */
@@ -197,6 +199,8 @@
       transform: translateY(0);
       filter: blur(0);
       pointer-events: auto;
+      margin-top: 0;
+      top: 0;
     }
 
     .site h1 {
@@ -312,7 +316,7 @@
     /* Hero section layout */
     .hero-section {
       position: relative;
-      min-height: 75vh;
+      min-height: 90vh; /* taller vertically */
       display: grid;
       place-items: center;
       overflow: hidden;
@@ -321,9 +325,19 @@
       border-bottom: 1px solid rgba(255,255,255,.15);
       background: var(--bg);
       box-shadow: 0 4px 20px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.1);
-      margin: 0 0 24px 0;
+      margin: 0;
+      margin-top: 0;
       width: 100vw;
       margin-left: calc(-50vw + 50%);
+    }
+    /* Ensure hero section starts right below fixed navbar with no gap */
+    .site.show .hero-section {
+      margin-top: 0;
+    }
+    /* For section pages, ensure content starts right below navbar with no gap */
+    .site.show > .content:first-child {
+      margin-top: 0;
+      padding-top: 0;
     }
     .hero-slideshow { position:absolute; inset:0; }
     .hero-slide {
@@ -353,6 +367,35 @@
       font-weight: 700;
       letter-spacing: -0.02em;
       line-height: 1.1;
+    }
+    /* Calligraphy SVG container */
+    .calligraphy-container {
+      margin: 0 0 16px;
+      display: inline-block;
+      width: 100%;
+      max-width: 2400px; /* 2x the original 1200px to accommodate scale(2) */
+      height: auto;
+      transform: scale(2);
+      transform-origin: center top;
+    }
+    .calligraphy-container svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,.5));
+    }
+    .calligraphy-container svg path,
+    .calligraphy-container svg polyline,
+    .calligraphy-container svg line,
+    .calligraphy-container svg circle,
+    .calligraphy-container svg rect,
+    .calligraphy-container svg ellipse,
+    .calligraphy-container svg polygon {
+      stroke: var(--fg); /* white */
+      fill: var(--fg); /* white fill */
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
     .hero-content p {
       font-size: clamp(16px, 2vw, 20px);
@@ -389,11 +432,11 @@
     .semicircle-separator {
       position: relative;
       width: 100%;
-      height: 100px;
+      height: 120px;
       background: var(--bg);
       overflow: visible;
-      margin-top: -30px;
-      z-index: 2;
+      margin-top: 160px; /* offset */
+      z-index: 1; /* below About section */
     }
     .semicircle-separator::before {
       content: '';
@@ -401,14 +444,14 @@
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 120%;
-      height: 200px;
+      width: 150%; /* bigger radius */
+      height: 300px; /* bigger radius */
       background: var(--content-bg);
       border-radius: 50% 50% 0 0 / 100% 100% 0 0;
     }
 
     .content-section { 
-      margin-top: 56px; 
+      margin-top: 100px; /* Add margin for navbar */
       padding: 0; 
       max-width: none;
       margin-left: 0;
@@ -418,7 +461,8 @@
       z-index: 1;
     }
     .content-section:first-of-type {
-      margin-top: 20px;
+      margin-top: 100px; /* Add margin for navbar */
+      z-index: 3;
     }
     .content-section h2 {
       font-size: clamp(26px, 4vw, 42px);
@@ -438,8 +482,8 @@
       margin-top: 20px;
     }
     .about-image { 
-      flex: 1 1 192px; /* 60% of 320px */
-      min-width: 156px; /* 60% of 260px */
+      flex: 1 1 128px; /* smaller size */
+      min-width: 104px; /* smaller min-width */
     }
     .about-image img { 
       width: 100%; 
@@ -660,11 +704,12 @@
       width: 100%;
       background: var(--content-bg);
       color: var(--content-fg);
-      padding: 40px 24px;
+      padding: 0 24px 40px 24px;
       border-radius: 0;
       margin: 0 auto;
       max-width: none;
       box-sizing: border-box;
+      padding-top: 0; /* No top padding, margin handles spacing */
     }
     
     /* Content section styling - white background with black text */
@@ -958,7 +1003,7 @@
       align-items: center;
     }
     .navbar-logo {
-      font-size: 20px;
+      font-size: 26px; /* 20px * 1.3 */
       font-weight: 700;
       color: var(--fg);
       text-decoration: none;
@@ -975,7 +1020,7 @@
     .navbar-links a {
       color: var(--fg);
       text-decoration: none;
-      font-size: 16px;
+      font-size: 20.8px; /* 16px * 1.3 */
       font-weight: 500;
       padding: 8px 0;
       border-bottom: 2px solid transparent;
@@ -1024,13 +1069,13 @@
         padding: 12px 16px;
       }
       .navbar-logo {
-        font-size: 18px;
+        font-size: 23.4px; /* 18px * 1.3 */
       }
       .navbar-links {
         gap: 16px;
       }
       .navbar-links a {
-        font-size: 14px;
+        font-size: 18.2px; /* 14px * 1.3 */
       }
       .navbar-social a { width: 36px; height: 36px; }
     }
@@ -1137,11 +1182,13 @@
 
   <nav class="navbar" id="navbar" aria-label="Main navigation">
     <div class="navbar-content">
-      <a href="../index.html" class="navbar-logo">Stella Xulin</a>
+      <a href="../index.html?skip" class="navbar-logo">Stella Xulin</a>
       <ul class="navbar-links">
+        <li><a href="../index.html?skip">Home</a></li>
         <li><a href="../music">Music</a></li>
         <li><a href="../research">Research</a></li>
         <li><a href="../education">Education</a></li>
+        <li><a href="../writing">Writing</a></li>
         <li><a href="../cheerleading">Cheerleading</a></li>
         <li><a href="../art-podcast">Art</a></li>
       </ul>
@@ -1214,12 +1261,11 @@
           <p>&copy; 2025 Stella Xulin. All rights reserved.</p>
           <p><a href="https://charlierusso.dev/" target="_blank" rel="noopener noreferrer">Designed by Charles Russo</a></p>
         </div>
-      </footer
+      </footer>
     </main>
   </div>
 
   <!-- Lightbox Modal -->
-<!-- Lightbox Modal -->
   <div id="lightbox" class="lightbox">
     <span class="lightbox-close">&times;</span>
     <span class="lightbox-nav lightbox-prev">&#8249;</span>
@@ -1227,7 +1273,97 @@
     <div class="lightbox-content">
       <img id="lightbox-image" src="" alt="">
     </div>
+  </div>
 
+  <script>
+    // Lightbox functionality for gallery images
+    (function() {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImage = document.getElementById('lightbox-image');
+      const lightboxClose = document.querySelector('.lightbox-close');
+      const lightboxPrev = document.querySelector('.lightbox-prev');
+      const lightboxNext = document.querySelector('.lightbox-next');
+      const galleryImages = document.querySelectorAll('.gallery-image');
+      
+      let currentIndex = 0;
+      let images = [];
+      
+      // Collect all gallery images
+      galleryImages.forEach(img => {
+        images.push({
+          src: img.src,
+          alt: img.alt
+        });
+      });
+      
+      function openLightbox(index) {
+        if (images.length === 0) return;
+        currentIndex = index;
+        updateLightboxImage();
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+      
+      function updateLightboxImage() {
+        if (images.length === 0) return;
+        const image = images[currentIndex];
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+        
+        // Show/hide navigation arrows
+        lightboxPrev.style.display = images.length > 1 ? 'block' : 'none';
+        lightboxNext.style.display = images.length > 1 ? 'block' : 'none';
+      }
+      
+      function showNext() {
+        if (images.length === 0) return;
+        currentIndex = (currentIndex + 1) % images.length;
+        updateLightboxImage();
+      }
+      
+      function showPrev() {
+        if (images.length === 0) return;
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateLightboxImage();
+      }
+      
+      // Event listeners
+      galleryImages.forEach((img, index) => {
+        img.addEventListener('click', () => openLightbox(index));
+      });
+      
+      if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+      if (lightboxPrev) lightboxPrev.addEventListener('click', showPrev);
+      if (lightboxNext) lightboxNext.addEventListener('click', showNext);
+      
+      // Close on background click
+      if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox) {
+            closeLightbox();
+          }
+        });
+      }
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox || !lightbox.classList.contains('active')) return;
+        
+        if (e.key === 'Escape') {
+          closeLightbox();
+        } else if (e.key === 'ArrowLeft') {
+          showPrev();
+        } else if (e.key === 'ArrowRight') {
+          showNext();
+        }
+      });
+    })();
+  </script>
 </body>
 
   <script>
