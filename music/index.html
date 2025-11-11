@@ -9,13 +9,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
 <style>
     :root {
-      --bg: #0a0a0a; /* dark black */
-      --fg: #ffffff; /* white */
-      --nav-bg: #1a1a1a; /* lighter black for navbar and boot animation */
-      --content-bg: #ffffff; /* white for content sections */
-      --content-fg: #1a1a1a; /* black for content text */
-      --muted: rgba(255, 255, 255, 0.6);
-      --flash: rgba(255, 255, 255, 0.95);
+      --bg: #f8f6e8; /* light cream */
+      --fg: #85ac7e; /* dark green */
+      --nav-bg: #eddcd5; /* light pink/beige */
+      --content-bg: #f8f6e8; /* light cream */
+      --content-fg: #85ac7e; /* dark green */
+      --muted: rgba(133, 172, 126, 0.6);
+      --flash: rgba(133, 172, 126, 0.95);
       --rail-height: 672px; /* 8x previous 84px */
       --word-gap: 56px;
       --word-size: 72px; /* bigger words for tall slot */
@@ -981,9 +981,9 @@
       top: 0;
       left: 0;
       right: 0;
-      background: rgba(26, 26, 26, 0.96);
+      background: rgba(237, 220, 213, 0.96);
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(133, 172, 126, 0.2);
       padding: 16px 24px;
       z-index: 100;
       opacity: 0;
@@ -1045,16 +1045,16 @@
       justify-content: center;
       width: 40px;
       height: 40px;
-      background: rgba(30, 30, 30, 0.82);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(237, 220, 213, 0.82);
+      border: 1px solid rgba(133, 172, 126, 0.3);
       border-radius: 50%;
       padding: 8px;
       transition: all 200ms ease;
       text-decoration: none;
     }
     .navbar-social a:hover {
-      background: rgba(40, 40, 40, 0.95);
-      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(218, 194, 198, 0.95);
+      border-color: rgba(133, 172, 126, 0.4);
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0,0,0,.3);
     }
@@ -1062,28 +1062,88 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: brightness(0) invert(1);
+      filter: none;
+    }
+    /* Mobile menu button */
+    .navbar-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      flex-direction: column;
+      gap: 5px;
+      width: 32px;
+      height: 32px;
+      justify-content: center;
+      align-items: center;
+    }
+    .navbar-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--fg);
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+    .navbar-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(7px, 7px);
+    }
+    .navbar-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .navbar-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
     }
     @media (max-width: 768px) {
       .navbar {
         padding: 12px 16px;
       }
+      .navbar-content {
+        flex-wrap: wrap;
+      }
+      .navbar-toggle {
+        display: flex;
+        order: 3;
+      }
       .navbar-logo {
         font-size: 23.4px; /* 18px * 1.3 */
+        flex: 1;
       }
       .navbar-links {
-        gap: 16px;
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        gap: 0;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(133, 172, 126, 0.2);
+        order: 4;
+      }
+      .navbar-links.active {
+        display: flex;
+      }
+      .navbar-links li {
+        width: 100%;
       }
       .navbar-links a {
         font-size: 18.2px; /* 14px * 1.3 */
+        padding: 12px 0;
+        display: block;
+        width: 100%;
+        border-bottom: 1px solid rgba(133, 172, 126, 0.1);
+      }
+      .navbar-social {
+        order: 2;
+        gap: 8px;
       }
       .navbar-social a { width: 36px; height: 36px; }
     }
 
     /* Footer styles */
     .footer {
-      background: rgba(10, 10, 10, 0.95);
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(237, 220, 213, 0.95);
+      border-top: 1px solid rgba(133, 172, 126, 0.2);
       padding: 40px 24px;
       margin-top: 80px;
       margin-right: 0;
@@ -1111,23 +1171,23 @@
       margin: 0 0 16px;
       font-size: 18px;
       font-weight: 600;
-      color: rgba(255, 255, 255, 0.95);
+      color: rgba(133, 172, 126, 0.95);
     }
     .footer-section p {
       margin: 8px 0;
-      color: rgba(255, 255, 255, 0.75);
+      color: rgba(133, 172, 126, 0.75);
       font-size: 15px;
       line-height: 1.6;
     }
     .footer-section a {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(133, 172, 126, 0.8);
       text-decoration: none;
-      border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
+      border-bottom: 1px dotted rgba(133, 172, 126, 0.4);
       transition: all 200ms ease;
     }
     .footer-section a:hover {
       border-bottom-style: solid;
-      color: rgba(255, 255, 255, 0.95);
+      color: rgba(133, 172, 126, 0.95);
     }
     .footer-social {
       display: flex;
@@ -1140,14 +1200,14 @@
       justify-content: center;
       width: 40px;
       height: 40px;
-      background: rgba(30, 30, 30, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(237, 220, 213, 0.8);
+      border: 1px solid rgba(133, 172, 126, 0.3);
       border-radius: 50%;
       padding: 8px;
     }
     .footer-social a:hover {
-      background: rgba(40, 40, 40, 0.95);
-      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(218, 194, 198, 0.95);
+      border-color: rgba(133, 172, 126, 0.4);
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
@@ -1155,14 +1215,14 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: brightness(0) invert(1);
+      filter: none;
     }
     .footer-bottom {
       margin-top: 32px;
       padding-top: 24px;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      border-top: 1px solid rgba(133, 172, 126, 0.2);
       text-align: center;
-      color: rgba(255, 255, 255, 0.65);
+      color: rgba(133, 172, 126, 0.65);
       font-size: 14px;
     }
     @media (max-width: 768px) {
@@ -1183,7 +1243,12 @@
   <nav class="navbar" id="navbar" aria-label="Main navigation">
     <div class="navbar-content">
       <a href="../index.html?skip" class="navbar-logo">Stella Xulin</a>
-      <ul class="navbar-links">
+      <button class="navbar-toggle" id="navbar-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="navbar-links" id="navbar-links">
         <li><a href="../index.html?skip">Home</a></li>
         <li><a href="../music">Music</a></li>
         <li><a href="../research">Research</a></li>
@@ -1401,6 +1466,31 @@
       
       if (navbar) {
         navbar.classList.add('show');
+      }
+    })();
+  </script>
+  
+  <script>
+    // Mobile menu toggle
+    (function() {
+      const toggle = document.getElementById('navbar-toggle');
+      const links = document.getElementById('navbar-links');
+      
+      if (toggle && links) {
+        toggle.addEventListener('click', () => {
+          toggle.classList.toggle('active');
+          links.classList.toggle('active');
+          toggle.setAttribute('aria-expanded', toggle.classList.contains('active'));
+        });
+        
+        // Close menu when clicking on a link
+        links.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            toggle.classList.remove('active');
+            links.classList.remove('active');
+            toggle.setAttribute('aria-expanded', 'false');
+          });
+        });
       }
     })();
   </script>

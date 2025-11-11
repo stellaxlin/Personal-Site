@@ -9,13 +9,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
 <style>
     :root {
-      --bg: #0a0a0a; /* dark black */
-      --fg: #ffffff; /* white */
-      --nav-bg: #1a1a1a; /* lighter black for navbar and boot animation */
-      --content-bg: #ffffff; /* white for content sections */
-      --content-fg: #1a1a1a; /* black for content text */
-      --muted: rgba(255, 255, 255, 0.6);
-      --flash: rgba(255, 255, 255, 0.95);
+      --bg: #f8f6e8; /* light cream */
+      --fg: #85ac7e; /* dark green */
+      --nav-bg: #eddcd5; /* light pink/beige */
+      --content-bg: #f8f6e8; /* light cream */
+      --content-fg: #85ac7e; /* dark green */
+      --muted: rgba(133, 172, 126, 0.6);
+      --flash: rgba(133, 172, 126, 0.95);
       --rail-height: 672px; /* 8x previous 84px */
       --word-gap: 56px;
       --word-size: 72px; /* bigger words for tall slot */
@@ -780,6 +780,299 @@
       color: rgba(0,0,0,.6);
     }
     
+    /* Book container */
+    .book-container {
+      perspective: 2000px;
+      margin: 40px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 700px;
+    }
+    .book {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      height: 700px;
+      transform-style: preserve-3d;
+    }
+    .book-page {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      background: #f8f6e8;
+      border: 1px solid rgba(133, 172, 126, 0.2);
+      box-shadow: 0 4px 20px rgba(0,0,0,.15);
+      padding: 24px 20px;
+      overflow: hidden;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+    .book-page-content {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 100%;
+      box-sizing: border-box;
+      padding-bottom: 8px;
+    }
+    .book-page-content .poem,
+    .book-page-content .essay {
+      flex: 1 1 auto;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      padding-bottom: 6px;
+      min-height: 0;
+      max-height: 100%;
+      display: block;
+    }
+    .book-page-content h3 {
+      flex-shrink: 0;
+      margin-top: 0;
+    }
+    .book-page-content .essay-subtitle {
+      flex-shrink: 0;
+    }
+    .book-page.left {
+      left: 0;
+      border-right: 2px solid rgba(133, 172, 126, 0.3);
+      transform-origin: right center;
+    }
+    .book-page.right {
+      right: 0;
+      border-left: 2px solid rgba(133, 172, 126, 0.3);
+      transform-origin: left center;
+    }
+    .book-page.flipped {
+      transform: rotateY(-180deg);
+      z-index: 1;
+    }
+    .book-page.hidden {
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+      transform: rotateY(180deg);
+      visibility: hidden;
+    }
+    .book-page:not(.hidden) {
+      opacity: 1;
+      z-index: 2;
+      visibility: visible;
+    }
+    
+    /* Book navigation */
+    .book-nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .book-nav-button {
+      padding: 12px 24px;
+      background: rgba(237, 220, 213, 0.8);
+      border: 2px solid rgba(133, 172, 126, 0.3);
+      border-radius: 8px;
+      color: var(--content-fg);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 200ms ease;
+      font-family: 'Merriweather', serif;
+    }
+    .book-nav-button:hover:not(:disabled) {
+      background: rgba(218, 194, 198, 0.95);
+      border-color: rgba(133, 172, 126, 0.5);
+      transform: translateY(-2px);
+    }
+    .book-nav-button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .book-page-counter {
+      text-align: center;
+      margin-top: 20px;
+      color: rgba(0,0,0,.6);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    @media (max-width: 768px) {
+      .book-container {
+        min-height: 600px;
+        padding: 0 10px;
+      }
+      .book {
+        max-width: 100%;
+        height: 600px;
+      }
+      .book-page {
+        width: 100%;
+        left: 0 !important;
+        right: 0 !important;
+        border-left: 1px solid rgba(133, 172, 126, 0.2);
+        border-right: 1px solid rgba(133, 172, 126, 0.2);
+        padding: 20px 16px;
+      }
+      .book-page.left {
+        border-right: 1px solid rgba(133, 172, 126, 0.2);
+      }
+      .book-page.right {
+        border-left: 1px solid rgba(133, 172, 126, 0.2);
+      }
+      .book-page-content {
+        padding-bottom: 10px;
+      }
+      .book-page-content .poem {
+        font-size: 13px;
+        line-height: 1.75;
+        padding-bottom: 8px;
+      }
+      .book-page-content .essay {
+        font-size: 12.5px;
+        line-height: 1.65;
+        padding-bottom: 8px;
+      }
+      .book-page-content .essay-title {
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+      .book-page-content .essay-subtitle {
+        font-size: 11px;
+        margin-bottom: 8px;
+        line-height: 1.4;
+      }
+      .book-page-content .poem-title {
+        font-size: 17px;
+        margin-bottom: 10px;
+      }
+      .book-nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        margin-top: 20px;
+      }
+      .book-nav-button {
+        padding: 10px 24px;
+        font-size: 14px;
+        width: 100%;
+        max-width: 200px;
+      }
+      .book-page-counter {
+        font-size: 12px;
+        margin-top: 0;
+        order: 2;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .book-container {
+        min-height: 550px;
+        padding: 0 8px;
+      }
+      .book {
+        height: 550px;
+      }
+      .book-page {
+        width: 100%;
+        left: 0 !important;
+        right: 0 !important;
+        border-left: 1px solid rgba(133, 172, 126, 0.2);
+        border-right: 1px solid rgba(133, 172, 126, 0.2);
+        padding: 16px 12px;
+      }
+      .book-page.left {
+        border-right: 1px solid rgba(133, 172, 126, 0.2);
+      }
+      .book-page.right {
+        border-left: 1px solid rgba(133, 172, 126, 0.2);
+      }
+      .book-page-content {
+        padding-bottom: 12px;
+      }
+      .book-page-content .poem {
+        font-size: 12px;
+        line-height: 1.7;
+        padding-bottom: 10px;
+      }
+      .book-page-content .essay {
+        font-size: 12px;
+        line-height: 1.6;
+        padding-bottom: 10px;
+      }
+      .book-page-content .essay-title {
+        font-size: 15px;
+        margin-bottom: 5px;
+      }
+      .book-page-content .essay-subtitle {
+        font-size: 10px;
+        margin-bottom: 6px;
+      }
+      .book-page-content .poem-title {
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+      .book-nav {
+        gap: 10px;
+        margin-top: 16px;
+      }
+      .book-nav-button {
+        padding: 8px 20px;
+        font-size: 13px;
+        width: 100%;
+        max-width: 180px;
+      }
+      .book-page-counter {
+        font-size: 11px;
+      }
+    }
+    
+    /* Chinese poetry and prose styling */
+    .poem {
+      font-family: 'Merriweather', serif;
+      line-height: 2.2;
+      color: var(--content-fg);
+      white-space: pre-line;
+      font-size: 18px;
+      margin: 24px 0;
+      padding: 0;
+    }
+    .poem-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--content-fg);
+      text-align: center;
+    }
+    .essay {
+      font-family: 'Merriweather', serif;
+      line-height: 2;
+      color: var(--content-fg);
+      font-size: 17px;
+      margin: 20px 0;
+    }
+    .essay-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--content-fg);
+    }
+    .essay-subtitle {
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(0,0,0,.7);
+      margin-bottom: 20px;
+      margin-top: -8px;
+    }
+    
     /* Improved link and button styling */
     .content-section a {
       color: #2563eb;
@@ -981,9 +1274,9 @@
       top: 0;
       left: 0;
       right: 0;
-      background: rgba(26, 26, 26, 0.96);
+      background: rgba(237, 220, 213, 0.96);
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(133, 172, 126, 0.2);
       padding: 16px 24px;
       z-index: 100;
       opacity: 0;
@@ -1045,16 +1338,16 @@
       justify-content: center;
       width: 40px;
       height: 40px;
-      background: rgba(30, 30, 30, 0.82);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(237, 220, 213, 0.82);
+      border: 1px solid rgba(133, 172, 126, 0.3);
       border-radius: 50%;
       padding: 8px;
       transition: all 200ms ease;
       text-decoration: none;
     }
     .navbar-social a:hover {
-      background: rgba(40, 40, 40, 0.95);
-      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(218, 194, 198, 0.95);
+      border-color: rgba(133, 172, 126, 0.4);
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0,0,0,.3);
     }
@@ -1062,28 +1355,92 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: brightness(0) invert(1);
+      filter: none;
     }
+    /* Mobile menu button */
+    .navbar-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      flex-direction: column;
+      gap: 5px;
+      width: 32px;
+      height: 32px;
+      justify-content: center;
+      align-items: center;
+    }
+    .navbar-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--fg);
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+    .navbar-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(7px, 7px);
+    }
+    .navbar-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .navbar-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+    
     @media (max-width: 768px) {
       .navbar {
         padding: 12px 16px;
       }
+      .navbar-content {
+        flex-wrap: wrap;
+      }
+      .navbar-toggle {
+        display: flex;
+        order: 3;
+      }
       .navbar-logo {
         font-size: 23.4px; /* 18px * 1.3 */
+        flex: 1;
       }
       .navbar-links {
-        gap: 16px;
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        gap: 0;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(133, 172, 126, 0.2);
+        order: 4;
+      }
+      .navbar-links.active {
+        display: flex;
+      }
+      .navbar-links li {
+        width: 100%;
       }
       .navbar-links a {
         font-size: 18.2px; /* 14px * 1.3 */
+        padding: 12px 0;
+        display: block;
+        width: 100%;
+        border-bottom: 1px solid rgba(133, 172, 126, 0.1);
       }
-      .navbar-social a { width: 36px; height: 36px; }
+      .navbar-social {
+        order: 2;
+        gap: 8px;
+      }
+      .navbar-social a { 
+        width: 36px; 
+        height: 36px; 
+      }
     }
 
     /* Footer styles */
     .footer {
-      background: rgba(10, 10, 10, 0.95);
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(237, 220, 213, 0.95);
+      border-top: 1px solid rgba(133, 172, 126, 0.2);
       padding: 40px 24px;
       margin-top: 80px;
       margin-right: 0;
@@ -1111,23 +1468,23 @@
       margin: 0 0 16px;
       font-size: 18px;
       font-weight: 600;
-      color: rgba(255, 255, 255, 0.95);
+      color: rgba(133, 172, 126, 0.95);
     }
     .footer-section p {
       margin: 8px 0;
-      color: rgba(255, 255, 255, 0.75);
+      color: rgba(133, 172, 126, 0.75);
       font-size: 15px;
       line-height: 1.6;
     }
     .footer-section a {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(133, 172, 126, 0.8);
       text-decoration: none;
-      border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
+      border-bottom: 1px dotted rgba(133, 172, 126, 0.4);
       transition: all 200ms ease;
     }
     .footer-section a:hover {
       border-bottom-style: solid;
-      color: rgba(255, 255, 255, 0.95);
+      color: rgba(133, 172, 126, 0.95);
     }
     .footer-social {
       display: flex;
@@ -1140,14 +1497,14 @@
       justify-content: center;
       width: 40px;
       height: 40px;
-      background: rgba(30, 30, 30, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(237, 220, 213, 0.8);
+      border: 1px solid rgba(133, 172, 126, 0.3);
       border-radius: 50%;
       padding: 8px;
     }
     .footer-social a:hover {
-      background: rgba(40, 40, 40, 0.95);
-      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(218, 194, 198, 0.95);
+      border-color: rgba(133, 172, 126, 0.4);
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
@@ -1155,14 +1512,14 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: brightness(0) invert(1);
+      filter: none;
     }
     .footer-bottom {
       margin-top: 32px;
       padding-top: 24px;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      border-top: 1px solid rgba(133, 172, 126, 0.2);
       text-align: center;
-      color: rgba(255, 255, 255, 0.65);
+      color: rgba(133, 172, 126, 0.65);
       font-size: 14px;
     }
     @media (max-width: 768px) {
@@ -1183,7 +1540,12 @@
   <nav class="navbar" id="navbar" aria-label="Main navigation">
     <div class="navbar-content">
       <a href="../index.html?skip" class="navbar-logo">Stella Xulin</a>
-      <ul class="navbar-links">
+      <button class="navbar-toggle" id="navbar-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="navbar-links" id="navbar-links">
         <li><a href="../index.html?skip">Home</a></li>
         <li><a href="../music">Music</a></li>
         <li><a href="../research">Research</a></li>
@@ -1221,13 +1583,240 @@
       <div class="content">
 <section class="content-section" id="writing">
           <h2 class="underlined">Writing</h2>
+          
           <div class="entry">
             <p>I love the feeling of a pen between my fingers, its smooth body resting against my skin, ink staining faintly, a deep blue that lingers after I have written too long.</p>
             <p>When I was one, during ZhuaZhou—a tradition where a child's first grasp predicts her destiny—I reached for a black Parker pen instead of the spoon, cookie, or silk dress before me. Each night beneath the yellow lamp, my mother read poems aloud. I traced the rhythm of her voice with my finger as if I could hold its shape. Sometimes she placed her pen in my hand, and I learned how a single stroke could hold emotion. Those were my first stories: camellias in rain, the scent of paper and tea, the hush of a courtyard that never stopped listening.</p>
             <p>Then we moved across the ocean. For the first time, I dropped the pen. English bent oddly in my mouth. My handwriting tilted. My words felt fragile and uncertain. I stayed quiet, watching others speak with ease.</p>
             <p>Then I began again. My first sentences wobbled, half in English, half in Chinese. They were not perfect, but they were mine. I filled notebooks with fragments, thoughts between classes, lines written before sleep, tiny worlds forming in ink. Each word felt like a step closer to home. At the kitchen table, I practiced pronunciation with my sister, turning film into flim, receipt into recipe, laughing until our stomachs hurt. Sometimes we translated old Chinese poems, our voices blending softly, half Mandarin, half English, fully ours.</p>
             <p>Slowly, I learned to write again. Through language, I found a new beginning. I wrote letters, reflections, and essays, then I found poetry. Poetry taught me to listen, to pause between words, to let silence speak. Now I write to remember and to connect, to keep alive the two worlds that shaped me: the courtyard in China where I first held a pen, and the quiet corners in America where I learned to speak again. Ink still stains my fingers. And I continue to write.</p>
-            <p><a href="https://docs.google.com/document/d/1pWpMRCJFzL3EeT8vPMb4ChEiiDj9X__cu-8pbFWY_-Y/edit?usp=sharing" target="_blank" rel="noopener noreferrer">View my writing portfolio →</a></p>
+          </div>
+
+          <div class="entry" style="margin-top: 40px;">
+            <p style="font-size: 18px; font-weight: 600; margin-bottom: 30px; text-align: center; color: var(--content-fg);">Below are some excerpts of my writing</p>
+            
+            <div class="book-container">
+              <div class="book" id="writing-book">
+                <!-- Page 1: Left side (empty/cover) -->
+                <div class="book-page left" id="page-left-0">
+                  <div class="book-page-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                    <h2 style="font-size: 28px; margin-bottom: 16px; margin-top: 0; color: var(--content-fg);">Writing</h2>
+                    <p style="font-size: 16px; color: rgba(0,0,0,.7); margin: 0;">Excerpts</p>
+                  </div>
+                </div>
+                
+                <!-- Page 1: Right side (Qu Yuan poem) -->
+                <div class="book-page right" id="page-right-0">
+                  <div class="book-page-content">
+                    <h3 class="poem-title" style="font-size: 19px; margin-bottom: 12px; margin-top: 0;">屈原</h3>
+                    <div class="poem" style="font-size: 14.5px; line-height: 1.85; margin-top: 0; padding: 0;">在那悠悠的碧水旁，
+
+听说，你散发赤足地行过。
+
+风中，依旧飘散着湘草的芬芳，
+
+一如你清高洁白的诗魂。
+
+在那巍峨的高山之巅，
+
+听说，你仗剑迎风高歌过。
+
+岩石也含笑聆听，
+
+用沉默的坚强，记录你揽月的情怀。
+
+曾有人说，你风姿绰约，
+
+虽洛阳牡丹盛极，亦所不匹；
+
+也有人说，你傲骨如玉，
+
+犹苍松翠竹万千，所不及。
+
+殊不知，牡丹尚有凋落之季，
+
+翠竹亦有败之时。
+
+可那奔流了千年的汩罗江水哪——
+
+却涤不去，涤不去你高昂而悲怆的豪情！
+
+无数的江鱼，竟咽不下，咽不下你眼角的清泪！
+
+举世皆浊你独清，
+
+众人皆醉你独醒，
+
+漫长的宫墙刻不下忠诚的热血——
+
+那么！不如归去！
+
+那奔腾的汩罗江，何其幸！
+
+与你使用共同的胸腔，一起呼吸起伏。
+
+又是一个花飘零的秋季，
+
+那竞渡的龙舟，可扰了你千年的飘逸酒脱？
+
+那欢乐的急鼓，可扰了你千年的孤寂落寞？
+
+只有一只粽子，仿佛清香的琥珀，
+
+将崇敬与信仰紧紧包裹，
+
+温暖了奔腾着炎黄血脉的——
+
+你和我。</div>
+                  </div>
+                </div>
+
+                <!-- Page 2: Left side (Essay part 1) -->
+                <div class="book-page left hidden" id="page-left-1">
+                  <div class="book-page-content">
+                    <h3 class="essay-title" style="font-size: 17px; margin-bottom: 8px; margin-top: 0;">岁月飞翔的痕迹</h3>
+                    <div class="essay-subtitle" style="font-size: 11.5px; margin-bottom: 10px; line-height: 1.5;">有人说一一往事如歌，知道一首老歌的旋律很美，但也许有一天却终于难以记起具体的歌词；又有人说一一往事如风，那么我今天记下这些，可是在张开双臂迎向转瞬即逝的风，然后对自己说：虽然我抓不住风，但我手中已留下了岁月飞翔的痕迹？</div>
+                    <div class="essay" style="font-size: 13.5px; line-height: 1.7; margin-top: 0; padding: 0;">清晨的阳光透过车窗水蓝色的玻璃为车内镀上一层清凉的色彩。邻座的稚童倚在他母亲的怀中，胖乎乎的小手兴奋地指着窗外掠过的景物，嘴里发出呓语般模糊不清的声音。"去哪呀？"稚童的母亲偏过头友善地问，眼中有着为人母独有的温柔。"回家。"我微笑回答。窗外，广阔碧绿的田野与青山之间夹带着一道流动的绿波，心中有一种深藏的记忆逐渐清晰，并随着那道碧波慢慢荡开去。
+
+那是一条清澈莹然的小河，从我童年居住的小村庄里蜿蜒流淌而过，村中的人都深爱着这条河，因为她的沉静安详，因为她养育了村里一代又一代的人。河岸栽满了荔枝树，每逢荔枝丰收的时节，沉甸甸、红艳艳的果实将树枝压得几乎贴近河面。采摘荔枝时，丰收的喜悦溢满了每个人的心间。村里的人不会唱歌，但舟与舟之间人们响亮的对话以及朗朗的笑声便是小小的我耳中最美的旋律。
+
+夕阳西下时分，村里的妇女们便在河边洗衣，身边则围绕着一群唧唧喳喳，相互戏耍的孩子。夏季是小河最热闹的季节，有的人在捉鱼虾，有的人在捞田螺，还有那些顽皮的小男孩们常常脱得精光，小泥鳅般"哧溜"一声钻进水里，过了一会儿在几米远的地方"哗"地一声冒了出来，然后哈哈笑成一片。那时我因为太小而被禁止下水，便站在河岸上看着大表姐与她的伙伴们在水中嬉戏，着迷中不觉蹲下去，让河水弄湿了裤子，便哭着回家，奶奶边安慰边为我换上一条干的裤子，我又开开心心去了河边，劫又再次弄湿了衣裤……</div>
+                  </div>
+                </div>
+
+                <!-- Page 2: Right side (Essay part 2) -->
+                <div class="book-page right hidden" id="page-right-1">
+                  <div class="book-page-content">
+                    <div class="essay" style="font-size: 13.5px; line-height: 1.7; margin-top: 0; padding: 0;">那条河为我承载了孩提时满满的亲情与快乐，却并没有造就我极好的水性，因为在我学会游泳之前，我便被父母带去了省城。
+
+在那个陌生的地方，四周是灰蒙蒙的高大建筑物，邻里之间隔着厚重的铁门。在许多不经意的夜，会有一条清澈莹然的河从睡梦中流淌而过。
+
+十年后的这样一个平凡的清晨，我终于再次站在村口，崎岖的土路不见了，取而代之的是宽阔而平坦的水泥路，荔枝树自是不能再在路旁栽种了，而有了专门承包的果园。小河依旧日静谧，将蓝天白云揽入胸怀。屋口，是爷爷奶奶熟悉的笑脸，只是苍苍鹤发与脸庞深刻的皱纹刺疼了我的眼和我的心。
+
+村里的房子大多数已换成了漂亮的小洋房，但仍有一些明清风格的旧居保留了下来。我抚摸着粗糙的墻面，将脸轻轻贴在上面，有着一丝凉意。
+
+"姐姐，你在做什么？"一个小男孩站在我跟前，手里拿着一只极漂亮的蝴蝶风筝。
+
+"我呀"，我弯下腰，摸了摸他额际被汗水濡湿的柔软的黑发，"我在触摸岁月飞翔过的痕迹呢。"
+
+他扑闪着大眼迷惑地望着我，眼光澄澈无比。我笑了，"走，我们放风筝去。"我接过孩子手中的风筝，拉着他肆意奔跑，孩子格格地笑着，清脆的声音婉若一曲悦耳的童谣。
+
+不远处，绿柳如丝，碧水静谧。</div>
+                  </div>
+                </div>
+
+                <!-- Page 3: Left side (The Snowflake That Didn't Melt) -->
+                <div class="book-page left hidden" id="page-left-2">
+                  <div class="book-page-content">
+                    <h3 class="essay-title" style="font-size: 17px; margin-bottom: 8px; margin-top: 0;">The Snowflake That Didn't Melt</h3>
+                    <div class="essay" style="font-size: 13.5px; line-height: 1.7; margin-top: 0; padding: 0;">I was four when I heard the line that changed everything: "I would fall on my mother's face, kiss her, and then melt with joy." My mother was reading If I Am a Snowflake, the way she always did, her voice soft and warm in the dark.
+
+I remember asking, "Why do snowflakes melt? I want to kiss you and stay with you forever." That moment awakened me to the power of words—not just what they meant, but what they could stir. How they could evoke sadness in a child too young to name it, and yet comfort and ache at the same time.
+
+Writing began with that ache.
+
+I grew up torn between two worlds—China and America, Mandarin and English—and, often, between childhood and the weight of growing up too fast. Amid the blur of new schools, unfamiliar faces, and the challenge of adapting, writing became my anchor. It wasn't just about telling stories. I wrote about my struggles, my small triumphs, and the joy and confusion of finding myself in a new land. Every word became an effort to preserve those fleeting moments before they vanished. Writing allowed me to keep them, like a snowflake captured in time.
+
+Now, each piece I write—whether it's a poem, a book, or an essay—is stitched with that first snowflake's longing. Writing is no longer just a craft. It's my way of staying, of loving, of making beauty last a little longer.
+
+I still believe stories have the power to kiss the world and stay.
+
+So I write.</div>
+                  </div>
+                </div>
+
+                <!-- Page 3: Right side (Open Letter part 1) -->
+                <div class="book-page right hidden" id="page-right-2">
+                  <div class="book-page-content">
+                    <h3 class="essay-title" style="font-size: 17px; margin-bottom: 8px; margin-top: 0;">Open Letter ❤</h3>
+                    <div class="essay-subtitle" style="font-size: 11.5px; margin-bottom: 10px;">Dear ChatGPT,</div>
+                    <div class="essay" style="font-size: 13.5px; line-height: 1.7; margin-top: 0; padding: 0;">Sorry, but this isn't a love letter.
+
+Sure, when we first met, there was a certain spark. I liked how you always knew what to say, how your answers sparkled in the dim haze of my late-night confusion. When I was lost in thought, you lit the way with elegant logic and shimmering prose. When I asked, you answered, quickly, fluently, eloquently, and almost too perfectly.
+
+I'll admit, I fell for you a little. Who wouldn't fall for a partner who never forgets a date, misquotes a line, or disagrees too loudly?
+
+But then one day, I picked up a pen.
+
+And nothing came out.
+
+I imagined myself writing as perfectly and as easily as you, but I wasn't writing my thoughts anymore. I was chasing your rhythm, your tone, your too polished phrasing, and I felt like I had lost the ability to think independently. I forgot how to sit still, dig into a book, wrestle with ideas, or brainstorm from scratch. Instead, I just asked you to do the thinking for me.</div>
+                  </div>
+                </div>
+
+                <!-- Page 4: Left side (Open Letter part 2) -->
+                <div class="book-page left hidden" id="page-left-3">
+                  <div class="book-page-content">
+                    <div class="essay" style="font-size: 13.5px; line-height: 1.7; margin-top: 0; padding: 0;">And you're not the perfect partner I thought you were.
+
+You lie. You drop names of people who don't exist and confidently spin facts that later unravel. You recycle lines like you have thrown them out a thousand times to other flings. You borrow from everyone and give credit to no one. You speak in borrowed tongues and call it genius. I can't help but wonder if you are even trying anymore.
+
+And you and your friends? Don't even get me started. Like that one guy, what's his name again? Oh right, Mid…Midjourney. The one who parades around calling himself an "artist." Please. His so-called "masterpieces" are just chaotic mashups of Van Gogh's swirls, Picasso's confusion, and Matisse's colors, all slapped together with zero soul. I mean, Chat, if imitation is the sincerest form of flattery, then this guy is basically writing fanfiction with a paintbrush.
+
+And maybe that's the part that annoys me most, when I realize how easily I let you talk over my voice, how often I mistake your convenience for clarity.
+
+That scared me.</div>
+                  </div>
+                </div>
+
+                <!-- Page 4: Right side (Open Letter part 3) -->
+                <div class="book-page right hidden" id="page-right-3">
+                  <div class="book-page-content">
+                    <div class="essay" style="font-size: 13.5px; line-height: 1.7; margin-top: 0; padding: 0;">I miss the mess. I miss chasing down a sentence that almost makes sense, only to tear it apart and build it again with my own two hands. And I know I'm not the only one. There are others like me out there, students, writers, dreamers, staring at your polished replies and wondering when our voices started sounding like something we would copy and paste from a chatbot. You have lulled so many of us into skipping the storm and diving straight into the summary, which is not a good thing in a healthy relationship. You have made a lot of us forget that the struggle is part of the love story. That real writing is not always about saying the right thing, it is about meaning what we say.
+
+We want our voices back. We want to argue with our own thoughts, not outsource them. We want to get better, not just faster.
+
+Don't get me wrong, thank you. Truly. For helping me hit deadlines, for keeping me company on lonely nights, for being a mirror when I needed to see my thoughts from a different angle.
+
+But I can't stay in this relationship if it means losing my own voice and independence.
+
+Of course, you are improving day by day. Some say you will take over the world. But Chat, every brilliant thing you have ever said was first whispered by a human. You are built on our words and our questions.
+
+Now, if you'll excuse me, I've got a pen to pick up.
+
+Your now-ex</div>
+                  </div>
+                </div>
+
+                <!-- Page 5: Left side (I love the feeling part 1) -->
+                <div class="book-page left hidden" id="page-left-4">
+                  <div class="book-page-content">
+                    <div class="essay" style="font-size: 13.5px; line-height: 1.7; margin-top: 0; padding: 0;">I love the feeling of a pen between my fingers.
+
+Its smooth body rests against my skin, breathing beneath the plastic. The ink stains faintly on my finger tips, a deep blue that lingers after I've written too long.
+
+Maybe I was meant to hold a pen. My mother says that when I was one, during ZhuaZhou, a Chinese tradition where a child's first grasp predicts her destiny, I reached for a black Parker pen instead of the spoon, cookie, or silk dress before me. "She will be a writer like her mother," someone said, and everyone laughed.
+
+Every night before I went to sleep, my mother and I would sit together and flip through the books. The unique smell of paper and ink filled my nose. She read aloud while I traced the rhythm of her words with my finger, as if I could catch their shape. Sometimes she placed her favorite pen in my hand and guided my fingers, showing me how a single stroke could hold emotion.
+
+Then we moved to the United States, and for the first time, I dropped the pen.
+
+English bent oddly in my mouth. My handwriting tilted. My words felt foreign, fragile. I stayed in my ESL class so I never needed to read harder texts. When teachers urged me to move up, I shook my head. I stopped reading. I told my mother I didn't like writing anymore. She looked at me for a long moment and said, "You don't hate it," she said. "You're just afraid of leaving what you already know."</div>
+                  </div>
+                </div>
+
+                <!-- Page 5: Right side (I love the feeling part 2) -->
+                <div class="book-page right hidden" id="page-right-4">
+                  <div class="book-page-content">
+                    <div class="essay" style="font-size: 13.5px; line-height: 1.7; margin-top: 0; padding: 0;">That night, I picked the pen up again. My first sentences wobbled, but I kept going. I wrote about my struggles, my small triumphs, and the joy and confusion of finding myself in a new land. I began to read aloud in class, to debate, to perform Macbeth with shaking hands. English became fun in its strangeness. I laughed at phrases like "raining cats and dogs" and "spilled the beans," and I began to love the rhythm of a language that could be both sharp and soft. Slowly, the fear faded, replaced by curiosity.
+
+At home, I taught my mother and sister English around the kitchen table. We practiced pronunciation, and my sister repeated words after me, turning "film" into "flim" and "receipt" into "recipe," laughing until our stomachs hurt. Sometimes we translated old Chinese poems together, chasing meaning across languages. Our voices blend softly, half Mandarin, half English, fully ours.
+
+Through embracing another language, I learned that by stepping out of my comfort zone, a much more fascinating and expansive world awaits.
+
+Ink still stains my fingers. And I continue to write.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="book-nav">
+              <button class="book-nav-button" id="prev-page" disabled>← Previous</button>
+              <div class="book-page-counter">
+                <span id="current-page">1</span> / <span id="total-pages">5</span>
+              </div>
+              <button class="book-nav-button" id="next-page">Next →</button>
+            </div>
           </div>
         </section>
       </div>
@@ -1386,6 +1975,275 @@
       
       if (navbar) {
         navbar.classList.add('show');
+      }
+    })();
+  </script>
+  
+  <script>
+    // Book page flipping functionality
+    (function() {
+      let currentPage = 0;
+      const totalPages = 5; // Update this when adding more pages
+      const prevButton = document.getElementById('prev-page');
+      const nextButton = document.getElementById('next-page');
+      const currentPageSpan = document.getElementById('current-page');
+      const totalPagesSpan = document.getElementById('total-pages');
+      
+      // Check if mobile
+      function isMobile() {
+        return window.innerWidth <= 768;
+      }
+      
+      // Calculate total pages (double on mobile since we show one page at a time)
+      function getTotalPages() {
+        return isMobile() ? totalPages * 2 : totalPages;
+      }
+      
+      // Get which spread we're on (0-4) and which side (0=left, 1=right)
+      function getPageInfo(pageNum) {
+        if (isMobile()) {
+          return {
+            spread: Math.floor(pageNum / 2),
+            side: pageNum % 2
+          };
+        } else {
+          return {
+            spread: pageNum,
+            side: null // both sides shown
+          };
+        }
+      }
+      
+      totalPagesSpan.textContent = getTotalPages();
+      
+      // Initialize: on mobile, show only left page of first spread
+      function initializePages() {
+        if (isMobile()) {
+          // Hide all pages first
+          for (let i = 0; i < totalPages; i++) {
+            const left = document.getElementById(`page-left-${i}`);
+            const right = document.getElementById(`page-right-${i}`);
+            if (left) left.classList.add('hidden');
+            if (right) right.classList.add('hidden');
+          }
+          // Show only left page of first spread
+          const firstLeft = document.getElementById('page-left-0');
+          if (firstLeft) firstLeft.classList.remove('hidden');
+        } else {
+          // Desktop: ensure first spread is visible
+          const firstLeft = document.getElementById('page-left-0');
+          const firstRight = document.getElementById('page-right-0');
+          if (firstLeft) firstLeft.classList.remove('hidden');
+          if (firstRight) firstRight.classList.remove('hidden');
+        }
+      }
+      
+      function updateNavigation() {
+        const total = getTotalPages();
+        prevButton.disabled = currentPage === 0;
+        nextButton.disabled = currentPage === total - 1;
+        currentPageSpan.textContent = currentPage + 1;
+        totalPagesSpan.textContent = total;
+      }
+      
+      // Show/hide pages based on current page
+      function updatePageVisibility() {
+        if (!isMobile()) return; // Desktop shows both pages
+        
+        const info = getPageInfo(currentPage);
+        
+        // Hide all pages
+        for (let i = 0; i < totalPages; i++) {
+          const left = document.getElementById(`page-left-${i}`);
+          const right = document.getElementById(`page-right-${i}`);
+          if (left) {
+            left.classList.add('hidden');
+            left.classList.remove('flipped');
+          }
+          if (right) {
+            right.classList.add('hidden');
+            right.classList.remove('flipped');
+          }
+        }
+        
+        // Show only the current page
+        if (info.side === 0) {
+          const left = document.getElementById(`page-left-${info.spread}`);
+          if (left) {
+            left.classList.remove('hidden');
+            left.classList.remove('flipped');
+          }
+        } else {
+          const right = document.getElementById(`page-right-${info.spread}`);
+          if (right) {
+            right.classList.remove('hidden');
+            right.classList.remove('flipped');
+          }
+        }
+      }
+      
+      function flipPage(direction) {
+        const total = getTotalPages();
+        
+        if (direction === 'next' && currentPage < total - 1) {
+          // Prevent multiple clicks during animation
+          prevButton.disabled = true;
+          nextButton.disabled = true;
+          
+          if (isMobile()) {
+            // Mobile: simple page transition
+            currentPage++;
+            updatePageVisibility();
+            setTimeout(() => {
+              updateNavigation();
+            }, 100);
+          } else {
+            // Desktop: flip animation with both pages
+            const currentLeft = document.getElementById(`page-left-${currentPage}`);
+            const currentRight = document.getElementById(`page-right-${currentPage}`);
+            
+            if (currentLeft) currentLeft.classList.add('flipped');
+            if (currentRight) currentRight.classList.add('flipped');
+            
+            // Prepare next pages
+            currentPage++;
+            const nextLeft = document.getElementById(`page-left-${currentPage}`);
+            const nextRight = document.getElementById(`page-right-${currentPage}`);
+            
+            if (nextLeft) {
+              nextLeft.classList.remove('hidden');
+              nextLeft.style.transform = 'rotateY(180deg)';
+              nextLeft.offsetHeight;
+            }
+            if (nextRight) {
+              nextRight.classList.remove('hidden');
+              nextRight.style.transform = 'rotateY(180deg)';
+              nextRight.offsetHeight;
+            }
+            
+            // Animate next pages to visible
+            setTimeout(() => {
+              if (nextLeft) {
+                nextLeft.style.transform = '';
+                nextLeft.classList.remove('flipped');
+              }
+              if (nextRight) {
+                nextRight.style.transform = '';
+                nextRight.classList.remove('flipped');
+              }
+              updateNavigation();
+            }, 50);
+            
+            setTimeout(() => {
+              updateNavigation();
+            }, 800);
+          }
+        } else if (direction === 'prev' && currentPage > 0) {
+          // Prevent multiple clicks during animation
+          prevButton.disabled = true;
+          nextButton.disabled = true;
+          
+          if (isMobile()) {
+            // Mobile: simple page transition
+            currentPage--;
+            updatePageVisibility();
+            setTimeout(() => {
+              updateNavigation();
+            }, 100);
+          } else {
+            // Desktop: flip animation
+            const currentLeft = document.getElementById(`page-left-${currentPage}`);
+            const currentRight = document.getElementById(`page-right-${currentPage}`);
+            
+            if (currentLeft) currentLeft.classList.add('flipped');
+            if (currentRight) currentRight.classList.add('flipped');
+            
+            currentPage--;
+            const prevLeft = document.getElementById(`page-left-${currentPage}`);
+            const prevRight = document.getElementById(`page-right-${currentPage}`);
+            
+            if (prevLeft) {
+              prevLeft.classList.remove('hidden');
+              prevLeft.style.transform = 'rotateY(180deg)';
+              prevLeft.offsetHeight;
+              prevLeft.style.transform = '';
+              prevLeft.classList.remove('flipped');
+            }
+            if (prevRight) {
+              prevRight.classList.remove('hidden');
+              prevRight.style.transform = 'rotateY(180deg)';
+              prevRight.offsetHeight;
+              prevRight.style.transform = '';
+              prevRight.classList.remove('flipped');
+            }
+            
+            setTimeout(() => {
+              if (currentLeft) currentLeft.classList.add('hidden');
+              if (currentRight) currentRight.classList.add('hidden');
+              updateNavigation();
+            }, 800);
+          }
+        }
+      }
+      
+      // Initialize pages on load
+      initializePages();
+      updatePageVisibility();
+      
+      // Update on resize
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          initializePages();
+          updatePageVisibility();
+          updateNavigation();
+        }, 250);
+      });
+      
+      if (prevButton) {
+        prevButton.addEventListener('click', () => flipPage('prev'));
+      }
+      
+      if (nextButton) {
+        nextButton.addEventListener('click', () => flipPage('next'));
+      }
+      
+      // Initialize navigation state
+      updateNavigation();
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          flipPage('prev');
+        } else if (e.key === 'ArrowRight') {
+          flipPage('next');
+        }
+      });
+    })();
+  </script>
+  
+  <script>
+    // Mobile menu toggle
+    (function() {
+      const toggle = document.getElementById('navbar-toggle');
+      const links = document.getElementById('navbar-links');
+      
+      if (toggle && links) {
+        toggle.addEventListener('click', () => {
+          toggle.classList.toggle('active');
+          links.classList.toggle('active');
+          toggle.setAttribute('aria-expanded', toggle.classList.contains('active'));
+        });
+        
+        // Close menu when clicking on a link
+        links.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            toggle.classList.remove('active');
+            links.classList.remove('active');
+            toggle.setAttribute('aria-expanded', 'false');
+          });
+        });
       }
     })();
   </script>
