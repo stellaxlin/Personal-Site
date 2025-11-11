@@ -200,7 +200,7 @@
       filter: blur(0);
       pointer-events: auto;
       margin-top: 0;
-      top: 0;
+      top: calc(var(--navbar-height) + 20px);
     }
 
     .site h1 {
@@ -220,13 +220,47 @@
     }
     .social a { color: inherit; text-decoration: none; border-bottom: 1px dotted rgba(255,255,255,.5); }
     .social a:hover { border-bottom-style: solid; }
+    .content {
+      width: 100%;
+      background: var(--content-bg);
+      color: var(--content-fg);
+      padding: 0 24px 40px 24px;
+      border-radius: 0;
+      margin: 0 auto;
+      max-width: none;
+      box-sizing: border-box;
+      padding-top: calc(var(--navbar-height) + 20px);
+    }
+    
+    /* Content section styling */
+    .content-section {
+      background: var(--content-bg);
+      color: var(--content-fg);
+      margin-top: 0;
+    }
+    .content-section:first-of-type {
+      margin-top: 0;
+    }
+    .content-section h2 {
+      color: var(--content-fg);
+      border-bottom: 2px solid rgba(0,0,0,.15);
+    }
+    .content-section h2.underlined {
+      border-bottom: 2px solid rgba(0,0,0,.15);
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+    }
     .entry { 
       margin-bottom: 32px; 
       padding: 20px;
-      background: rgba(20, 20, 20, 0.6);
+      background: rgba(0,0,0,.03);
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.1);
+      border: 1px solid rgba(0,0,0,.08);
       transition: transform 200ms ease, box-shadow 200ms ease;
+    }
+    .content-section .entry {
+      background: rgba(0,0,0,.03);
+      border: 1px solid rgba(0,0,0,.08);
     }
     .entry:hover {
       transform: translateY(-2px);
@@ -236,26 +270,38 @@
       margin: 0 0 8px; 
       font-size: 20px; 
       font-weight: 600;
-      color: rgba(255,255,255,.95);
+      color: var(--content-fg);
       line-height: 1.3;
+    }
+    .content-section .entry h3 {
+      color: var(--content-fg);
     }
     .entry h4 {
       margin: 16px 0 8px;
       font-size: 18px;
       font-weight: 600;
-      color: rgba(255,255,255,.9);
+      color: var(--content-fg);
       line-height: 1.3;
+    }
+    .content-section .entry h4 {
+      color: var(--content-fg);
     }
     .meta { 
       font-size: 15px; 
-      color: rgba(255,255,255,.7); 
+      color: rgba(0,0,0,.65); 
       margin: 0 0 12px; 
       font-weight: 500;
+    }
+    .content-section .meta {
+      color: rgba(0,0,0,.65);
     }
     ul.bullets { 
       margin: 0; 
       padding-left: 22px; 
-      color: rgba(255,255,255,.85);
+      color: rgba(0,0,0,.8);
+    }
+    .content-section ul.bullets {
+      color: rgba(0,0,0,.8);
     }
     ul.bullets li { 
       margin: 8px 0; 
@@ -263,8 +309,11 @@
     }
     .entry p {
       margin: 12px 0 0;
-      color: rgba(255,255,255,.85);
+      color: rgba(0,0,0,.85);
       line-height: 1.7;
+    }
+    .content-section .entry p {
+      color: rgba(0,0,0,.85);
     }
 
     /* Media grid for images */
@@ -337,7 +386,7 @@
     /* For section pages, ensure content starts right below navbar with no gap */
     .site.show > .content:first-child {
       margin-top: 0;
-      padding-top: 0;
+      padding-top: calc(var(--navbar-height) + 20px);
     }
     .hero-slideshow { position:absolute; inset:0; }
     .hero-slide {
@@ -350,7 +399,7 @@
     .hero-slide.active { opacity: 1; }
     .hero-section::before {
       content: ""; position:absolute; inset:0;
-      background: linear-gradient(to bottom, rgba(10,10,10,0.40), rgba(10,10,10,0.78));
+      background: linear-gradient(to bottom, rgba(248, 246, 232, 0.40), rgba(248, 246, 232, 0.78));
     }
     .hero-content { 
       position: relative; 
@@ -411,11 +460,11 @@
     }
     .social-link {
       padding: 10px 20px;
-      background: rgba(30, 30, 30, 0.85);
-      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(237, 220, 213, 0.8);
+      border: 1px solid rgba(133, 172, 126, 0.3);
       border-radius: 8px;
       text-decoration: none;
-      color: inherit;
+      color: var(--fg);
       font-size: 15px;
       transition: all 200ms ease;
       font-weight: 500;
@@ -506,6 +555,205 @@
         gap: 8px;
       }
       .navbar-social a { width: 36px; height: 36px; }
+    }
+
+    /* Navbar styles */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(237, 220, 213, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(133, 172, 126, 0.2);
+      padding: 16px 24px;
+      z-index: 100;
+      opacity: 0;
+      transform: translateY(-100%);
+      transition: opacity 600ms ease, transform 600ms ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .navbar.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .navbar-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar-logo {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--fg);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .navbar-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar-links a {
+      color: var(--fg);
+      text-decoration: none;
+      font-size: 20.8px;
+      font-weight: 500;
+      padding: 8px 0;
+      border-bottom: 2px solid transparent;
+      transition: all 200ms ease;
+    }
+    .navbar-links a:hover {
+      border-bottom-color: var(--fg);
+      opacity: 0.8;
+    }
+    .navbar-links a.active {
+      border-bottom-color: var(--fg);
+      opacity: 1;
+    }
+    .navbar-social {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .navbar-social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(237, 220, 213, 0.82);
+      border: 1px solid rgba(133, 172, 126, 0.3);
+      border-radius: 50%;
+      padding: 8px;
+      transition: all 200ms ease;
+      text-decoration: none;
+    }
+    .navbar-social a:hover {
+      background: rgba(218, 194, 198, 0.95);
+      border-color: rgba(133, 172, 126, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,.3);
+    }
+    .navbar-social img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: none;
+    }
+
+    /* Lightbox modal for images */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      animation: fadeIn 0.3s ease;
+      overflow: auto;
+    }
+    .lightbox.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .lightbox-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      margin: auto;
+      animation: zoomIn 0.3s ease;
+    }
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      line-height: 1;
+      transition: opacity 0.2s ease;
+    }
+    .lightbox-close:hover {
+      opacity: 0.7;
+    }
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff;
+      font-size: 32px;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 16px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      transition: background 0.2s ease;
+      user-select: none;
+    }
+    .lightbox-nav:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+    .lightbox-prev {
+      left: 20px;
+    }
+    .lightbox-next {
+      right: 20px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @media (max-width: 768px) {
+      .lightbox-nav {
+        font-size: 24px;
+        padding: 12px;
+      }
+      .lightbox-prev {
+        left: 10px;
+      }
+      .lightbox-next {
+        right: 10px;
+      }
+      .lightbox-close {
+        top: -30px;
+        font-size: 32px;
+      }
+      .content-section {
+        margin-top: 40px;
+      }
+      .entry {
+        padding: 16px;
+      }
+      .media-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .media-grid img {
+        height: 200px;
+      }
     }
 
     /* Footer styles */
@@ -652,18 +900,30 @@
     
     <main id="site" class="site" aria-hidden="true">
       <div class="content">
-<section class="content-section" id="cheerleading">
+        <section class="content-section" id="cheerleading">
           <h2 class="underlined">Cheerleading</h2>
-          <div class="media-grid">
+          
+          <div class="entry" style="text-align: center; margin-bottom: 40px;">
+            <p style="font-size: 24px; font-weight: 600; margin-bottom: 24px; color: var(--content-fg); font-style: italic;">"Let's get fired up and show 'em what you got!"</p>
+          </div>
+
+          <div class="media-grid" style="margin: 40px 0;">
             <img src="../media/cheer/1.png" alt="Cheerleading photo 1" class="gallery-image">
             <img src="../media/cheer/2.png" alt="Cheerleading photo 2" class="gallery-image">
             <img src="../media/cheer/3.png" alt="Cheerleading photo 3" class="gallery-image">
             <img src="../media/cheer/4.png" alt="Cheerleading photo 4" class="gallery-image">
           </div>
-          <div class="entry">
-            <p>"Let's get fired up and show 'em what you got!"</p>
-            <p>That chant still echoes in my head every time I step onto the mat. Cheer taught me strength in balance and grace under pressure. From long practices to championship floors, it became more than a sport; it became a language of trust and precision.</p>
-            <p>As a four-time All-Academic athlete, Most Improved awardee, and CCC nominee, I have grown as both a performer and a leader. I have coached elementary, middle school, and unified teams, and helped our squad to earn the first CCC championship in school history.</p>
+
+          <div class="entry" style="margin-top: 40px;">
+            <p>That chant still echoes in my head every time I step onto the mat. Cheer taught me strength in balance and grace under pressure. From long practices to championship floors, it became more than a sport; it became a language of trust and precision. As a four-time All-Academic athlete, Most Improved awardee, and CCC nominee, I have grown as both a performer and a leader. I have coached elementary, middle school, and unified teams, and helped our squad to earn the first CCC championship in school history.</p>
+          </div>
+
+          <div class="entry" style="margin-top: 40px;">
+            <h4 style="margin-bottom: 20px; color: var(--content-fg);">Performance Video</h4>
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 20px 0; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.1);">
+              <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/r8C4EoHqoJY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <p style="margin-top: 16px;"><a href="https://youtu.be/r8C4EoHqoJY?si=DUpAXIFXIuaXWaHM" target="_blank" rel="noopener noreferrer">Watch on YouTube →</a></p>
           </div>
         </section>
       </div>
@@ -697,7 +957,7 @@
           <p>&copy; 2025 Stella Xulin. All rights reserved.</p>
           <p><a href="https://charlierusso.dev/" target="_blank" rel="noopener noreferrer">Designed by Charles Russo</a></p>
         </div>
-      </footer
+      </footer>
     </main>
   </div>
 
@@ -734,6 +994,95 @@
       if (navbar) {
         navbar.classList.add('show');
       }
+    })();
+  </script>
+  <script>
+    // Lightbox functionality for gallery images
+    (function() {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImage = document.getElementById('lightbox-image');
+      const lightboxClose = document.querySelector('.lightbox-close');
+      const lightboxPrev = document.querySelector('.lightbox-prev');
+      const lightboxNext = document.querySelector('.lightbox-next');
+      const galleryImages = document.querySelectorAll('.gallery-image');
+      
+      let currentIndex = 0;
+      let images = [];
+      
+      // Collect all gallery images
+      galleryImages.forEach(img => {
+        images.push({
+          src: img.src,
+          alt: img.alt
+        });
+      });
+      
+      function openLightbox(index) {
+        if (images.length === 0) return;
+        currentIndex = index;
+        updateLightboxImage();
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+      
+      function updateLightboxImage() {
+        if (images.length === 0) return;
+        const image = images[currentIndex];
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+        
+        // Show/hide navigation arrows
+        lightboxPrev.style.display = images.length > 1 ? 'block' : 'none';
+        lightboxNext.style.display = images.length > 1 ? 'block' : 'none';
+      }
+      
+      function showNext() {
+        if (images.length === 0) return;
+        currentIndex = (currentIndex + 1) % images.length;
+        updateLightboxImage();
+      }
+      
+      function showPrev() {
+        if (images.length === 0) return;
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateLightboxImage();
+      }
+      
+      // Event listeners
+      galleryImages.forEach((img, index) => {
+        img.addEventListener('click', () => openLightbox(index));
+      });
+      
+      if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+      if (lightboxPrev) lightboxPrev.addEventListener('click', showPrev);
+      if (lightboxNext) lightboxNext.addEventListener('click', showNext);
+      
+      // Close on background click
+      if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox) {
+            closeLightbox();
+          }
+        });
+      }
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox || !lightbox.classList.contains('active')) return;
+        
+        if (e.key === 'Escape') {
+          closeLightbox();
+        } else if (e.key === 'ArrowLeft') {
+          showPrev();
+        } else if (e.key === 'ArrowRight') {
+          showNext();
+        }
+      });
     })();
   </script>
   <script>

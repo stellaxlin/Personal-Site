@@ -200,7 +200,7 @@
       filter: blur(0);
       pointer-events: auto;
       margin-top: 0;
-      top: 0;
+      top: calc(var(--navbar-height) + 20px);
     }
 
     .site h1 {
@@ -337,7 +337,7 @@
     /* For section pages, ensure content starts right below navbar with no gap */
     .site.show > .content:first-child {
       margin-top: 0;
-      padding-top: 0;
+      padding-top: calc(var(--navbar-height) + 20px);
     }
     .hero-slideshow { position:absolute; inset:0; }
     .hero-slide {
@@ -709,7 +709,7 @@
       margin: 0 auto;
       max-width: none;
       box-sizing: border-box;
-      padding-top: 0; /* No top padding, margin handles spacing */
+      padding-top: calc(var(--navbar-height) + 20px);
     }
     
     /* Content section styling - white background with black text */

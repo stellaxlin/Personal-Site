@@ -200,7 +200,7 @@
       filter: blur(0);
       pointer-events: auto;
       margin-top: 0;
-      top: 0;
+      top: calc(var(--navbar-height) + 20px);
     }
 
     .site h1 {
@@ -307,6 +307,18 @@
 
     .grid, .card { display: initial; }
 
+    .content {
+      width: 100%;
+      background: var(--content-bg);
+      color: var(--content-fg);
+      padding: 0 24px 40px 24px;
+      border-radius: 0;
+      margin: 0 auto;
+      max-width: none;
+      box-sizing: border-box;
+      padding-top: calc(var(--navbar-height) + 20px);
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .track { transition: none; }
       .word { transition: none; }
@@ -337,7 +349,7 @@
     /* For section pages, ensure content starts right below navbar with no gap */
     .site.show > .content:first-child {
       margin-top: 0;
-      padding-top: 0;
+      padding-top: calc(var(--navbar-height) + 20px);
     }
     .hero-slideshow { position:absolute; inset:0; }
     .hero-slide {

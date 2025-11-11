@@ -200,7 +200,7 @@
       filter: blur(0);
       pointer-events: auto;
       margin-top: 0;
-      top: 0;
+      top: calc(var(--navbar-height) + 20px);
     }
 
     .site h1 {
@@ -223,10 +223,14 @@
     .entry { 
       margin-bottom: 32px; 
       padding: 20px;
-      background: rgba(20, 20, 20, 0.6);
+      background: rgba(0,0,0,.03);
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.1);
+      border: 1px solid rgba(0,0,0,.08);
       transition: transform 200ms ease, box-shadow 200ms ease;
+    }
+    .content-section .entry {
+      background: rgba(0,0,0,.03);
+      border: 1px solid rgba(0,0,0,.08);
     }
     .entry:hover {
       transform: translateY(-2px);
@@ -236,26 +240,38 @@
       margin: 0 0 8px; 
       font-size: 20px; 
       font-weight: 600;
-      color: rgba(255,255,255,.95);
+      color: var(--content-fg);
       line-height: 1.3;
+    }
+    .content-section .entry h3 {
+      color: var(--content-fg);
     }
     .entry h4 {
       margin: 16px 0 8px;
       font-size: 18px;
       font-weight: 600;
-      color: rgba(255,255,255,.9);
+      color: var(--content-fg);
       line-height: 1.3;
+    }
+    .content-section .entry h4 {
+      color: var(--content-fg);
     }
     .meta { 
       font-size: 15px; 
-      color: rgba(255,255,255,.7); 
+      color: rgba(0,0,0,.65); 
       margin: 0 0 12px; 
       font-weight: 500;
+    }
+    .content-section .meta {
+      color: rgba(0,0,0,.65);
     }
     ul.bullets { 
       margin: 0; 
       padding-left: 22px; 
-      color: rgba(255,255,255,.85);
+      color: rgba(0,0,0,.8);
+    }
+    .content-section ul.bullets {
+      color: rgba(0,0,0,.8);
     }
     ul.bullets li { 
       margin: 8px 0; 
@@ -263,8 +279,23 @@
     }
     .entry p {
       margin: 12px 0 0;
-      color: rgba(255,255,255,.85);
+      color: rgba(0,0,0,.85);
       line-height: 1.7;
+    }
+    .content-section .entry p {
+      color: rgba(0,0,0,.85);
+    }
+    .content-section .entry a {
+      color: var(--fg);
+      text-decoration: none;
+      border-bottom: 2px solid rgba(133, 172, 126, 0.3);
+      transition: all 200ms ease;
+      padding-bottom: 2px;
+      font-weight: 500;
+    }
+    .content-section .entry a:hover {
+      border-bottom-color: var(--fg);
+      opacity: 0.8;
     }
 
     /* Media grid for images */
@@ -307,6 +338,18 @@
 
     .grid, .card { display: initial; }
 
+    .content {
+      width: 100%;
+      background: var(--content-bg);
+      color: var(--content-fg);
+      padding: 0 24px 40px 24px;
+      border-radius: 0;
+      margin: 0 auto;
+      max-width: none;
+      box-sizing: border-box;
+      padding-top: calc(var(--navbar-height) + 20px);
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .track { transition: none; }
       .word { transition: none; }
@@ -337,7 +380,7 @@
     /* For section pages, ensure content starts right below navbar with no gap */
     .site.show > .content:first-child {
       margin-top: 0;
-      padding-top: 0;
+      padding-top: calc(var(--navbar-height) + 20px);
     }
     .hero-slideshow { position:absolute; inset:0; }
     .hero-slide {
@@ -469,9 +512,14 @@
       margin: 0 0 24px; 
       letter-spacing: -0.01em;
       font-weight: 700;
-      color: rgba(255,255,255,.95);
+      color: var(--content-fg);
       padding-bottom: 12px;
-      border-bottom: 2px solid rgba(255,255,255,.15);
+      border-bottom: 2px solid rgba(0,0,0,.15);
+    }
+    .content-section h2.underlined {
+      border-bottom: 2px solid rgba(0,0,0,.15);
+      padding-bottom: 12px;
+      margin-bottom: 24px;
     }
 
     .about-content { 
@@ -551,7 +599,96 @@
       line-height: 1.7;
       margin: 0 0 16px;
     }
-        /* Mobile menu button */
+    /* Navbar styles */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(237, 220, 213, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(133, 172, 126, 0.2);
+      padding: 16px 24px;
+      z-index: 100;
+      opacity: 0;
+      transform: translateY(-100%);
+      transition: opacity 600ms ease, transform 600ms ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .navbar.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .navbar-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar-logo {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--fg);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .navbar-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar-links a {
+      color: var(--fg);
+      text-decoration: none;
+      font-size: 20.8px;
+      font-weight: 500;
+      padding: 8px 0;
+      border-bottom: 2px solid transparent;
+      transition: all 200ms ease;
+    }
+    .navbar-links a:hover {
+      border-bottom-color: var(--fg);
+      opacity: 0.8;
+    }
+    .navbar-links a.active {
+      border-bottom-color: var(--fg);
+      opacity: 1;
+    }
+    .navbar-social {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .navbar-social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(237, 220, 213, 0.82);
+      border: 1px solid rgba(133, 172, 126, 0.3);
+      border-radius: 50%;
+      padding: 8px;
+      transition: all 200ms ease;
+      text-decoration: none;
+    }
+    .navbar-social a:hover {
+      background: rgba(218, 194, 198, 0.95);
+      border-color: rgba(133, 172, 126, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,.3);
+    }
+    .navbar-social img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: none;
+    }
+    /* Mobile menu button */
     .navbar-toggle {
       display: none;
       background: none;
@@ -582,7 +719,7 @@
     .navbar-toggle.active span:nth-child(3) {
       transform: rotate(-45deg) translate(7px, -7px);
     }
-        @media (max-width: 768px) {
+    @media (max-width: 768px) {
       .navbar {
         padding: 12px 16px;
       }
@@ -771,49 +908,52 @@
     
     <main id="site" class="site" aria-hidden="true">
       <div class="content">
-<section class="content-section" id="education">
+        <section class="content-section" id="education">
           <h2 class="underlined">Education & Academics</h2>
+          
           <div class="entry">
-            <h3>Farmington High School</h3>
-            <div class="meta">Farmington, Connecticut • Aug 2020 – Jun 2026</div>
-            <ul class="bullets">
-              <li>GPA 97.5% • SAT 800 Math, 730 English</li>
-              <li>Honors include National Recognition Program, AP Scholar with Distinction, Scholastic Art & Writing Awards, FIRST Team Sustainability Award, All‑Academic Athlete, CT COLT Award, Mu Alpha Theta</li>
-            </ul>
-          </div>
-          <div class="entry">
-            <h3>Kenyon College — Kenyon Review Young Writers Workshops</h3>
-            <div class="meta">Gambier, Ohio</div>
-            <ul class="bullets">
-              <li>Creative Writing concentration: nonfiction, memoir, and poetry</li>
-            </ul>
-          </div>
-          <div class="entry">
-            <h3>Yale Young Global Scholars — Innovation in Science & Technology</h3>
-            <div class="meta">Summer 2024</div>
+            <h3>Academics:</h3>
+            
+            <h4>Yale Young Global Scholars – Innovation in Science & Technology (Summer 2024)</h4>
             <p>Explored interdisciplinary STEM fields including physics, molecular biology, chemistry, engineering, and neuroscience through lectures, labs, and collaborative projects that emphasized inquiry and real-world application.</p>
+            
             <h4>Capstone: Computer Science</h4>
             <p>Developed an AI-powered personalized learning platform that integrates educational psychology and adaptive algorithms to enhance engagement and academic growth.</p>
-            <h4>Seminars & Lectures</h4>
-            <ul class="bullets">
-              <li><strong>Introduction to Microelectronics</strong> (Ivan Huang) — Studied semiconductor physics and circuit analysis with a focus on diodes, transistors, MOSFETs, and amplifiers while bridging theory with practical design</li>
-              <li><strong>Model Fitting: Forecasting Extreme Weather</strong> (Mashiko Lortkipanidze) — Applied Bayesian statistical modeling and data analysis to understand climate change through the prediction of extreme weather events</li>
-              <li><strong>The Crooked Line Between the Finite and the Infinite</strong> (Benjamin Grant) — Explored geometric reflections and symmetry using algebraic tools such as Coxeter groups and diagrams to classify mirror configurations</li>
-              <li><strong>Image Making in the Age of AI</strong> (Nahom Seyoum) — Analyzed how AI and computer technologies influence modern image-making, ethics, and artistic expression</li>
-              <li><strong>Observing Star and Planet Formation</strong> (Hector Arce) — Studied star and planet formation using multiwavelength observation and modern astronomical instruments</li>
-              <li><strong>Nutrition, Food Practices, and Equity</strong> (Erica Watson) — Examined how race, culture, and access shape nutrition, health, and food systems with a focus on social equity</li>
-              <li><strong>Musical Intervention in Medicine</strong> (Tom Duffy) — Explored how music-based training helps medical students identify body sounds, blending art and anatomy in diagnostic education</li>
-              <li><strong>The Scientific Method in Everyday Life</strong> (David Hillier) — Investigated how the scientific method can be applied across professions and daily life to improve understanding of the world</li>
-            </ul>
-            <h4>Symposium: CubeSat</h4>
-            <p>Built and programmed CubeSat prototypes using Arduino sensors to collect environmental data and simulate real-world space research.</p>
             <p><a href="https://docs.google.com/presentation/d/1wirvCMcuOJWpMmvlMGc0b8yncAp-eQ5d/edit?usp=sharing&ouid=110452420028554407544&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer">View Capstone Presentation →</a></p>
+            
+            <h4>Seminar: Introduction to Microelectronics (Ivan Huang)</h4>
+            <p>Studied semiconductor physics and circuit analysis with a focus on diodes, transistors, MOSFETs, and amplifiers while bridging theory with practical design.</p>
+            
+            <h4>Seminar: Model Fitting: Forecasting Extreme Weather (Mashiko Lortkipanidze)</h4>
+            <p>Applied Bayesian statistical modeling and data analysis to understand climate change through the prediction of extreme weather events.</p>
+            
+            <h4>Seminar: The Crooked Line Between the Finite and the Infinite (Benjamin Grant)</h4>
+            <p>Explored geometric reflections and symmetry using algebraic tools such as Coxeter groups and diagrams to classify mirror configurations.</p>
+            
+            <h4>Seminar: Image Making in the Age of AI (Nahom Seyoum)</h4>
+            <p>Analyzed how AI and computer technologies influence modern image-making, ethics, and artistic expression.</p>
+            
+            <h4>Lecture: Observing Star and Planet Formation (Hector Arce)</h4>
+            <p>Studied star and planet formation using multiwavelength observation and modern astronomical instruments.</p>
+            
+            <h4>Lecture: Nutrition, Food Practices, and Equity (Erica Watson)</h4>
+            <p>Examined how race, culture, and access shape nutrition, health, and food systems with a focus on social equity.</p>
+            
+            <h4>Lecture: Musical Intervention in Medicine (Tom Duffy)</h4>
+            <p>Explored how music-based training helps medical students identify body sounds, blending art and anatomy in diagnostic education.</p>
+            
+            <h4>Lecture: The Scientific Method in Everyday Life (David Hillier)</h4>
+            <p>Investigated how the scientific method can be applied across professions and daily life to improve understanding of the world.</p>
+            
+            <h4>Symposium: CubeSat (Nahom Seyoum, Asher Mehr)</h4>
+            <p>Built and programmed CubeSat prototypes using Arduino sensors to collect environmental data and simulate real-world space research.</p>
           </div>
+          
           <div class="entry">
-            <h3>Barnard College — NextGen Leadership Institute, STEMinist Track</h3>
-            <div class="meta">New York City, New York • Summer 2024</div>
-            <p>Participated in a three-week program in New York City exploring leadership through a feminist lens. In the STEMinist track, examined the role of women in science and technology while developing leadership, problem-solving, and communication skills through workshops and mentorship from the Athena Center for Leadership. Gained insight into how inclusive innovation and equity shape the future of STEM.</p>
-            <p>Also participated in "The Exploration of Space" program, further expanding interdisciplinary learning.</p>
+            <h4>Barnard College – NextGen Leadership Institute, STEMnist Track (Summer 2024)</h4>
+            <p>Participated in a three-week program in New York City exploring leadership through a feminist lens. In the STEMnist track, examined the role of women in science and technology while developing leadership, problem-solving, and communication skills through workshops and mentorship from the Athena Center for Leadership. Gained insight into how inclusive innovation and equity shape the future of STEM.</p>
+            <p><a href="https://drive.google.com/file/d/1HhugyHCTq-DF7ByFbQctEwtS3PO3pV0I/view?usp=sharing" target="_blank" rel="noopener noreferrer">View Certificate →</a></p>
+            <p><a href="https://drive.google.com/file/d/11dx7qXamVWScu8Jzk1HryLAeqIxD5KKT/view?usp=sharing" target="_blank" rel="noopener noreferrer">View Additional Document →</a></p>
           </div>
         </section>
 

@@ -200,7 +200,7 @@
       filter: blur(0);
       pointer-events: auto;
       margin-top: 0;
-      top: 0;
+      top: calc(var(--navbar-height) + 20px);
     }
 
     .site h1 {
@@ -337,7 +337,7 @@
     /* For section pages, ensure content starts right below navbar with no gap */
     .site.show > .content:first-child {
       margin-top: 0;
-      padding-top: 0;
+      padding-top: calc(var(--navbar-height) + 20px);
     }
     .hero-slideshow { position:absolute; inset:0; }
     .hero-slide {
@@ -709,7 +709,7 @@
       margin: 0 auto;
       max-width: none;
       box-sizing: border-box;
-      padding-top: 0; /* No top padding, margin handles spacing */
+      padding-top: calc(var(--navbar-height) + 20px);
     }
     
     /* Content section styling - white background with black text */
@@ -1284,25 +1284,53 @@
     
     <main id="site" class="site" aria-hidden="true">
       <div class="content">
-<section class="content-section" id="research">
+        <section class="content-section" id="research">
           <h2 class="underlined">Research</h2>
+          
           <div class="entry">
-            <h3>Yale School of Medicine, Yan Lab — Research Assistant</h3>
-            <div class="meta">New Haven, Connecticut • Jun 2025 – Aug 2025</div>
             <p>At the Yan Lab in the Yale School of Medicine's Department of Pathology, I studied the function of Endogenous Retroviruses (ERVs), ancient viral sequences often considered "junk DNA." My project focused on reactivating these ERVs through precise epigenetic editing to better understand their role in cancer and immunity.</p>
-            <p>I constructed the lab's central molecular tool, a dCas9-KDM4D fusion protein designed to remove repressive H3K9me3 histone marks from ERV loci. I designed primers, performed PCR-based molecular cloning, and successfully assembled the lentiviral plasmid carrying our editor. After delivering the construct into target cells, I validated its expression through Western blot analysis.</p>
+            <p>I constructed the lab's central molecular tool, a Cas9 KDM4D fusion protein designed to remove repressive H3K9me3 histone marks from ERV loci. I designed primers, performed PCR-based molecular cloning, and successfully assembled the lentiviral plasmid carrying our editor. After delivering the construct into target cells, I validated its expression through Western blot analysis.</p>
             <p>This validated construct became the foundation for the lab's large-scale study on ERV function, enabling new exploration into how ERV reactivation may influence tumor biology and immune responses. I concluded my research by presenting my methods and results at a formal Yan Lab meeting at Yale.</p>
-            <p><strong>Research Impact:</strong> The successful construction and validation of the dCas9-KDM4D epigenetic editor enable the lab to study ERV activation with unprecedented precision. This tool provides a framework for exploring how epigenetic regulation of viral elements shapes the tumor microenvironment and immune signaling, potentially informing new therapeutic strategies that harness the body's immune system to recognize and eliminate tumor cells.</p>
-            <p><a href="https://medicine.yale.edu/lab/yan/research/" target="_blank" rel="noopener noreferrer">Learn more about the Yan Lab →</a></p>
+            
+            <div class="media-grid" style="margin: 32px 0;">
+              <img src="../media/research/yan1.png" alt="Yan Lab research image 1" class="gallery-image">
+              <img src="../media/research/yan2.png" alt="Yan Lab research image 2" class="gallery-image">
+              <img src="../media/research/yan3.png" alt="Yan Lab research image 3" class="gallery-image">
+            </div>
+            
+            <p><a href="https://medicine.yale.edu/lab/yan/research/" target="_blank" rel="noopener noreferrer">Website of the lab: https://medicine.yale.edu/lab/yan/research/ →</a></p>
           </div>
-          <div class="entry">
-            <h3>University of Hartford, Civil Engineering — Research Assistant</h3>
-            <div class="meta">Hartford, Connecticut • Jun 2025 – Sep 2025</div>
-            <ul class="bullets">
-              <li>Developing an app to standardize concrete roughness estimation</li>
-              <li>Designed CAD models, built a mechanical shaking board, and ran tuning tests</li>
-              <li>Explored sustainable uses of FRP, including seawater concrete and bio-based materials</li>
-            </ul>
+
+          <div class="entry" style="margin-top: 40px;">
+            <h3>Research: Melanoma and Endogenous Retroviruses</h3>
+            
+            <p style="font-weight: 600; margin: 20px 0 16px; color: var(--content-fg);">Figure 1. Reactivation of Endogenous Retroviruses (ERVs) as a potential mechanism for anti-tumor immunity.</p>
+            
+            <p>Endogenous Retroviruses (ERVs) are ancient viral elements that make up nearly 8% of the human genome. Once infectious, these sequences are now silenced by epigenetic modifications such as H3K9me3 to preserve genomic stability. Recent studies suggest that reactivation of ERVs in tumor cells can mimic viral infection and stimulate strong immune responses against cancer. This phenomenon, known as viral mimicry, represents an emerging direction in melanoma immunotherapy research.</p>
+            
+            <p style="font-weight: 600; margin: 24px 0 16px; color: var(--content-fg);">Figure 2. Diagram illustrating the concept of viral mimicry and ERV-driven immune activation.</p>
+            
+            <p>At the Yale School of Medicine, the Yan Laboratory studies how histone demethylases regulate ERV silencing and how their dysregulation affects cancer progression and immune response. In this context, I contributed to the lab's ongoing effort to understand the functional role of ERV reactivation through precise epigenetic editing.</p>
+          </div>
+
+          <div class="entry" style="margin-top: 40px;">
+            <h4>Project Focus: Locus-Specific Reactivation of ERVs</h4>
+            
+            <p style="font-weight: 600; margin: 20px 0 16px; color: var(--content-fg);">Figure 3. Design of a dCas9-KDM4D fusion construct for targeted epigenetic editing.</p>
+            
+            <p>My research focused on developing a molecular tool to specifically reactivate ERVs by removing repressive histone marks. I constructed a dCas9-KDM4D fusion protein, engineered to erase H3K9me3 at ERV loci without altering the rest of the genome. To achieve this, I designed primers and performed PCR-based molecular cloning to assemble the lentiviral plasmid carrying the fusion construct.</p>
+            
+            <p>After verifying correct assembly through colony screening and sequencing, I transfected mammalian cells and confirmed expression of the fusion protein by Western blot analysis. This validated system now serves as the foundation for the lab's functional screening platform that will map which ERV families most strongly influence anti-tumor immunity in melanoma.</p>
+          </div>
+
+          <div class="entry" style="margin-top: 40px;">
+            <h4>Research Impact</h4>
+            
+            <p style="font-weight: 600; margin: 20px 0 16px; color: var(--content-fg);">Figure 4. Model of CRISPR-based epigenetic reactivation of ERVs and downstream immune response.</p>
+            
+            <p>The successful construction and validation of the dCas9-KDM4D epigenetic editor enable the lab to study ERV activation with unprecedented precision. This tool provides a framework for exploring how epigenetic regulation of viral elements shapes the tumor microenvironment and immune signaling.</p>
+            
+            <p>By contributing to this project, I helped establish a critical molecular platform that supports the lab's broader goal of uncovering how chromatin modifications influence cancer immunity. The insights gained may ultimately inform new therapeutic strategies that harness the body's immune system to recognize and eliminate tumor cells.</p>
           </div>
         </section>
       </div>
