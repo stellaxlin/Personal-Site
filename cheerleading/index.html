@@ -963,7 +963,6 @@
   </div>
 
   <!-- Lightbox Modal -->
-<!-- Lightbox Modal -->
   <div id="lightbox" class="lightbox">
     <span class="lightbox-close">&times;</span>
     <span class="lightbox-nav lightbox-prev">&#8249;</span>
@@ -971,8 +970,7 @@
     <div class="lightbox-content">
       <img id="lightbox-image" src="" alt="">
     </div>
-
-</body>
+  </div>
 
   <script>
     // Skip boot animation for section pages - show content immediately
@@ -1007,6 +1005,12 @@
       const lightboxNext = document.querySelector('.lightbox-next');
       const galleryImages = document.querySelectorAll('.gallery-image');
       
+      // Check if required elements exist
+      if (!lightbox || !lightboxImage) {
+        console.warn('Lightbox elements not found');
+        return;
+      }
+      
       let currentIndex = 0;
       let images = [];
       
@@ -1019,7 +1023,7 @@
       });
       
       function openLightbox(index) {
-        if (images.length === 0) return;
+        if (images.length === 0 || !lightbox || !lightboxImage) return;
         currentIndex = index;
         updateLightboxImage();
         lightbox.classList.add('active');
@@ -1027,19 +1031,24 @@
       }
       
       function closeLightbox() {
+        if (!lightbox) return;
         lightbox.classList.remove('active');
         document.body.style.overflow = '';
       }
       
       function updateLightboxImage() {
-        if (images.length === 0) return;
+        if (images.length === 0 || !lightboxImage) return;
         const image = images[currentIndex];
         lightboxImage.src = image.src;
         lightboxImage.alt = image.alt;
         
         // Show/hide navigation arrows
-        lightboxPrev.style.display = images.length > 1 ? 'block' : 'none';
-        lightboxNext.style.display = images.length > 1 ? 'block' : 'none';
+        if (lightboxPrev) {
+          lightboxPrev.style.display = images.length > 1 ? 'block' : 'none';
+        }
+        if (lightboxNext) {
+          lightboxNext.style.display = images.length > 1 ? 'block' : 'none';
+        }
       }
       
       function showNext() {
@@ -1059,9 +1068,15 @@
         img.addEventListener('click', () => openLightbox(index));
       });
       
-      if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
-      if (lightboxPrev) lightboxPrev.addEventListener('click', showPrev);
-      if (lightboxNext) lightboxNext.addEventListener('click', showNext);
+      if (lightboxClose) {
+        lightboxClose.addEventListener('click', closeLightbox);
+      }
+      if (lightboxPrev) {
+        lightboxPrev.addEventListener('click', showPrev);
+      }
+      if (lightboxNext) {
+        lightboxNext.addEventListener('click', showNext);
+      }
       
       // Close on background click
       if (lightbox) {
