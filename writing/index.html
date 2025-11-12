@@ -227,6 +227,13 @@
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,.1);
       transition: transform 200ms ease, box-shadow 200ms ease;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 600ms ease, transform 600ms ease, box-shadow 200ms ease;
+    }
+    .entry.fade-in {
+      opacity: 1;
+      transform: translateY(0);
     }
     .entry:hover {
       transform: translateY(-2px);
@@ -799,6 +806,13 @@
       max-height: 300px;
       overflow: hidden;
       position: relative;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 600ms ease, transform 600ms ease, box-shadow 300ms ease;
+    }
+    .writing-card.fade-in {
+      opacity: 1;
+      transform: translateY(0);
     }
     .writing-card:hover {
       box-shadow: 0 4px 12px rgba(0,0,0,.1);
@@ -1985,6 +1999,47 @@ Ink still stains my fingers. And I continue to write.</div>
     })();
   </script>
   
+  <script>
+    // Scroll fade-in animation for sections
+    (function() {
+      const observerOptions = {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const fadeInObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in');
+            fadeInObserver.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      function initFadeIn() {
+        const elements = document.querySelectorAll('.entry, .writing-card');
+        elements.forEach(element => {
+          fadeInObserver.observe(element);
+        });
+      }
+
+      const site = document.getElementById('site');
+      if (site && site.classList.contains('show')) {
+        initFadeIn();
+      } else {
+        const checkSite = setInterval(() => {
+          if (site && site.classList.contains('show')) {
+            initFadeIn();
+            clearInterval(checkSite);
+          }
+        }, 100);
+        setTimeout(() => {
+          clearInterval(checkSite);
+          initFadeIn();
+        }, 2000);
+      }
+    })();
+  </script>
   <script>
     // Mobile menu toggle
     (function() {
