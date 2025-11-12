@@ -800,10 +800,6 @@
       overflow: hidden;
       position: relative;
     }
-    .writing-card.expanded {
-      max-height: none;
-      min-height: 300px;
-    }
     .writing-card:hover {
       box-shadow: 0 4px 12px rgba(0,0,0,.1);
       transform: translateY(-2px);
@@ -827,7 +823,7 @@
       overflow: hidden;
       position: relative;
     }
-    .writing-card-content.preview::after {
+    .writing-card-content::after {
       content: '';
       position: absolute;
       bottom: 0;
@@ -836,12 +832,6 @@
       height: 60px;
       background: linear-gradient(to bottom, transparent, rgba(248, 246, 232, 1));
       pointer-events: none;
-    }
-    .writing-card-content.expanded {
-      overflow: visible;
-    }
-    .writing-card-content.expanded::after {
-      display: none;
     }
     .writing-card .poem,
     .writing-card .essay {
@@ -875,10 +865,10 @@
     .writing-card-button {
       margin-top: 16px;
       padding: 10px 20px;
-      background: rgba(237, 220, 213, 0.8);
-      border: 2px solid rgba(133, 172, 126, 0.3);
+      background: #6b8a6e;
+      border: 2px solid #6b8a6e;
       border-radius: 8px;
-      color: var(--content-fg);
+      color: #ffffff;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
@@ -887,9 +877,109 @@
       align-self: flex-start;
     }
     .writing-card-button:hover {
-      background: rgba(218, 194, 198, 0.95);
-      border-color: rgba(133, 172, 126, 0.5);
+      background: #5a7a55;
+      border-color: #5a7a55;
       transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(107, 138, 110, 0.3);
+    }
+    
+    /* Writing modal popup */
+    .writing-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      animation: fadeIn 0.3s ease;
+      overflow: auto;
+    }
+    .writing-modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .writing-modal-content {
+      position: relative;
+      background: var(--content-bg);
+      border-radius: 12px;
+      padding: 40px;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: slideUp 0.3s ease;
+      width: 100%;
+    }
+    .writing-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      color: var(--content-fg);
+      font-size: 32px;
+      font-weight: bold;
+      cursor: pointer;
+      line-height: 1;
+      transition: opacity 0.2s ease;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(0,0,0,.05);
+    }
+    .writing-modal-close:hover {
+      opacity: 0.7;
+      background: rgba(0,0,0,.1);
+    }
+    .writing-modal-content .poem-title,
+    .writing-modal-content .essay-title {
+      font-size: 28px;
+      margin-bottom: 16px;
+      margin-top: 0;
+    }
+    .writing-modal-content .essay-subtitle {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .writing-modal-content .poem,
+    .writing-modal-content .essay {
+      font-size: 18px;
+      line-height: 1.9;
+      margin: 0;
+      white-space: pre-line;
+    }
+    .writing-modal-content .poem {
+      line-height: 2.2;
+      text-align: center;
+    }
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    @media (max-width: 768px) {
+      .writing-modal-content {
+        padding: 32px 24px;
+        max-height: 95vh;
+      }
+      .writing-modal-content .poem-title,
+      .writing-modal-content .essay-title {
+        font-size: 24px;
+      }
+      .writing-modal-content .poem,
+      .writing-modal-content .essay {
+        font-size: 16px;
+      }
     }
     @media (max-width: 768px) {
       .writing-grid {
@@ -989,7 +1079,7 @@
     }
     
     /* Improved button styling */
-    .content-section button,
+    .content-section button:not(.writing-card-button),
     .content-section .button,
     .content-section input[type="submit"],
     .content-section input[type="button"] {
@@ -1005,7 +1095,7 @@
       box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
       font-family: 'Merriweather', serif;
     }
-    .content-section button:hover,
+    .content-section button:not(.writing-card-button):hover,
     .content-section .button:hover,
     .content-section input[type="submit"]:hover,
     .content-section input[type="button"]:hover {
@@ -1013,7 +1103,7 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
     }
-    .content-section button:active,
+    .content-section button:not(.writing-card-button):active,
     .content-section .button:active,
     .content-section input[type="submit"]:active,
     .content-section input[type="button"]:active {
@@ -1533,7 +1623,7 @@
 
 你和我。</div>
                 </div>
-                <button class="writing-card-button" onclick="toggleCard(this)">Read more</button>
+                <button class="writing-card-button" onclick="openWritingModal(this)">Read more</button>
               </div>
 
               <!-- Card 2: 岁月飞翔的痕迹 -->
@@ -1563,7 +1653,7 @@
 
 不远处，绿柳如丝，碧水静谧。</div>
                 </div>
-                <button class="writing-card-button" onclick="toggleCard(this)">Read more</button>
+                <button class="writing-card-button" onclick="openWritingModal(this)">Read more</button>
               </div>
 
               <!-- Card 3: The Snowflake That Didn't Melt -->
@@ -1584,7 +1674,7 @@ I still believe stories have the power to kiss the world and stay.
 
 So I write.</div>
                 </div>
-                <button class="writing-card-button" onclick="toggleCard(this)">Read more</button>
+                <button class="writing-card-button" onclick="openWritingModal(this)">Read more</button>
               </div>
 
               <!-- Card 4: Open Letter -->
@@ -1628,7 +1718,7 @@ Now, if you'll excuse me, I've got a pen to pick up.
 
 Your now-ex</div>
                 </div>
-                <button class="writing-card-button" onclick="toggleCard(this)">Read more</button>
+                <button class="writing-card-button" onclick="openWritingModal(this)">Read more</button>
               </div>
 
               <!-- Card 5: I love the feeling -->
@@ -1655,7 +1745,7 @@ Through embracing another language, I learned that by stepping out of my comfort
 
 Ink still stains my fingers. And I continue to write.</div>
                 </div>
-                <button class="writing-card-button" onclick="toggleCard(this)">Read more</button>
+                <button class="writing-card-button" onclick="openWritingModal(this)">Read more</button>
               </div>
             </div>
           </div>
@@ -1702,6 +1792,14 @@ Ink still stains my fingers. And I continue to write.</div>
     <span class="lightbox-nav lightbox-next">&#8250;</span>
     <div class="lightbox-content">
       <img id="lightbox-image" src="" alt="">
+    </div>
+  </div>
+
+  <!-- Writing Modal -->
+  <div id="writing-modal" class="writing-modal">
+    <div class="writing-modal-content">
+      <span class="writing-modal-close">&times;</span>
+      <div id="writing-modal-body"></div>
     </div>
   </div>
 
@@ -1821,30 +1919,70 @@ Ink still stains my fingers. And I continue to write.</div>
   </script>
   
   <script>
-    // Writing card expand/collapse functionality
-    function toggleCard(button) {
-      const card = button.closest('.writing-card');
-      const content = card.querySelector('.writing-card-content');
-      const isExpanded = card.classList.contains('expanded');
+    // Writing modal functionality
+    (function() {
+      const modal = document.getElementById('writing-modal');
+      const modalBody = document.getElementById('writing-modal-body');
+      const modalClose = document.querySelector('.writing-modal-close');
       
-      if (isExpanded) {
-        // Collapse
-        card.classList.remove('expanded');
-        content.classList.add('preview');
-        content.classList.remove('expanded');
-        button.textContent = 'Read more';
-        // Scroll card into view smoothly
-        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      } else {
-        // Expand
-        card.classList.add('expanded');
-        content.classList.remove('preview');
-        content.classList.add('expanded');
-        button.textContent = 'Read less';
-        // Scroll card into view smoothly
-        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      function openWritingModal(button) {
+        const card = button.closest('.writing-card');
+        const title = card.querySelector('.poem-title, .essay-title');
+        const subtitle = card.querySelector('.essay-subtitle');
+        const content = card.querySelector('.poem, .essay');
+        
+        // Build modal content
+        let html = '';
+        if (title) {
+          html += title.outerHTML;
+        }
+        if (subtitle) {
+          html += subtitle.outerHTML;
+        }
+        if (content) {
+          html += content.outerHTML;
+        }
+        
+        modalBody.innerHTML = html;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Scroll modal content to top
+        const modalContent = document.querySelector('.writing-modal-content');
+        if (modalContent) {
+          modalContent.scrollTop = 0;
+        }
       }
-    }
+      
+      function closeWritingModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+      
+      // Close button
+      if (modalClose) {
+        modalClose.addEventListener('click', closeWritingModal);
+      }
+      
+      // Close on background click
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            closeWritingModal();
+          }
+        });
+      }
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          closeWritingModal();
+        }
+      });
+      
+      // Make function globally available
+      window.openWritingModal = openWritingModal;
+    })();
   </script>
   
   <script>
