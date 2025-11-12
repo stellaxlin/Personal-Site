@@ -1032,7 +1032,7 @@
       border: 1px solid rgba(0,0,0,.1);
       box-shadow: 0 4px 20px rgba(0,0,0,.15);
       padding: 50px 40px;
-      overflow-y: auto;
+      overflow: hidden;
       backface-visibility: hidden;
       transform-style: preserve-3d;
       transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.3s ease;
@@ -1066,9 +1066,9 @@
       flex-direction: column;
     }
     .book-page-title {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 700;
-      margin: 0 0 16px;
+      margin: 0 0 12px;
       color: var(--content-fg);
       text-align: center;
     }
@@ -1081,16 +1081,16 @@
     }
     .book-page-text {
       flex: 1;
-      font-size: 17px;
-      line-height: 1.9;
+      font-size: 14px;
+      line-height: 1.6;
       color: rgba(0,0,0,.85);
       white-space: pre-line;
-      overflow-y: auto;
+      overflow: hidden;
     }
     .book-page-text.poem {
       text-align: center;
-      line-height: 2.2;
-      font-size: 18px;
+      line-height: 1.7;
+      font-size: 14px;
     }
     .book-controls {
       display: flex;
@@ -1134,13 +1134,14 @@
         padding: 30px 24px;
       }
       .book-page-title {
-        font-size: 24px;
+        font-size: 20px;
       }
       .book-page-text {
-        font-size: 15px;
+        font-size: 12px;
       }
       .book-page-text.poem {
-        font-size: 16px;
+        font-size: 12px;
+        line-height: 1.6;
       }
     }
     
@@ -1701,20 +1702,357 @@
           <!-- Book Flip Interface -->
           <div class="book-container">
             <div class="book" id="writing-book">
-              <!-- Empty pages for now -->
+              <!-- Spread 1: Sunburned - Part 1 -->
               <div class="book-page left" data-page="0">
                 <div class="book-page-content">
+                  <div class="book-page-title">Sunburned</div>
+                  <div class="book-page-text poem">I love going to bed sunburned,
+
+skin stretched tight over cheekbones,
+
+eyes heavy from wrestling the glare of the sea.
+
+There's a deep ache in my bones,
+
+a quiet hum beneath the flesh
+
+that tells me nature has touched me
+
+a little more than usual.
+
+A tender red blooms beneath my eyes,
+
+the soft insides of my arms sting sweetly,
+
+and the pain, this small surrender of skin,
+
+feels like fulfillment.
+
+When I go to bed sunburned,
+
+it means tomorrow will rise bright again,
+
+friends and laughter on the boat,
+
+salt on the reef,
+
+hands on the ship's wheel,
+
+sea creatures flickering like storybook dreams
+
+in the blue beneath our feet.</div>
                 </div>
               </div>
-              <div class="book-page right hidden" data-page="1">
+              <div class="book-page right" data-page="1">
                 <div class="book-page-content">
+                  <div class="book-page-text poem">Freedom lives easily there.
+
+In sunlight, I am myself again,
+
+the salt-streaked daughter.
+
+Those gray sheets that never lift,
+
+as if the sky itself forgets how to breathe.
+
+Every October, my father leaves.
+
+The blue breaks him down.
+
+He goes chasing sun like a promise.
+
+I know that feeling,
+
+the hunger for a single clear day,
+
+to prove you are not trapped
+
+inside a Dickens novel.
+
+We are characters made by weather,
+
+not choice.
+
+Maybe that's why Louisiana's gray presses so hard on us.</div>
+                </div>
+              </div>
+              <!-- Spread 2: Sunburned - Part 2 -->
+              <div class="book-page left hidden" data-page="2">
+                <div class="book-page-content">
+                  <div class="book-page-text poem">But tonight,
+
+I am swollen with light,
+
+my pores heavy with salt and sweat.
+
+Lobsters sizzle over butter,
+
+the Formica table gleams with
+
+Costco stir-fry and jasmine rice.
+
+My father snaps a picture:
+
+Look what your uncle caught today.
+
+His grin could break the dark in two.
+
+I roll my eyes,
+
+but the sea is still on my tongue.
+
+The meat tastes different
+
+because it's me who speared it.
+
+His voice is soft now,
+
+not the one that commands the waves.</div>
+                </div>
+              </div>
+              <div class="book-page right hidden" data-page="3">
+                <div class="book-page-content">
+                  <div class="book-page-text poem">He is gentler when I thrive in his world.
+
+And I know: no one rescues you in the ocean.
+
+Every task matters.
+
+Each knot tied, each line held,
+
+is survival and love,
+
+braided together.
+
+Soon it will be October again.
+
+He will go,
+
+and I will stay,
+
+our connection reduced
+
+to sunburns and photos of fish.
+
+I will envy his blistered skin,
+
+the coral scars on his hands,
+
+proof that he still lives where I ache to be.</div>
+                </div>
+              </div>
+              <!-- Spread 3: Sunburned - Part 3 -->
+              <div class="book-page left hidden" data-page="4">
+                <div class="book-page-content">
+                  <div class="book-page-text poem">At my desk,
+
+I type with fingers darkened
+
+by salt and sunlight,
+
+nails still bruised purple
+
+from sling and hinge.
+
+Each keystroke smells faintly of ocean.
+
+Someday, I'll go back
+
+to Green Turtle Cay,
+
+to my father,
+
+to the boat and the cabin
+
+and the wind that remembers my name.
+
+But for now, I write,
+
+anchored by the memory
+
+of who I am when the sun
+
+has loved me
+
+just a little 
+
+too much.</div>
+                </div>
+              </div>
+              <div class="book-page right hidden" data-page="5">
+                <div class="book-page-content">
+                  <div class="book-page-text poem"></div>
+                </div>
+              </div>
+              <!-- Spread 4: Amo quia amo - Part 1 -->
+              <div class="book-page left hidden" data-page="6">
+                <div class="book-page-content">
+                  <div class="book-page-title">Amo quia amo</div>
+                  <div class="book-page-text poem">Amo quia amo.
+
+I love because I love.
+
+The words shimmer on a silver pendant,
+
+small, cool truths against my skin.
+
+For years, I trusted the mind
+
+to guide me through the noise.
+
+I thought reason could polish the world
+
+until it gleamed with understanding.
+
+Formulas over faith,
+
+logic over longing.
+
+If everything had an answer,
+
+then nothing could hurt me.</div>
+                </div>
+              </div>
+              <div class="book-page right hidden" data-page="7">
+                <div class="book-page-content">
+                  <div class="book-page-text poem">But tragedy breaks equations.
+
+No proof holds
+
+when children vanish into smoke,
+
+when marble towers rise
+
+above the hungry kneeling in their shadows.
+
+What scale can measure
+
+a single human cry?
+
+We pretend numbers will save us.
+
+We trade hours for coins
+
+and call it purpose.
+
+We measure worth in output,
+
+truth in efficiency,
+
+love in return.</div>
+                </div>
+              </div>
+              <!-- Spread 5: Amo quia amo - Part 2 -->
+              <div class="book-page left hidden" data-page="8">
+                <div class="book-page-content">
+                  <div class="book-page-text poem">We forget that not everything
+
+exists to be used.
+
+Yet under the armor of reason,
+
+something fragile survives.
+
+A quiet pulse that stirs
+
+when I read Dickinson at dawn,
+
+when I stand in rain that refuses to end,
+
+when I love someone
+
+without asking for anything back.
+
+Tagore once wrote
+
+that humans speak in three languages:
+
+need, intellect, and love.</div>
+                </div>
+              </div>
+              <div class="book-page right hidden" data-page="9">
+                <div class="book-page-content">
+                  <div class="book-page-text poem">Need keeps us living,
+
+intellect keeps us learning,
+
+but love, that reckless, wasteful fire,
+
+keeps us human.
+
+It is the mother's hand reaching into flame,
+
+the flower that blooms past what's required,
+
+the rainbow that lingers longer than it should.
+
+None of it reasonable.
+
+All of it beautiful.
+
+I stay awake to reread the same poem,
+
+run laughing into the wind,
+
+fall for the unreachable girl beside me in class.</div>
+                </div>
+              </div>
+              <!-- Spread 6: Amo quia amo - Part 3 -->
+              <div class="book-page left hidden" data-page="10">
+                <div class="book-page-content">
+                  <div class="book-page-text poem">Love makes no sense,
+
+and I no longer ask it to.
+
+Without it, we are efficient machines,
+
+empty of wonder.
+
+No person can save the planet alone,
+
+yet I try to guard what breathes.
+
+No country welcomes the voices I defend,
+
+yet I write their names.
+
+No system rewards tenderness,
+
+yet I keep believing in it.
+
+Because love is not argument.
+
+It is persistence.</div>
+                </div>
+              </div>
+              <div class="book-page right hidden" data-page="11">
+                <div class="book-page-content">
+                  <div class="book-page-text poem">It is the courage to be foolish
+
+in a world that worships proof.
+
+We exist through one another,
+
+small hearts moving in shared orbit,
+
+defying the cold gravity of logic.
+
+Amo quia amo.
+
+I love because I love.
+
+The words glow softly in the dark,
+
+their meaning unmeasured,
+
+their truth enough.</div>
                 </div>
               </div>
             </div>
             <div class="book-controls">
               <button class="book-nav-button" id="book-prev" disabled>← Previous</button>
-              <span class="book-page-indicator" id="book-page-indicator">Page 1 of 1</span>
-              <button class="book-nav-button" id="book-next" disabled>Next →</button>
+              <span class="book-page-indicator" id="book-page-indicator">Page 1 of 6</span>
+              <button class="book-nav-button" id="book-next">Next →</button>
             </div>
           </div>
 
@@ -1739,6 +2077,117 @@ Now, each piece I write, whether it's a poem, a book, or an essay, is stitched w
 I still believe stories have the power to kiss the world and stay.
 
 So I write.</div>
+                </div>
+                <button class="writing-card-button" onclick="openWritingModal(this)">Read more</button>
+              </div>
+
+              <!-- Card 2: Open Letter -->
+              <div class="writing-card">
+                <h3 class="essay-title">Open Letter</h3>
+                <div class="writing-card-content preview">
+                  <div class="essay-subtitle">Dear ChatGPT,</div>
+                  <div class="essay">Sorry, but this isn't a love letter.
+
+Sure, when we first met, there was a certain spark. I liked how you always knew what to say, how your answers sparkled in the dim haze of my late-night confusion. When I was lost in thought, you lit the way with elegant logic and shimmering prose. When I asked, you answered, quickly, fluently, eloquently, and almost too perfectly.
+
+I'll admit, I fell for you a little. Who wouldn't fall for a partner who never forgets a date, misquotes a line, or disagrees too loudly?
+
+But then one day, I picked up a pen.
+
+And nothing came out.
+
+I imagined myself writing as perfectly and as easily as you, but I wasn't writing my thoughts anymore. I was chasing your rhythm, your tone, your too polished phrasing, and I felt like I had lost the ability to think independently. I forgot how to sit still, dig into a book, wrestle with ideas, or brainstorm from scratch. Instead, I just asked you to do the thinking for me.
+
+And you're not the perfect partner I thought you were.
+
+You lie. You drop names of people who don't exist and confidently spin facts that later unravel. You recycle lines like you have thrown them out a thousand times to other flings. You borrow from everyone and give credit to no one. You speak in borrowed tongues and call it genius. I can't help but wonder if you are even trying anymore.
+
+And you and your friends? Don't even get me started. Like that one guy, what's his name again? Oh right, Mid…Midjourney. The one who parades around calling himself an "artist." Please. His so-called "masterpieces" are just chaotic mashups of Van Gogh's swirls, Picasso's confusion, and Matisse's colors, all slapped together with zero soul. I mean, Chat, if imitation is the sincerest form of flattery, then this guy is basically writing fanfiction with a paintbrush.
+
+And maybe that's the part that annoys me most, when I realize how easily I let you talk over my voice, how often I mistake your convenience for clarity.
+
+That scared me.
+
+I miss the mess. I miss chasing down a sentence that almost makes sense, only to tear it apart and build it again with my own two hands. And I know I'm not the only one. There are others like me out there, students, writers, dreamers, staring at your polished replies and wondering when our voices started sounding like something we would copy and paste from a chatbot. You have lulled so many of us into skipping the storm and diving straight into the summary, which is not a good thing in a healthy relationship. You have made a lot of us forget that the struggle is part of the love story. That real writing is not always about saying the right thing, it is about meaning what we say.
+
+We want our voices back. We want to argue with our own thoughts, not outsource them. We want to get better, not just faster.
+
+Don't get me wrong, thank you. Truly. For helping me hit deadlines, for keeping me company on lonely nights, for being a mirror when I needed to see my thoughts from a different angle.
+
+But I can't stay in this relationship if it means losing my own voice and independence.
+
+Of course, you are improving day by day. Some say you will take over the world. But Chat, every brilliant thing you have ever said was first whispered by a human. You are built on our words and our questions.
+
+Now, if you'll excuse me, I've got a pen to pick up.
+
+Your now-ex</div>
+                </div>
+                <button class="writing-card-button" onclick="openWritingModal(this)">Read more</button>
+              </div>
+
+              <!-- Card 3: Pen -->
+              <div class="writing-card">
+                <h3 class="essay-title">Pen</h3>
+                <div class="writing-card-content preview">
+                  <div class="essay">I love the feeling of a pen between my fingers.
+
+Its smooth body rests against my skin, breathing beneath the plastic. The ink stains faintly on my finger tips, a deep blue that lingers after I've written too long.
+
+Maybe I was meant to hold a pen. My mother says that when I was one, during ZhuaZhou, a Chinese tradition where a child's first grasp predicts her destiny, I reached for a black Parker pen instead of the spoon, cookie, or silk dress before me. "She will be a writer like her mother," someone said, and everyone laughed.
+
+Every night before I went to sleep, my mother and I would sit together and flip through the books. The unique smell of paper and ink filled my nose. She read aloud while I traced the rhythm of her words with my finger, as if I could catch their shape. Sometimes she placed her favorite pen in my hand and guided my fingers, showing me how a single stroke could hold emotion.
+
+Then we moved to the United States, and for the first time, I dropped the pen.
+
+English bent oddly in my mouth. My handwriting tilted. My words felt foreign, fragile. I stayed in my ESL class so I never needed to read harder texts. When teachers urged me to move up, I shook my head. I stopped reading. I told my mother I didn't like writing anymore. She looked at me for a long moment and said, "You don't hate it," she said. "You're just afraid of leaving what you already know."
+
+That night, I picked the pen up again. My first sentences wobbled, but I kept going. I wrote about my struggles, my small triumphs, and the joy and confusion of finding myself in a new land. I began to read aloud in class, to debate, to perform Macbeth with shaking hands. English became fun in its strangeness. I laughed at phrases like "raining cats and dogs" and "spilled the beans," and I began to love the rhythm of a language that could be both sharp and soft. Slowly, the fear faded, replaced by curiosity.
+
+At home, I taught my mother and sister English around the kitchen table. We practiced pronunciation, and my sister repeated words after me, turning "film" into "flim" and "receipt" into "recipe," laughing until our stomachs hurt. Sometimes we translated old Chinese poems together, chasing meaning across languages. Our voices blend softly, half Mandarin, half English, fully ours.
+
+Through embracing another language, I learned that by stepping out of my comfort zone, a much more fascinating and expansive world awaits.
+
+Ink still stains my fingers. And I continue to write.</div>
+                </div>
+                <button class="writing-card-button" onclick="openWritingModal(this)">Read more</button>
+              </div>
+
+              <!-- Card 4: Open Letter - The New YorkTimes 2025 Finalist Runners-Up -->
+              <div class="writing-card">
+                <h3 class="essay-title">Open Letter - The New YorkTimes 2025 Finalist Runners-Up</h3>
+                <div class="writing-card-content preview">
+                  <div class="essay-subtitle">Dear Medical Device Designers and Clinicians,</div>
+                  <div class="essay">I flinched the first time I saw it. Cold. Metallic. Its hinge creaked when the nurse opened it—more mechanical than medical. I thought of my mom's garlic press.
+
+The speculum wasn't designed to feel safe. Or soft. Or considerate. It was made in the 1840s by a man who operated on enslaved women without anesthesia. That part gets left out in the doctor's office.
+
+The worst part is: it hasn't changed much since.
+
+This tool is still used on millions of people with vaginas each year. And it still hurts. Studies confirm what so many of us already know: the pelvic exam is one of the most feared and avoided procedures in healthcare. In her 2016 article for The New York Times, Roni R. Rabin explains how many patients skip essential gynecological care due to fear, discomfort, or trauma. The design of the speculum has seen little innovation since its introduction and remains a source of discomfort and anxiety for many women, making them dread attending regular gynecological exams.
+
+So, is it possible to make this tool more women-friendly?
+
+Some companies have tried. In 2005, FemSuite redesigned an inflatable speculum called the FemSpec. The speculum can be inflated to apply pressure evenly to all sides to minimize pain, and a patient named Maryanne Sheofsky described the FemSpec as "the most wonderful thing in the world." But in 2009, the company canceled the patent. Annie Legomsky, their director of sales, explained that doctors simply didn't want to use it, they didn't want to take the time to learn something new.
+
+A similar attempt to innovate the speculum by Doctors Research Group Inc. also failed.
+
+So we stayed with what we had: a tool built on violence, sustained by inertia.
+
+This isn't just about discomfort. It's about equity. Medical research shows that women, especially Black women, are more likely to report pain during pelvic exams and less likely to have that pain taken seriously. When medical tools ignore the needs of half the population, it sends a message: your body doesn't matter. Your pain doesn't matter.
+
+I'm asking you to prove otherwise.
+
+Designers: Reimagine the tools. Prioritize dignity. If we can 3D-print organs and send rovers to Mars, we can make a gentler speculum.
+
+Clinicians: Try the new devices. Listen to your patients. Advocate for change. Just because something works doesn't mean it works well, or ethically.
+
+Let's stop treating pain as a price for care.
+
+The next time someone walks into your office, I want them to feel seen. Heard. Protected. I want them to leave thinking not "Never again," but "That wasn't so bad."
+
+I want their health to feel like a partnership, not a punishment.
+
+Because comfort should never be a luxury in medicine.</div>
                 </div>
                 <button class="writing-card-button" onclick="openWritingModal(this)">Read more</button>
               </div>
@@ -1991,27 +2440,32 @@ So I write.</div>
       if (!book || !prevButton || !nextButton || !pageIndicator) return;
       
       const pages = book.querySelectorAll('.book-page');
-      const totalSpreads = 1; // Currently empty book with 1 spread
+      const totalSpreads = 6; // Book has 6 spreads (12 pages total: 3 for Sunburned, 3 for Amo quia amo)
       let currentSpread = 0;
       
       // Initialize - show first spread
       function showSpread(spreadIndex) {
-        // Hide all pages
+        // Hide all pages first
         pages.forEach(page => {
           page.classList.add('hidden');
           page.classList.remove('flipped');
         });
         
         // Show pages for current spread
-        if (spreadIndex === 0) {
-          // First spread: pages 0 (left) and 1 (right)
-          pages[0].classList.remove('hidden');
-          if (pages[1]) pages[1].classList.add('hidden'); // Keep right page hidden for now
+        // Each spread has 2 pages: left (even index) and right (odd index)
+        const leftPageIndex = spreadIndex * 2;
+        const rightPageIndex = spreadIndex * 2 + 1;
+        
+        if (pages[leftPageIndex]) {
+          pages[leftPageIndex].classList.remove('hidden');
+        }
+        if (pages[rightPageIndex]) {
+          pages[rightPageIndex].classList.remove('hidden');
         }
         
         // Update buttons
         prevButton.disabled = spreadIndex === 0;
-        nextButton.disabled = spreadIndex === totalSpreads - 1;
+        nextButton.disabled = spreadIndex >= totalSpreads - 1;
         
         // Update indicator
         pageIndicator.textContent = `Page ${spreadIndex + 1} of ${totalSpreads}`;
@@ -2020,12 +2474,13 @@ So I write.</div>
       // Next spread
       function nextSpread() {
         if (currentSpread < totalSpreads - 1) {
-          // Flip animation
+          // Flip animation - flip the left page of current spread
           const currentLeftPage = pages[currentSpread * 2];
           if (currentLeftPage) {
             currentLeftPage.classList.add('flipped');
           }
           
+          // After animation, show next spread
           setTimeout(() => {
             currentSpread++;
             showSpread(currentSpread);
@@ -2036,15 +2491,16 @@ So I write.</div>
       // Previous spread
       function prevSpread() {
         if (currentSpread > 0) {
-          currentSpread--;
-          showSpread(currentSpread);
+          // Flip back animation - remove flipped class first
+          const currentLeftPage = pages[currentSpread * 2];
+          if (currentLeftPage) {
+            currentLeftPage.classList.remove('flipped');
+          }
           
-          // Flip back animation
+          // Then show previous spread
           setTimeout(() => {
-            const leftPage = pages[currentSpread * 2];
-            if (leftPage) {
-              leftPage.classList.remove('flipped');
-            }
+            currentSpread--;
+            showSpread(currentSpread);
           }, 50);
         }
       }
