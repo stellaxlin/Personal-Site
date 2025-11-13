@@ -342,6 +342,22 @@
       cursor: pointer;
       display: block;
     }
+    .media-grid video,
+    .gallery-video {
+      width: 100%;
+      height: 280px;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,.1);
+      transition: transform 300ms ease, box-shadow 300ms ease;
+      display: block;
+      background: #000;
+    }
+    .media-grid video:hover,
+    .gallery-video:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(0,0,0,.4);
+    }
     .content-section .media-grid img {
       border: 1px solid rgba(0,0,0,.1);
     }
@@ -358,6 +374,102 @@
       place-items: center;
       color: rgba(0,0,0,.45);
       font-size: 14px;
+    }
+
+    /* Lightbox modal for images */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      animation: fadeIn 0.3s ease;
+      overflow: auto;
+    }
+    .lightbox.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .lightbox-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      margin: auto;
+      animation: zoomIn 0.3s ease;
+    }
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      line-height: 1;
+      transition: opacity 0.2s ease;
+    }
+    .lightbox-close:hover {
+      opacity: 0.7;
+    }
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff;
+      font-size: 32px;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 16px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      transition: background 0.2s ease;
+      user-select: none;
+    }
+    .lightbox-nav:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+    .lightbox-prev {
+      left: 20px;
+    }
+    .lightbox-next {
+      right: 20px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @media (max-width: 768px) {
+      .lightbox-nav {
+        font-size: 24px;
+        padding: 12px;
+      }
+      .lightbox-prev {
+        left: 10px;
+      }
+      .lightbox-next {
+        right: 10px;
+      }
+      .lightbox-close {
+        top: -30px;
+        font-size: 32px;
+      }
     }
 
     /* Allow paragraph and grid/card content to render within the site */
@@ -843,7 +955,7 @@
         <li><a href="../education">Education</a></li>
         <li><a href="../writing">Writing</a></li>
         <li><a href="../cheerleading">Cheerleading</a></li>
-        <li><a href="../art-podcast">Art</a></li>
+        <li><a href="../art-podcast">Media</a></li>
       </ul>
       <div class="navbar-social">
         <a href="mailto:stellashengjia@gmail.com" aria-label="Email">
@@ -884,6 +996,42 @@
               <h3>S.H.E. Podcast</h3>
               <p>I host S.H.E., a podcast where science meets storytelling and women's voices take center stage. Through conversations with inspiring women in STEM, we explore the intersections of science, identity, and personal narrative.</p>
               <p><a href="https://drive.google.com/file/d/1iduv_XEvnRGOK4OapC-deP2guIpzKKmY/view?usp=sharing" target="_blank" rel="noopener noreferrer">Listen to S.H.E. Podcast →</a></p>
+            </div>
+          </div>
+
+          <div class="entry" style="margin-top: 40px;">
+            <h3>Art Gallery</h3>
+            <div class="media-grid">
+              <img src="../media/art/art1.jpg" alt="Artwork 1" class="gallery-image">
+              <img src="../media/art/art2.jpg" alt="Artwork 2" class="gallery-image">
+              <img src="../media/art/art3.jpg" alt="Artwork 3" class="gallery-image">
+              <img src="../media/art/art4.jpg" alt="Artwork 4" class="gallery-image">
+              <img src="../media/art/art5.jpg" alt="Artwork 5" class="gallery-image">
+              <img src="../media/art/art6.jpg" alt="Artwork 6" class="gallery-image">
+              <img src="../media/art/art8.jpg" alt="Artwork 8" class="gallery-image">
+              <img src="../media/art/art9.jpg" alt="Artwork 9" class="gallery-image">
+            </div>
+          </div>
+
+          <div class="entry" style="margin-top: 40px;">
+            <h3>Video Gallery</h3>
+            <div class="media-grid">
+              <video class="gallery-video" controls>
+                <source src="../media/videos/v1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <video class="gallery-video" controls>
+                <source src="../media/videos/v2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <video class="gallery-video" controls>
+                <source src="../media/videos/v3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <video class="gallery-video" controls>
+                <source src="../media/videos/v4.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
             </div>
           </div>
         </section>
@@ -1009,6 +1157,95 @@
           });
         });
       }
+    })();
+  </script>
+  <script>
+    // Lightbox functionality for gallery images
+    (function() {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImage = document.getElementById('lightbox-image');
+      const lightboxClose = document.querySelector('.lightbox-close');
+      const lightboxPrev = document.querySelector('.lightbox-prev');
+      const lightboxNext = document.querySelector('.lightbox-next');
+      const galleryImages = document.querySelectorAll('.gallery-image');
+      
+      let currentIndex = 0;
+      let images = [];
+      
+      // Collect all gallery images
+      galleryImages.forEach(img => {
+        images.push({
+          src: img.src,
+          alt: img.alt
+        });
+      });
+      
+      function openLightbox(index) {
+        if (images.length === 0) return;
+        currentIndex = index;
+        updateLightboxImage();
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+      
+      function updateLightboxImage() {
+        if (images.length === 0) return;
+        const image = images[currentIndex];
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+        
+        // Show/hide navigation arrows
+        lightboxPrev.style.display = images.length > 1 ? 'block' : 'none';
+        lightboxNext.style.display = images.length > 1 ? 'block' : 'none';
+      }
+      
+      function showNext() {
+        if (images.length === 0) return;
+        currentIndex = (currentIndex + 1) % images.length;
+        updateLightboxImage();
+      }
+      
+      function showPrev() {
+        if (images.length === 0) return;
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateLightboxImage();
+      }
+      
+      // Event listeners
+      galleryImages.forEach((img, index) => {
+        img.addEventListener('click', () => openLightbox(index));
+      });
+      
+      if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+      if (lightboxPrev) lightboxPrev.addEventListener('click', showPrev);
+      if (lightboxNext) lightboxNext.addEventListener('click', showNext);
+      
+      // Close on background click
+      if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox) {
+            closeLightbox();
+          }
+        });
+      }
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox || !lightbox.classList.contains('active')) return;
+        
+        if (e.key === 'Escape') {
+          closeLightbox();
+        } else if (e.key === 'ArrowLeft') {
+          showPrev();
+        } else if (e.key === 'ArrowRight') {
+          showNext();
+        }
+      });
     })();
   </script>
 </body>
