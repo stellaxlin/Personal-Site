@@ -4,6 +4,25 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Stella Xulin — Portfolio</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="media/random/pfp.jpg">
+  <link rel="apple-touch-icon" href="media/random/pfp.jpg">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stellaxulin.com/">
+  <meta property="og:title" content="Stella Xulin — Portfolio">
+  <meta property="og:description" content="Portfolio website showcasing research, music, writing, robotics, and more.">
+  <meta property="og:image" content="https://stellaxulin.com/media/random/pfp.jpg">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://stellaxulin.com/">
+  <meta name="twitter:title" content="Stella Xulin — Portfolio">
+  <meta name="twitter:description" content="Portfolio website showcasing research, music, writing, robotics, and more.">
+  <meta name="twitter:image" content="https://stellaxulin.com/media/random/pfp.jpg">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
@@ -1053,6 +1072,8 @@
       top: 0;
       left: 0;
       right: 0;
+      width: 100%;
+      max-width: 100%;
       background: rgba(237, 220, 213, 0.96);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(133, 172, 126, 0.2);
@@ -1062,6 +1083,8 @@
       transform: translateY(-100%);
       transition: opacity 600ms ease, transform 600ms ease;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      box-sizing: border-box;
+      overflow: hidden;
     }
     .navbar.show {
       opacity: 1;
@@ -1073,6 +1096,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
     }
     .navbar-logo {
       font-size: 26px; /* 20px * 1.3 */
@@ -1170,9 +1196,15 @@
     @media (max-width: 768px) {
       .navbar {
         padding: 12px 16px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
       }
       .navbar-content {
         flex-wrap: wrap;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
       }
       .navbar-toggle {
         display: flex;
@@ -1571,6 +1603,18 @@
       const urlParams = new URLSearchParams(window.location.search);
       const skipParam = urlParams.get('skip') || urlParams.get('skipAnimation');
       
+      // Function to remove ?skip parameter from URL
+      const removeSkipParam = () => {
+        const currentUrl = new URL(window.location.href);
+        const hasSkip = currentUrl.searchParams.has('skip') || currentUrl.searchParams.has('skipAnimation');
+        if (hasSkip) {
+          currentUrl.searchParams.delete('skip');
+          currentUrl.searchParams.delete('skipAnimation');
+          const newUrl = currentUrl.pathname + (currentUrl.search ? currentUrl.search : '') + (currentUrl.hash ? currentUrl.hash : '');
+          window.history.replaceState({}, '', newUrl);
+        }
+      };
+      
       // Check if user came from another page (same origin, different path)
       let cameFromAnotherPage = false;
       if (document.referrer) {
@@ -1615,6 +1659,10 @@
         live.textContent = 'Welcome!';
         document.documentElement.classList.remove('animating');
         enableScrolling();
+        
+        // Remove ?skip parameter from URL after page loads
+        setTimeout(removeSkipParam, 100);
+        
         return;
       }
 
@@ -1714,6 +1762,8 @@
                 // Re-enable scrolling after animation completes
                 document.documentElement.classList.remove('animating');
                 enableScrolling();
+                // Remove ?skip parameter from URL after page loads
+                removeSkipParam();
               }, 1000);
             };
             rail.addEventListener('transitionend', onShrinkDone, { once: true });
@@ -2110,13 +2160,16 @@
         if (!isHomePage && link.getAttribute('href') === '/') {
           link.setAttribute('href', '/?skip');
         }
-        // If we're on home page and link points to #about, add skip parameter
+        // If we're on home page and link points to #about, ensure it works correctly
         if (isHomePage && link.getAttribute('href') === '#about') {
+          // Ensure the link works correctly for both / and /index.html pathnames
           link.addEventListener('click', function(e) {
             // If coming from another page, the referrer check will handle it
             // But we can also add the parameter explicitly
             if (document.referrer && document.referrer !== window.location.href) {
-              window.location.href = '/?skip#about';
+              const currentPath = window.location.pathname;
+              const targetPath = currentPath === '/index.html' ? '/index.html?skip#about' : '/?skip#about';
+              window.location.href = targetPath;
               e.preventDefault();
             }
           });
@@ -2177,6 +2230,70 @@
         clearInterval(checkNavbar);
         initMobileMenu();
       }, 500);
+    })();
+  </script>
+  
+  <script>
+    // Ensure navbar works correctly for both / and /index.html pathnames
+    (function() {
+      const ensureNavbarWorks = () => {
+        const navbar = document.getElementById('navbar');
+        if (!navbar) return;
+        
+        // Ensure navbar is properly styled regardless of pathname
+        const navbarContent = navbar.querySelector('.navbar-content');
+        if (navbarContent) {
+          navbarContent.style.width = '100%';
+          navbarContent.style.maxWidth = '100%';
+          navbarContent.style.boxSizing = 'border-box';
+        }
+        
+        // Ensure navbar logo link works for both pathname formats
+        const logoLink = navbar.querySelector('.navbar-logo');
+        if (logoLink && logoLink.getAttribute('href') === '#about') {
+          // The smooth scroll handler should handle this, but ensure it's set up
+          if (!logoLink.hasAttribute('data-smooth-scroll-setup')) {
+            logoLink.setAttribute('data-smooth-scroll-setup', 'true');
+          }
+        }
+      };
+      
+      // Run immediately and after DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', ensureNavbarWorks);
+      } else {
+        ensureNavbarWorks();
+      }
+      
+      // Also run after a short delay to ensure it's applied
+      setTimeout(ensureNavbarWorks, 100);
+    })();
+  </script>
+  <script>
+    // Ensure ?skip parameter is removed from URL after page fully loads
+    (function() {
+      const cleanupUrl = () => {
+        const currentUrl = new URL(window.location.href);
+        const hasSkip = currentUrl.searchParams.has('skip') || currentUrl.searchParams.has('skipAnimation');
+        if (hasSkip) {
+          currentUrl.searchParams.delete('skip');
+          currentUrl.searchParams.delete('skipAnimation');
+          const newUrl = currentUrl.pathname + (currentUrl.search ? currentUrl.search : '') + (currentUrl.hash ? currentUrl.hash : '');
+          window.history.replaceState({}, '', newUrl);
+        }
+      };
+      
+      // Run cleanup on window load
+      if (document.readyState === 'complete') {
+        setTimeout(cleanupUrl, 200);
+      } else {
+        window.addEventListener('load', () => {
+          setTimeout(cleanupUrl, 200);
+        });
+      }
+      
+      // Also run after a short delay as fallback
+      setTimeout(cleanupUrl, 1000);
     })();
   </script>
 </body>
