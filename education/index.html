@@ -887,6 +887,168 @@
         gap: 24px;
       }
     }
+
+    /* Lesson Plans Grid */
+    .lesson-plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 600ms ease, transform 600ms ease;
+    }
+    .lesson-plans-grid.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .lesson-plan-card {
+      background: rgba(0,0,0,.03);
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 300ms ease, box-shadow 300ms ease;
+    }
+    .lesson-plan-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,.15);
+    }
+    .pdf-preview {
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      background: #f5f5f5;
+      position: relative;
+      border-radius: 8px 8px 0 0;
+      clip-path: inset(0 0 0 0);
+    }
+    .pdf-preview iframe {
+      width: 100%;
+      height: calc(100% + 80px);
+      border: none;
+      pointer-events: none;
+      overflow: hidden;
+      display: block;
+      margin: 0;
+      padding: 0;
+      transform: translateY(-80px);
+    }
+    .lesson-plan-title {
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--content-fg);
+      text-align: center;
+      border-top: 1px solid rgba(0,0,0,.08);
+    }
+
+    /* PDF Modal */
+    .pdf-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      animation: fadeIn 0.3s ease;
+      overflow: hidden;
+    }
+    .pdf-modal.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .pdf-modal-header {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    .pdf-modal-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0;
+    }
+    .pdf-modal-close {
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      line-height: 1;
+      transition: opacity 0.2s ease;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .pdf-modal-close:hover {
+      opacity: 0.7;
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .pdf-modal-content {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      height: calc(100vh - 120px);
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      animation: slideUp 0.3s ease;
+    }
+    .pdf-modal-content iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @media (max-width: 768px) {
+      .lesson-plans-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .pdf-preview {
+        height: 350px;
+      }
+      .pdf-modal-header {
+        padding: 0 10px;
+      }
+      .pdf-modal-title {
+        font-size: 18px;
+      }
+      .pdf-modal-close {
+        font-size: 32px;
+        width: 36px;
+        height: 36px;
+      }
+      .pdf-modal-content {
+        height: calc(100vh - 100px);
+      }
+    }
   </style>
 </head>
 <body>
@@ -925,7 +1087,6 @@
   </nav>
 
   <div class="stage">
-<div class="stage">
     <div class="rail-wrap" aria-label="Word selector animation" role="region">
       <div class="indicator" aria-hidden="true"></div>
       <div class="rail">
@@ -948,7 +1109,16 @@
             
             <h4>Capstone: Computer Science</h4>
             <p>Developed an AI-powered personalized learning platform that integrates educational psychology and adaptive algorithms to enhance engagement and academic growth.</p>
-            <p><a href="https://docs.google.com/presentation/d/1wirvCMcuOJWpMmvlMGc0b8yncAp-eQ5d/edit?usp=sharing&ouid=110452420028554407544&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer">View Capstone Presentation →</a></p>
+            
+            <h3 style="margin-top: 32px; margin-bottom: 20px;">Capstone Presentation</h3>
+            <div class="lesson-plans-grid">
+              <div class="lesson-plan-card" onclick="openPdfModal('../media/random/YYGS Capstone Presentation.pptx.pdf', 'YYGS Capstone Presentation')">
+                <div class="pdf-preview">
+                  <iframe src="../media/random/YYGS Capstone Presentation.pptx.pdf#page=1&toolbar=0&navpanes=0&scrollbar=0" type="application/pdf" scrolling="no"></iframe>
+                </div>
+                <div class="lesson-plan-title">YYGS Capstone Presentation</div>
+              </div>
+            </div>
             
             <h4>Seminar: Introduction to Microelectronics (Ivan Huang)</h4>
             <p>Studied semiconductor physics and circuit analysis with a focus on diodes, transistors, MOSFETs, and amplifiers while bridging theory with practical design.</p>
@@ -983,6 +1153,80 @@
             <p>Participated in a three-week program in New York City exploring leadership through a feminist lens. In the STEMnist track, examined the role of women in science and technology while developing leadership, problem-solving, and communication skills through workshops and mentorship from the Athena Center for Leadership. Gained insight into how inclusive innovation and equity shape the future of STEM.</p>
             <p><a href="https://drive.google.com/file/d/1HhugyHCTq-DF7ByFbQctEwtS3PO3pV0I/view?usp=sharing" target="_blank" rel="noopener noreferrer">View Certificate →</a></p>
             <p><a href="https://drive.google.com/file/d/11dx7qXamVWScu8Jzk1HryLAeqIxD5KKT/view?usp=sharing" target="_blank" rel="noopener noreferrer">View Additional Document →</a></p>
+          </div>
+        </section>
+
+        <section class="content-section" id="awards">
+          <h2 class="underlined">Awards & Honors</h2>
+          
+          <div class="entry">
+            <h4>The JAR Audio Emerging Women Podcasters' Pilot Competition Finalist — International, 2025</h4>
+            <p>Finalist for a documentary podcast exploring women's medical experiences, gender disparities in healthcare, and systemic challenges in medicine and science through storytelling and advocacy for health equity.</p>
+          </div>
+
+          <div class="entry">
+            <h4>The Duke of Edinburgh's International Bronze Award — International, 2025</h4>
+            <p>Completed a 6-month program emphasizing creative writing, physical fitness, and community service, demonstrating sustained personal growth and leadership.</p>
+          </div>
+
+          <div class="entry">
+            <h4>The New York Times Learning Network Open Letter Contest Finalist (Runner-Up) — International, 2025</h4>
+            <p>Placed in the top 25% of global entries with an open letter titled "Re-envisioning Women's Healthcare in the Twenty-First Century."</p>
+          </div>
+
+          <div class="entry">
+            <h4>College Board National Recognition Program Scholar — National, 2025</h4>
+            <p>Honored for exceptional academic achievement, ranking in the top 10% nationally based on SAT, AP, and GPA performance.</p>
+          </div>
+
+          <div class="entry">
+            <h4>NCWIT Aspirations in Computing Award – Connecticut Affiliate Winner — State/Regional, 2025</h4>
+            <p>Recognized for excellence in computing, leadership, and advocacy for women in technology; selected as a state affiliate winner for advancing gender equity in STEM.</p>
+          </div>
+
+          <div class="entry">
+            <h4>Scholastic Art & Writing Awards — State/Regional, 2025</h4>
+            <p>Silver Key — Personal Essay & Memoir.</p>
+          </div>
+
+          <div class="entry">
+            <h4>AP Scholar with Distinction — National, 2024</h4>
+            <p>Awarded for outstanding academic excellence on multiple Advanced Placement exams.</p>
+          </div>
+
+          <div class="entry">
+            <h4>FIRST Robotics "Gracious Professionalism" Award — State/Regional, 2024 & 2025</h4>
+            <p>Honored for exceptional teamwork, ethics, and collaboration at the District FIRST Robotics Competition.</p>
+          </div>
+
+          <div class="entry">
+            <h4>FIRST Robotics "Team Sustainability" Award — State/Regional, 2024 & 2025</h4>
+            <p>Recognized at the Western New England Competition for innovative outreach and long-term impact in STEM education.</p>
+          </div>
+
+          <div class="entry">
+            <h4>CCC Cheerleading Champions — State/Regional, 2023</h4>
+            <p>Member of the first team in school history to win the conference title; promoted inclusivity and enthusiasm for school athletics.</p>
+          </div>
+
+          <div class="entry">
+            <h4>Central Connecticut Conference All-Academic Athlete — State/Regional, 2022–2025</h4>
+            <p>Recognized annually for academic and athletic excellence; held the highest GPA on the team.</p>
+          </div>
+
+          <div class="entry">
+            <h4>CT COLT Award for Excellence in Spanish — State/Regional, 2023</h4>
+            <p>Selected by faculty as the sole school representative for statewide recognition in Spanish language achievement.</p>
+          </div>
+
+          <div class="entry">
+            <h4>HMTA Rising Pianists Competition – First Place — State/Regional, 2023</h4>
+            <p>Earned the highest score and gold medal in the high school performance division.</p>
+          </div>
+
+          <div class="entry">
+            <h4>National K–12 Ceramics Exhibition Selection — National, 2023</h4>
+            <p>Ceramic artwork selected among the top 10 outstanding high school pieces nationwide for exhibition at the annual NCECA International Conference.</p>
           </div>
         </section>
 
@@ -1032,12 +1276,11 @@
           <p>&copy; 2025 Stella Xulin. All rights reserved.</p>
           <p><a href="https://charlierusso.dev/" target="_blank" rel="noopener noreferrer">Designed by Charles Russo</a></p>
         </div>
-      </footer
+      </footer>
     </main>
   </div>
 
   <!-- Lightbox Modal -->
-<!-- Lightbox Modal -->
   <div id="lightbox" class="lightbox">
     <span class="lightbox-close">&times;</span>
     <span class="lightbox-nav lightbox-prev">&#8249;</span>
@@ -1045,8 +1288,18 @@
     <div class="lightbox-content">
       <img id="lightbox-image" src="" alt="">
     </div>
+  </div>
 
-</body>
+  <!-- PDF Modal -->
+  <div id="pdf-modal" class="pdf-modal">
+    <div class="pdf-modal-header">
+      <h3 class="pdf-modal-title" id="pdf-modal-title"></h3>
+      <span class="pdf-modal-close" onclick="closePdfModal()">&times;</span>
+    </div>
+    <div class="pdf-modal-content">
+      <iframe id="pdf-modal-iframe" src="" type="application/pdf"></iframe>
+    </div>
+  </div>
 
   <script>
     // Skip boot animation for section pages - show content immediately
@@ -1090,7 +1343,7 @@
       }, observerOptions);
 
       function initFadeIn() {
-        const elements = document.querySelectorAll('.entry, .media-grid, .content-card, .podcast-content, .about-content');
+        const elements = document.querySelectorAll('.entry, .media-grid, .content-card, .podcast-content, .about-content, .lesson-plans-grid');
         elements.forEach(element => {
           fadeInObserver.observe(element);
         });
@@ -1149,6 +1402,52 @@
         });
       }
     })();
+  </script>
+  <script>
+    // PDF Modal functionality
+    function openPdfModal(pdfUrl, title) {
+      const modal = document.getElementById('pdf-modal');
+      const iframe = document.getElementById('pdf-modal-iframe');
+      const titleElement = document.getElementById('pdf-modal-title');
+      
+      if (modal && iframe && titleElement) {
+        titleElement.textContent = title;
+        iframe.src = pdfUrl;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    
+    function closePdfModal() {
+      const modal = document.getElementById('pdf-modal');
+      const iframe = document.getElementById('pdf-modal-iframe');
+      
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        // Clear iframe src to stop PDF rendering when closed
+        if (iframe) {
+          iframe.src = '';
+        }
+      }
+    }
+    
+    // Close PDF modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      const pdfModal = document.getElementById('pdf-modal');
+      if (pdfModal && pdfModal.classList.contains('active') && e.key === 'Escape') {
+        closePdfModal();
+      }
+    });
+    
+    // Close PDF modal when clicking outside the content
+    document.addEventListener('click', (e) => {
+      const pdfModal = document.getElementById('pdf-modal');
+      const pdfModalContent = document.querySelector('.pdf-modal-content');
+      if (pdfModal && pdfModal.classList.contains('active') && e.target === pdfModal) {
+        closePdfModal();
+      }
+    });
   </script>
 </body>
 </html>

@@ -987,6 +987,44 @@
       }
     }
 
+    /* YouTube Video Grid */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 600ms ease, transform 600ms ease;
+    }
+    .video-grid.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,.08);
+      background: rgba(0,0,0,.03);
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    @media (max-width: 768px) {
+      .video-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
     @media (max-width: 768px) {
       .content-section {
         margin-top: 40px;
@@ -1308,7 +1346,6 @@
   </nav>
 
   <div class="stage">
-<div class="stage">
     <div class="rail-wrap" aria-label="Word selector animation" role="region">
       <div class="indicator" aria-hidden="true"></div>
       <div class="rail">
@@ -1344,6 +1381,24 @@
             <p>We also interview seniors about how music has shaped their lives, gathering stories of memory, emotion, and connection that guide our creative process. This expanding interdisciplinary library serves as a source of solace for patients while uniting art, technology, and healing. Our student-coded AI further empowers elders to engage with the digital world through the universal language of music.</p>
             <p><a href="https://docs.google.com/document/d/1Yi-Avb_hucaOss3bw5kBfwQSv_5jnWQkmsImsHrEKQc/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Read our articles →</a></p>
             <p><a href="https://youtube.com/@farmingtonmsa" target="_blank" rel="noopener noreferrer">View our playlist →</a></p>
+          </div>
+          
+          <div class="entry">
+            <h3>Performance Videos</h3>
+            <div class="video-grid">
+              <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/OPcyi2Zxq-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/vLlI5SF-K60" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/yVPGUeCHbeQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/NwCxOzpHwQA" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
           </div>
         </section>
       </div>
@@ -1480,8 +1535,6 @@
       });
     })();
   </script>
-</body>
-
   <script>
     // Skip boot animation for section pages - show content immediately
     (function () {
@@ -1525,7 +1578,7 @@
       }, observerOptions);
 
       function initFadeIn() {
-        const elements = document.querySelectorAll('.entry, .media-grid, .content-card, .podcast-content, .about-content');
+        const elements = document.querySelectorAll('.entry, .media-grid, .content-card, .podcast-content, .about-content, .video-grid');
         elements.forEach(element => {
           fadeInObserver.observe(element);
         });
