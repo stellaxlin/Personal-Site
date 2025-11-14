@@ -359,6 +359,22 @@
       transform: translateY(-4px) scale(1.02);
       box-shadow: 0 8px 20px rgba(0,0,0,.4);
     }
+    .media-grid video,
+    .gallery-video {
+      width: 100%;
+      height: 280px;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,.1);
+      transition: transform 300ms ease, box-shadow 300ms ease;
+      display: block;
+      background: #000;
+    }
+    .media-grid video:hover,
+    .gallery-video:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(0,0,0,.4);
+    }
     .media-grid .ph {
       aspect-ratio: 4 / 3;
       background: rgba(255,255,255,.08);
@@ -944,6 +960,20 @@
               <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/r8C4EoHqoJY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <p style="margin-top: 16px;"><a href="https://youtu.be/r8C4EoHqoJY?si=DUpAXIFXIuaXWaHM" target="_blank" rel="noopener noreferrer">Watch on YouTube →</a></p>
+          </div>
+
+          <div class="entry" style="margin-top: 40px;">
+            <h3>Video Gallery</h3>
+            <div class="media-grid">
+              <video class="gallery-video" controls>
+                <source src="../media/videos/v3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <video class="gallery-video" controls>
+                <source src="../media/videos/v4.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
           </div>
         </section>
       </div>
