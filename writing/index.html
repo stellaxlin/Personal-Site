@@ -722,12 +722,15 @@
       max-width: none;
       box-sizing: border-box;
       padding-top: calc(var(--navbar-height) + 20px);
+      overflow-x: visible;
+      overflow-y: visible;
     }
     
     /* Content section styling - white background with black text */
     .content-section {
       background: var(--content-bg);
       color: var(--content-fg);
+      overflow: visible;
     }
     .content-section h2 {
       color: var(--content-fg);
@@ -1016,86 +1019,92 @@
       }
     }
     
-    /* Book flip interface */
+    /* Book flip interface - turn.js (original image-based system) */
     .book-container {
       margin: 60px auto;
-      max-width: 900px;
-      perspective: 1500px;
-      padding: 20px;
-    }
-    .book {
-      position: relative;
-      width: 100%;
-      height: 600px;
-      transform-style: preserve-3d;
-    }
-    .book-page {
-      position: absolute;
-      width: 50%;
-      height: 100%;
-      background: var(--content-bg);
-      border: 1px solid rgba(0,0,0,.1);
-      box-shadow: 0 4px 20px rgba(0,0,0,.15);
-      padding: 50px 40px;
-      overflow: hidden;
-      backface-visibility: hidden;
-      transform-style: preserve-3d;
-      transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.3s ease;
-    }
-    .book-page.left {
-      left: 0;
-      border-radius: 8px 0 0 8px;
-      border-right: 2px solid rgba(0,0,0,.1);
-      transform-origin: right center;
-      z-index: 2;
-    }
-    .book-page.right {
-      right: 0;
-      border-radius: 0 8px 8px 0;
-      border-left: 2px solid rgba(0,0,0,.1);
-      transform-origin: left center;
-      z-index: 1;
-    }
-    .book-page.hidden {
-      opacity: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .book-page.flipped {
-      transform: rotateY(-180deg);
-      z-index: 3;
-    }
-    .book-page-content {
-      height: 100%;
+      max-width: 1200px;
+      padding: 40px;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      overflow: visible;
     }
-    .book-page-title {
+    .flipbook {
+      width: 1000px;
+      height: 600px;
+      max-width: 100%;
+    }
+    /* Mobile carousel styles */
+    .mobile-carousel {
+      display: none;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .carousel-image-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      background: var(--content-bg);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid rgba(0, 0, 0, 0.11);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .carousel-image-container img {
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .carousel-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .flipbook .hard {
+      background: #6b8a6e !important;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       font-size: 24px;
-      font-weight: 700;
-      margin: 0 0 12px;
-      color: var(--content-fg);
       text-align: center;
     }
-    .book-page-subtitle {
-      font-size: 16px;
+    .flipbook .hard small {
       font-style: italic;
-      color: rgba(0,0,0,.7);
-      margin: 0 0 24px;
-      text-align: center;
+      font-weight: lighter;
+      opacity: 0.8;
+      font-size: 16px;
+      margin-top: 10px;
     }
-    .book-page-text {
-      flex: 1;
-      font-size: 14px;
-      line-height: 1.6;
-      color: rgba(0,0,0,.85);
-      white-space: pre-line;
-      overflow: hidden;
+    .flipbook .page {
+      background: var(--content-bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.11);
     }
-    .book-page-text.poem {
-      text-align: center;
-      line-height: 1.7;
+    .flipbook .page img {
+      width: 70%;
+      object-fit: contain;
+      margin: auto;
+    }
+    .flipbook .page small {
       font-size: 14px;
+      margin-bottom: 10px;
+      color: var(--content-fg);
+      font-family: 'Merriweather', serif;
     }
     .book-controls {
       display: flex;
@@ -1106,10 +1115,10 @@
     }
     .book-nav-button {
       padding: 12px 24px;
-      background: #6b8a6e;
-      border: 2px solid #6b8a6e;
+      background: #85ac7e !important;
+      border: 2px solid #85ac7e !important;
       border-radius: 8px;
-      color: #ffffff;
+      color: #ffffff !important;
       font-size: 16px;
       font-weight: 600;
       cursor: pointer;
@@ -1117,10 +1126,10 @@
       font-family: 'Merriweather', serif;
     }
     .book-nav-button:hover:not(:disabled) {
-      background: #5a7a55;
-      border-color: #5a7a55;
+      background: #6b8a6e !important;
+      border-color: #6b8a6e !important;
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(107, 138, 110, 0.3);
+      box-shadow: 0 4px 8px rgba(133, 172, 126, 0.3);
     }
     .book-nav-button:disabled {
       opacity: 0.5;
@@ -1132,21 +1141,48 @@
       font-weight: 500;
     }
     @media (max-width: 768px) {
-      .book {
-        height: 500px;
+      .book-container {
+        padding: 20px 10px;
+        margin: 40px auto;
       }
-      .book-page {
-        padding: 30px 24px;
+      /* Hide flipbook on mobile */
+      .flipbook {
+        display: none !important;
       }
-      .book-page-title {
-        font-size: 20px;
+      .book-controls {
+        display: none !important;
       }
-      .book-page-text {
-        font-size: 12px;
+      /* Show mobile carousel */
+      .mobile-carousel {
+        display: block;
       }
-      .book-page-text.poem {
-        font-size: 12px;
-        line-height: 1.6;
+      .carousel-controls {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .carousel-controls .book-nav-button {
+        padding: 10px 20px;
+        font-size: 14px;
+        flex: 1;
+        min-width: 120px;
+        background: #85ac7e !important;
+        border: 2px solid #85ac7e !important;
+        color: #ffffff !important;
+      }
+      .carousel-controls .book-nav-button:hover:not(:disabled) {
+        background: #6b8a6e !important;
+        border-color: #6b8a6e !important;
+      }
+      .carousel-controls .book-page-indicator {
+        font-size: 14px;
+        width: 100%;
+        text-align: center;
+      }
+    }
+    @media (min-width: 769px) {
+      /* Hide mobile carousel on desktop */
+      .mobile-carousel {
+        display: none !important;
       }
     }
     
@@ -1706,357 +1742,44 @@
 
           <!-- Book Flip Interface -->
           <div class="book-container">
-            <div class="book" id="writing-book">
-              <!-- Spread 1: Sunburned - Part 1 -->
-              <div class="book-page left" data-page="0">
-                <div class="book-page-content">
-                  <div class="book-page-title">Sunburned</div>
-                  <div class="book-page-text poem">I love going to bed sunburned,
-
-skin stretched tight over cheekbones,
-
-eyes heavy from wrestling the glare of the sea.
-
-There's a deep ache in my bones,
-
-a quiet hum beneath the flesh
-
-that tells me nature has touched me
-
-a little more than usual.
-
-A tender red blooms beneath my eyes,
-
-the soft insides of my arms sting sweetly,
-
-and the pain, this small surrender of skin,
-
-feels like fulfillment.
-
-When I go to bed sunburned,
-
-it means tomorrow will rise bright again,
-
-friends and laughter on the boat,
-
-salt on the reef,
-
-hands on the ship's wheel,
-
-sea creatures flickering like storybook dreams
-
-in the blue beneath our feet.</div>
-                </div>
+            <!-- Desktop Flipbook -->
+            <div class="flipbook" id="writing-book">
+              <!-- Cover -->
+              <div class="hard">Writing Collection<small>~ Stella Xulin</small></div>
+              <div class="hard"></div>
+              <!-- Pages 1-11 -->
+              <div><img src="../media/writingbook/p1.png" alt="Page 1" /></div>
+              <div><img src="../media/writingbook/p2.png" alt="Page 2" /></div>
+              <div><img src="../media/writingbook/p3.png" alt="Page 3" /></div>
+              <div><img src="../media/writingbook/p4.png" alt="Page 4" /></div>
+              <div><img src="../media/writingbook/p5.png" alt="Page 5" /></div>
+              <div><img src="../media/writingbook/p6.png" alt="Page 6" /></div>
+              <div><img src="../media/writingbook/p7.png" alt="Page 7" /></div>
+              <div><img src="../media/writingbook/p8.png" alt="Page 8" /></div>
+              <div><img src="../media/writingbook/p9.png" alt="Page 9" /></div>
+              <div><img src="../media/writingbook/p10.png" alt="Page 10" /></div>
+              <div><img src="../media/writingbook/p11.png" alt="Page 11" /></div>
+              <!-- Back cover -->
+              <div class="hard"></div>
+              <div class="hard">Thank You<small>~ Stella Xulin</small></div>
+            </div>
+            
+            <!-- Mobile Image Carousel -->
+            <div class="mobile-carousel" id="mobile-carousel">
+              <div class="carousel-image-container">
+                <img id="carousel-image" src="../media/writingbook/p1.png" alt="Page 1" />
               </div>
-              <div class="book-page right" data-page="1">
-                <div class="book-page-content">
-                  <div class="book-page-text poem">Freedom lives easily there.
-
-In sunlight, I am myself again,
-
-the salt-streaked daughter.
-
-Those gray sheets that never lift,
-
-as if the sky itself forgets how to breathe.
-
-Every October, my father leaves.
-
-The blue breaks him down.
-
-He goes chasing sun like a promise.
-
-I know that feeling,
-
-the hunger for a single clear day,
-
-to prove you are not trapped
-
-inside a Dickens novel.
-
-We are characters made by weather,
-
-not choice.
-
-Maybe that's why Louisiana's gray presses so hard on us.</div>
-                </div>
-              </div>
-              <!-- Spread 2: Sunburned - Part 2 -->
-              <div class="book-page left hidden" data-page="2">
-                <div class="book-page-content">
-                  <div class="book-page-text poem">But tonight,
-
-I am swollen with light,
-
-my pores heavy with salt and sweat.
-
-Lobsters sizzle over butter,
-
-the Formica table gleams with
-
-Costco stir-fry and jasmine rice.
-
-My father snaps a picture:
-
-Look what your uncle caught today.
-
-His grin could break the dark in two.
-
-I roll my eyes,
-
-but the sea is still on my tongue.
-
-The meat tastes different
-
-because it's me who speared it.
-
-His voice is soft now,
-
-not the one that commands the waves.</div>
-                </div>
-              </div>
-              <div class="book-page right hidden" data-page="3">
-                <div class="book-page-content">
-                  <div class="book-page-text poem">He is gentler when I thrive in his world.
-
-And I know: no one rescues you in the ocean.
-
-Every task matters.
-
-Each knot tied, each line held,
-
-is survival and love,
-
-braided together.
-
-Soon it will be October again.
-
-He will go,
-
-and I will stay,
-
-our connection reduced
-
-to sunburns and photos of fish.
-
-I will envy his blistered skin,
-
-the coral scars on his hands,
-
-proof that he still lives where I ache to be.</div>
-                </div>
-              </div>
-              <!-- Spread 3: Sunburned - Part 3 -->
-              <div class="book-page left hidden" data-page="4">
-                <div class="book-page-content">
-                  <div class="book-page-text poem">At my desk,
-
-I type with fingers darkened
-
-by salt and sunlight,
-
-nails still bruised purple
-
-from sling and hinge.
-
-Each keystroke smells faintly of ocean.
-
-Someday, I'll go back
-
-to Green Turtle Cay,
-
-to my father,
-
-to the boat and the cabin
-
-and the wind that remembers my name.
-
-But for now, I write,
-
-anchored by the memory
-
-of who I am when the sun
-
-has loved me
-
-just a little 
-
-too much.</div>
-                </div>
-              </div>
-              <div class="book-page right hidden" data-page="5">
-                <div class="book-page-content">
-                  <div class="book-page-text poem"></div>
-                </div>
-              </div>
-              <!-- Spread 4: Amo quia amo - Part 1 -->
-              <div class="book-page left hidden" data-page="6">
-                <div class="book-page-content">
-                  <div class="book-page-title">Amo quia amo</div>
-                  <div class="book-page-text poem">Amo quia amo.
-
-I love because I love.
-
-The words shimmer on a silver pendant,
-
-small, cool truths against my skin.
-
-For years, I trusted the mind
-
-to guide me through the noise.
-
-I thought reason could polish the world
-
-until it gleamed with understanding.
-
-Formulas over faith,
-
-logic over longing.
-
-If everything had an answer,
-
-then nothing could hurt me.</div>
-                </div>
-              </div>
-              <div class="book-page right hidden" data-page="7">
-                <div class="book-page-content">
-                  <div class="book-page-text poem">But tragedy breaks equations.
-
-No proof holds
-
-when children vanish into smoke,
-
-when marble towers rise
-
-above the hungry kneeling in their shadows.
-
-What scale can measure
-
-a single human cry?
-
-We pretend numbers will save us.
-
-We trade hours for coins
-
-and call it purpose.
-
-We measure worth in output,
-
-truth in efficiency,
-
-love in return.</div>
-                </div>
-              </div>
-              <!-- Spread 5: Amo quia amo - Part 2 -->
-              <div class="book-page left hidden" data-page="8">
-                <div class="book-page-content">
-                  <div class="book-page-text poem">We forget that not everything
-
-exists to be used.
-
-Yet under the armor of reason,
-
-something fragile survives.
-
-A quiet pulse that stirs
-
-when I read Dickinson at dawn,
-
-when I stand in rain that refuses to end,
-
-when I love someone
-
-without asking for anything back.
-
-Tagore once wrote
-
-that humans speak in three languages:
-
-need, intellect, and love.</div>
-                </div>
-              </div>
-              <div class="book-page right hidden" data-page="9">
-                <div class="book-page-content">
-                  <div class="book-page-text poem">Need keeps us living,
-
-intellect keeps us learning,
-
-but love, that reckless, wasteful fire,
-
-keeps us human.
-
-It is the mother's hand reaching into flame,
-
-the flower that blooms past what's required,
-
-the rainbow that lingers longer than it should.
-
-None of it reasonable.
-
-All of it beautiful.
-
-I stay awake to reread the same poem,
-
-run laughing into the wind,
-
-fall for the unreachable girl beside me in class.</div>
-                </div>
-              </div>
-              <!-- Spread 6: Amo quia amo - Part 3 -->
-              <div class="book-page left hidden" data-page="10">
-                <div class="book-page-content">
-                  <div class="book-page-text poem">Love makes no sense,
-
-and I no longer ask it to.
-
-Without it, we are efficient machines,
-
-empty of wonder.
-
-No person can save the planet alone,
-
-yet I try to guard what breathes.
-
-No country welcomes the voices I defend,
-
-yet I write their names.
-
-No system rewards tenderness,
-
-yet I keep believing in it.
-
-Because love is not argument.
-
-It is persistence.</div>
-                </div>
-              </div>
-              <div class="book-page right hidden" data-page="11">
-                <div class="book-page-content">
-                  <div class="book-page-text poem">It is the courage to be foolish
-
-in a world that worships proof.
-
-We exist through one another,
-
-small hearts moving in shared orbit,
-
-defying the cold gravity of logic.
-
-Amo quia amo.
-
-I love because I love.
-
-The words glow softly in the dark,
-
-their meaning unmeasured,
-
-their truth enough.</div>
-                </div>
+              <div class="carousel-controls">
+                <button class="book-nav-button" id="carousel-prev" disabled>← Previous</button>
+                <span class="book-page-indicator" id="carousel-page-indicator">Page 1 of 11</span>
+                <button class="book-nav-button" id="carousel-next">Next →</button>
               </div>
             </div>
+            
+            <!-- Desktop Controls -->
             <div class="book-controls">
               <button class="book-nav-button" id="book-prev" disabled>← Previous</button>
-              <span class="book-page-indicator" id="book-page-indicator">Page 1 of 6</span>
+              <span class="book-page-indicator" id="book-page-indicator">Page 1 of 11</span>
               <button class="book-nav-button" id="book-next">Next →</button>
             </div>
           </div>
@@ -2434,88 +2157,139 @@ Because comfort should never be a luxury in medicine.</div>
     })();
   </script>
   
+  <!-- jQuery and turn.js libraries -->
+  <script src="jquery.js"></script>
+  <script src="turn.js"></script>
+  
   <script>
-    // Book flip functionality
-    (function() {
-      const book = document.getElementById('writing-book');
+    // Book flip functionality with turn.js (desktop) and mobile carousel
+    $(document).ready(function() {
+      const flipbook = $('#writing-book');
       const prevButton = document.getElementById('book-prev');
       const nextButton = document.getElementById('book-next');
       const pageIndicator = document.getElementById('book-page-indicator');
       
-      if (!book || !prevButton || !nextButton || !pageIndicator) return;
+      // Mobile carousel elements
+      const carouselImage = document.getElementById('carousel-image');
+      const carouselPrev = document.getElementById('carousel-prev');
+      const carouselNext = document.getElementById('carousel-next');
+      const carouselPageIndicator = document.getElementById('carousel-page-indicator');
       
-      const pages = book.querySelectorAll('.book-page');
-      const totalSpreads = 6; // Book has 6 spreads (12 pages total: 3 for Sunburned, 3 for Amo quia amo)
-      let currentSpread = 0;
+      const totalPages = 11; // p1-p11
+      const imagePaths = [];
+      for (let i = 1; i <= totalPages; i++) {
+        imagePaths.push(`../media/writingbook/p${i}.png`);
+      }
       
-      // Initialize - show first spread
-      function showSpread(spreadIndex) {
-        // Hide all pages first
-        pages.forEach(page => {
-          page.classList.add('hidden');
-          page.classList.remove('flipped');
+      // Mobile carousel functionality
+      let currentCarouselPage = 1;
+      
+      function updateCarousel() {
+        if (!carouselImage || !carouselPageIndicator) return;
+        
+        carouselImage.src = imagePaths[currentCarouselPage - 1];
+        carouselImage.alt = `Page ${currentCarouselPage}`;
+        carouselPageIndicator.textContent = `Page ${currentCarouselPage} of ${totalPages}`;
+        
+        if (carouselPrev) carouselPrev.disabled = currentCarouselPage === 1;
+        if (carouselNext) carouselNext.disabled = currentCarouselPage === totalPages;
+      }
+      
+      if (carouselPrev) {
+        carouselPrev.addEventListener('click', function() {
+          if (currentCarouselPage > 1) {
+            currentCarouselPage--;
+            updateCarousel();
+          }
+        });
+      }
+      
+      if (carouselNext) {
+        carouselNext.addEventListener('click', function() {
+          if (currentCarouselPage < totalPages) {
+            currentCarouselPage++;
+            updateCarousel();
+          }
+        });
+      }
+      
+      // Initialize mobile carousel
+      updateCarousel();
+      
+      // Desktop flipbook functionality
+      if (!flipbook.length || !prevButton || !nextButton || !pageIndicator) return;
+      
+      // Initialize turn.js for desktop only
+      function initFlipbook() {
+        // Only initialize on desktop
+        if (window.innerWidth <= 768) {
+          return;
+        }
+        
+        // Destroy existing instance if it exists
+        if (flipbook.data('turn')) {
+          flipbook.turn('destroy');
+        }
+        
+        flipbook.turn({
+          width: 1000,
+          height: 600,
+          autoCenter: true,
+          when: {
+            turning: function(event, page, view) {
+              // Pages structure: 
+              // Page 1-2: Front cover
+              // Pages 3-13: Content pages (p1-p11)
+              // Pages 14-15: Back cover
+              let currentPage = 1;
+              
+              if (page >= 3 && page <= 13) {
+                // Content pages: convert to page number (1-11)
+                currentPage = page - 2;
+              } else if (page > 13) {
+                // After content, show last page
+                currentPage = totalPages;
+              }
+              
+              pageIndicator.textContent = `Page ${currentPage} of ${totalPages}`;
+              
+              // Update button states
+              const totalFlipbookPages = flipbook.turn('pages');
+              prevButton.disabled = page <= 1;
+              nextButton.disabled = page >= totalFlipbookPages;
+            }
+          }
         });
         
-        // Show pages for current spread
-        // Each spread has 2 pages: left (even index) and right (odd index)
-        const leftPageIndex = spreadIndex * 2;
-        const rightPageIndex = spreadIndex * 2 + 1;
-        
-        if (pages[leftPageIndex]) {
-          pages[leftPageIndex].classList.remove('hidden');
-        }
-        if (pages[rightPageIndex]) {
-          pages[rightPageIndex].classList.remove('hidden');
-        }
-        
-        // Update buttons
-        prevButton.disabled = spreadIndex === 0;
-        nextButton.disabled = spreadIndex >= totalSpreads - 1;
-        
-        // Update indicator
-        pageIndicator.textContent = `Page ${spreadIndex + 1} of ${totalSpreads}`;
+        // Disable dragging
+        flipbook.turn('disable', 'drag');
       }
       
-      // Next spread
-      function nextSpread() {
-        if (currentSpread < totalSpreads - 1) {
-          // Flip animation - flip the left page of current spread
-          const currentLeftPage = pages[currentSpread * 2];
-          if (currentLeftPage) {
-            currentLeftPage.classList.add('flipped');
+      // Initialize on load (desktop only)
+      if (window.innerWidth > 768) {
+        initFlipbook();
+      }
+      
+      // Reinitialize on resize (with debounce) - desktop only
+      let resizeTimeout;
+      $(window).on('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+          if (window.innerWidth > 768) {
+            initFlipbook();
+          } else {
+            // Destroy flipbook if switching to mobile
+            if (flipbook.data('turn')) {
+              flipbook.turn('destroy');
+            }
           }
-          
-          // After animation, show next spread
-          setTimeout(() => {
-            currentSpread++;
-            showSpread(currentSpread);
-          }, 400);
-        }
-      }
+        }, 250);
+      });
       
-      // Previous spread
-      function prevSpread() {
-        if (currentSpread > 0) {
-          // Flip back animation - remove flipped class first
-          const currentLeftPage = pages[currentSpread * 2];
-          if (currentLeftPage) {
-            currentLeftPage.classList.remove('flipped');
-          }
-          
-          // Then show previous spread
-          setTimeout(() => {
-            currentSpread--;
-            showSpread(currentSpread);
-          }, 50);
-        }
-      }
-      
-      // Event listeners
-      nextButton.addEventListener('click', nextSpread);
-      prevButton.addEventListener('click', prevSpread);
-      
-      // Keyboard navigation
-      document.addEventListener('keydown', (e) => {
+      // Enable keyboard navigation (desktop only)
+      $(document).keydown(function(e) {
+        if (window.innerWidth <= 768) return; // Skip on mobile
+        
         const bookContainer = document.querySelector('.book-container');
         if (!bookContainer) return;
         
@@ -2525,18 +2299,28 @@ Because comfort should never be a luxury in medicine.</div>
         
         if (!isVisible) return;
         
-        if (e.key === 'ArrowRight' && !nextButton.disabled) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
           e.preventDefault();
-          nextSpread();
-        } else if (e.key === 'ArrowLeft' && !prevButton.disabled) {
+          flipbook.turn('next');
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
           e.preventDefault();
-          prevSpread();
+          flipbook.turn('previous');
         }
       });
       
-      // Initialize
-      showSpread(0);
-    })();
+      // Button event listeners (desktop)
+      nextButton.addEventListener('click', function() {
+        flipbook.turn('next');
+      });
+      
+      prevButton.addEventListener('click', function() {
+        flipbook.turn('previous');
+      });
+      
+      // Initialize button states
+      prevButton.disabled = true;
+      pageIndicator.textContent = `Page 1 of ${totalPages}`;
+    });
   </script>
   
   <script>
